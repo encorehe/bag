@@ -1,0 +1,162 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools"></span>
+				学期：<span class="J-xueqi"></span>
+				<input style="display:none" type="text" placeholder="学期名" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button style="display:none" class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a style="display:none;" href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加学期"><i class="iconfont">&#xe618;</i>添加学期</a>
+</script>
+<script type="text/html" id="delAllBtn"><!-- 
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a> -->
+</script>
+    <script type="text/html" id="tplXueqi">
+        <span class="select-box w_auto">
+            <select class="select" name="semesterId">
+                {{ if list == undefined }}<option value="">所有学期</option>{{/if}}
+                {{each list as val key }}
+                <option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.semesterName }}</option>
+                {{/each}}
+            </select>
+        </span>
+    </script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <p>{{ schoolName }}-{{ semesterName }}期的第{{ key +1 }}周信息</p>
+		<table class="table tableStyle">
+            <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tc">开始时间</td>
+                    <td>{{ startDate }}</td>
+                    <td width="15%" class="tdbg tc">结束时间</td>
+                    <td>{{ endDate }}</td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">周一</td>
+                    <td>
+                        <label><input type="radio" name="isMonSchool" value="1" {{ if isMonSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isMonSchool" value="0" {{ if isMonSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                    <td class="tdbg tc">周二</td>
+                    <td>
+                        <label><input type="radio" name="isTueSchool" value="1" {{ if isTueSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isTueSchool" value="0" {{ if isTueSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="tdbg tc">周三</td>
+                    <td>
+                        <label><input type="radio" name="isWedSchool" value="1" {{ if isWedSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isWedSchool" value="0" {{ if isWedSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                    <td class="tdbg tc">周四</td>
+                    <td>
+                        <label><input type="radio" name="isThuSchool" value="1" {{ if isThuSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isThuSchool" value="0" {{ if isThuSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td class="tdbg tc">周五</td>
+                    <td>
+                        <label><input type="radio" name="isFriSchool" value="1" {{ if isFriSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isFriSchool" value="0" {{ if isFriSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                    <td class="tdbg tc">周六</td>
+                    <td>
+                        <label><input type="radio" name="isSatSchool" value="1" {{ if isSatSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isSatSchool" value="0" {{ if isSatSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">周日</td>
+                    <td colspan="3">
+                        <label><input type="radio" name="isSunSchool" value="1" {{ if isSunSchool == 1 }} checked {{/if}}>上学</label>
+                        <label><input type="radio" name="isSunSchool" value="0" {{ if isSunSchool == 0 }} checked {{/if}}>休息</label>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <p>{{ schoolName }}-{{ semesterName }}期的第{{ key +1 }}周信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc">开始时间</td>
+                <td>{{ startDate }}</td>
+                <td width="15%" class="tdbg tc">结束时间</td>
+                <td>{{ endDate }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">周一</td>
+                <td>
+                    {{ if isMonSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+                <td class="tdbg tc">周二</td>
+                <td>
+                    {{ if isTueSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">周三</td>
+                <td>
+                    {{ if isWedSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+                <td class="tdbg tc">周四</td>
+                <td>
+                    {{ if isThuSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">周五</td>
+                <td>
+                    {{ if isFriSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+                <td class="tdbg tc">周六</td>
+                <td>
+                    {{ if isSatSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">周日</td>
+                <td colspan="3">
+                    {{ if isSunSchool == 1 }} 上学 {{ else }} 休息 {{/if}}
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/yey-xuezhou.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-xuezhou.min.js"></script> -->
+
+
+
+
+
+

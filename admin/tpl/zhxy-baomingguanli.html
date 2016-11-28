@@ -1,0 +1,186 @@
+﻿
+<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+        <form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >已处理</option>
+					  <option value="0">未处理</option>
+				  </select>
+				</span>
+            <input type="text" placeholder="申请人名/手机号/宝贝名" style="width:160px;" value="" id="keyWord" name="keyWord" class="input-text"/>
+            <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+<div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+        <div id="paginator"></div>
+    </div>
+</div>
+<script type="text/html" id="addBtn">
+</script>
+<script type="text/html" id="delAllBtn"><!--
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>-->
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"> <span class="f-red">*</span>版本号</td>
+                <td width="35%"><input class="input-text" type="text" name="version" datatype="version" /></td>
+                <td width="13%" class="tdbg tr">系统</td>
+                <td>
+                    <span class="select-box">
+                        <select class="select" name="system">
+                            <option value="0">ios</option>
+                            <option value="1">android</option>
+                            <option value="2">win</option>
+                            <option value="3">终端</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>下载地址</td>
+                <td>
+                    <input class="input-text" type="text" name="downUrl" datatype="url" />
+                </td>
+                <td class="tdbg tr">说明</td>
+                <td>
+                    <textarea class="textarea" name="remark" id="remark" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">终端应用名称</td>
+                <td class="J-appName">
+                </td>
+                <td class="tdbg tr">是否强制更新</td>
+                <td>
+                    <label>
+                        <input type="radio" name="isUpdate" value="1" checked>是
+                    </label>
+                     <label style="margin-left:10px;">
+                        <input type="radio" name="isUpdate" value="0">否
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplAppName">
+{{ if list && list.length>0 }}
+<span class="select-box">
+    <select class="select" name="appName">             
+    {{each list as val key }}
+        <option {{ if val.appNameCur }} selected {{ /if }} value="{{ val.appName }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.proName }}</option>
+    {{/each}}
+ </select>
+</span>
+{{else}}
+没有终端应用
+{{/if}}
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>版本号</td>
+                <td width="35%"><input class="input-text" type="text" name="version" value="{{ version }}" datatype="version" /></td>
+                <td width="13%" class="tdbg tr">系统</td>
+                <td>
+                    <span class="select-box">
+                        <select class="select" name="system">
+                            <option value="0" {{ if system == 0}}selected{{/if}}>ios</option>
+                            <option value="1" {{ if system == 1}}selected{{/if}}>android</option>
+                            <option value="2" {{ if system == 2}}selected{{/if}}>win</option>
+                            <option value="3" {{ if system == 3}}selected{{/if}}>终端</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>下载地址</td>
+                <td>
+                    <input class="input-text" type="text" name="downUrl" value="{{ downUrl }}" datatype="url" />
+                </td>
+                <td class="tdbg tr">说明</td>
+                <td>
+                    <textarea class="textarea" name="remark" id="remark" cols="30" rows="10">{{ remark }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">终端应用名称</td>
+                <td class="J-appName">
+                    
+                </td>
+                <td class="tdbg tr">是否强制更新</td>
+                <td>
+                    <label>
+                        <input type="radio" name="isUpdate" value="1" {{ if isUpdate == 1}} checked {{/if}}>是
+                    </label>
+                     <label style="margin-left:10px;">
+                        <input type="radio" name="isUpdate" value="0" {{ if isUpdate == 0}} checked {{/if}} >否
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr">版本号</td>
+                <td width="35%">{{ version }}</td>
+                <td width="13%" class="tdbg tr">系统</td>
+                <td>
+                    <span class="select-box">
+                        {{ if system == 0}}ios{{/if}}
+                        {{ if system == 1}}android{{/if}}
+                        {{ if system == 2}}win{{/if}}
+                        {{ if system == 3}}终端{{/if}}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">下载地址</td>
+                <td>
+                    <a href="{{ downUrl }}" target="_blank">{{ downUrl }}</a>
+                </td>
+                <td class="tdbg tr">说明</td>
+                <td>
+                    {{ remark }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">终端应用名称</td>
+                <td>
+                    {{ proName }}
+                </td>
+                <td class="tdbg tr">是否强制更新</td>
+                <td>
+                    {{ if isUpdate == 1 }} 是 {{/if}}
+                    {{ if isUpdate == 0 }} 否 {{/if}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/zhxy-baomingguanli.js"></script>
+
+
+
+
+

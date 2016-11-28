@@ -1,0 +1,14 @@
+﻿
+/* -----------贝安港后台登录------------
+* login.js v1
+* http://www.encorehe.com/
+* Created & Modified by hejiachao
+* Date modified 2016-02.05
+*
+* Copyright 2013-2016 武汉缘诚科技 All rights reserved.
+* Licensed under MIT license.
+* http://opensource.org/licenses/MIT
+*
+*/
+@charset "utf-8";
+@charset "utf-8";.bg{background:url(../images/login/bg.png) 50% 50% / cover no-repeat fixed}.Hui-wraper{padding:0 20px}.header,.footer{position:fixed;width:100%;color:#fff}.header{top:0;height:48px;line-height:48px;background:#19C9B4;color:#fff;font-size:18px}.footer{bottom:0;height:140px;background:#2b2f39;text-align:center}.main{position:absolute;width:100%;top:48px;bottom:60px}a.logo{color:#fff}.Hui-wraper{width:960px;margin:0 auto;padding:0}.header .Hui-wraper{width:auto;padding:0 40px}.logo{width:48px;height:48px;background:url("../images/logo.png");display:block;border-radius:48px;text-indent:-2000px}.login-box{position:absolute;top:8%;width:100%;height:100%}.login-form{position:relative;z-index:1001;width:300px;margin-left:auto;margin-right:auto;padding:30px 40px 20px;border-radius:5px;background:rgba(200,255,255,0.5);margin-top:6%}.login-form .input-text{border-radius:3px;height:38px}.login-form .iconfont{font-size:22px;position:relative;top:-3px}.login-form .btn{width:100%;margin-top:5px;margin-bottom:5px}.login-form .btn-primary{background:#19c9b4;border:0}.login-form .btn-primary:hover{background:#11B4A1}input[type="radio"],input[type="checkbox"]{margin-top:0;margin-right:5px}.copy{font-size:14px;padding-top:15px}.copy p{margin:0;line-height:28px;color:#d3d2d2}.copy .iconfont{color:#5c64b1;margin-left:-25px;margin-right:10px}.footer img{position:relative;top:10px}

@@ -1,0 +1,140 @@
+﻿<div id="tab_demo" class="HuiTab iframe-tab">
+	<div class="tabBar cl">
+		<span>我的订单</span>
+		<span>下级订单</span>
+	</div>
+</div>
+<div class="wrapper-content">
+	<div class="action">
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="0" >未支付</option>
+					  <option value="1">已支付</option>
+					  <option value="2">完成</option>
+					  <option value="3">取消</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="订单编号" value="" id="keyword" name="keyword" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加代理商" style="display:none;"><i class="iconfont">&#xe618;</i>下订单</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量取消"  style="display:none;"><i class="iconfont">&#xe625;</i>批量取消</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量完成"  style="display:none;"><i class="iconfont">&#xe630;</i>批量完成</a>
+</script>
+
+<script type="text/html" id="tplGoods">
+	{{each list as val key }}
+	<li>
+		<label><input type="checkbox" />{{ val.proName }}</label>
+		<div class="sub-label">
+			<span>单价<span class="price">{{ val.price }}</span>(元)*</span>
+			<span><input type="text" />&nbps;个</span>
+		</div>
+	</li>
+	{{ /each }}
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm inputNo">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr">订单编号</td>
+				<td width="35%">{{ orderNO }}</td>
+				<td width="13%" class="tdbg tr">总金额</td>
+				<td width="35%">{{ total }}</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">状态</td>
+				<td>
+					{{ if isUse == 0}}未支付{{/if}}
+					{{ if isUse == 1}}已支付{{/if}}
+					{{ if isUse == 2}}完成{{/if}}
+					{{ if isUse == 3}}取消{{/if}}
+				</td>
+				<td class="tdbg tr">订单商品</td>
+				<td>
+					{{each orderDetail as val key }}
+					    <p>商品：{{ val.proName }},数量：{{ val.number  }}，单价：{{ val.price }}(元)</p>
+					{{/each}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">创建时间</td>
+				<td><input class="input-text laydate-icon J-date" type="text" id="insertDate" name="insertDate" value="{{ insertDate }}" readonly /></td>
+				<td class="tdbg tr">完结时间</td>
+				<td>
+					<input class="input-text laydate-icon J-date" type="text" name="endDate" value="{{ endDate }}" readonly />
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr"><span class="f-red">*</span>订单编号</td>
+				<td width="35%"><input class="input-text " type="text" id="orderNO" name="orderNO" value="{{ orderNO }}" readonly /></td>
+				<td width="13%" class="tdbg tr"><span class="f-red">*</span>总金额</td>
+				<td width="35%"><input class="input-text" type="text" id="total" name="total" value="{{ total }}" readonly /></td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">状态</td>
+				<td>
+					<span class="select-box w_auto">
+					  <select class="select J-select" name="isUse" id="isUse">
+						  <option value="0" {{ if isUse == 0}} selected {{/if}}>未支付</option>
+						  <option value="1" {{ if isUse == 1}} selected {{/if}}>已支付</option>
+						  <option value="2" {{ if isUse == 2}} selected {{/if}}>完成</option>
+						  <option value="3" {{ if isUse == 3}} selected {{/if}} >取消</option>
+					  </select>
+					</span>
+				</td>
+				<td class="tdbg tr">订单商品</td>
+				<td>
+					{{each orderDetail as val key }}
+					<p>商品：{{ val.proName }},数量：{{ val.number  }}，单价：{{ val.price }}(元)</p>
+					{{/each}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">创建时间</td>
+				<td><input class="input-text laydate-icon J-date" type="text" id="insertDate" name="insertDate" value="{{ insertDate }}" readonly /></td>
+				<td class="tdbg tr">完结时间</td>
+				<td>
+					<input class="input-text laydate-icon J-date" type="text" name="endDate" value="{{ endDate }}" readonly />
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="tplPay">
+		<p>订单号：{{ orderNO }}</p>
+		<p>总价：{{ total }}</p>
+		<p><a href="javascript:void(0);" class="btn btn-primary radius J-pays"><i class="iconfont">&#xe63b;</i>支付宝</a></p>
+</script>
+<!-- <script type="text/javascript" src="../static/admin/js/service/qdgl-dingdan.js"></script> -->
+<script type="text/javascript" src="../static/admin/js/serviceMin/qdgl-dingdan.min.js"></script>
+
+
+
+

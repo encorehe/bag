@@ -1,0 +1,43 @@
+<?php
+header("Content-type: text/html; charset=UTF-8");
+include_once('connect.php');
+$name=$_POST['name'];
+$enName=$_POST['enName'];
+$gender=$_POST['gender'];
+$isUse=$_POST['isUse'];
+$kidNO=$_POST['kidNO'];
+$rfId=$_POST['rfId'];
+$registerTime=$_POST['registerTime'];
+$isUse=$_POST['isUse'];
+$hasOnlineVideo=$_POST['hasOnlineVideo'];
+$videoExpirationDate=$_POST['videoExpirationDate'];
+$enPosition=$_POST['enPosition'];
+$address=$_POST['address'];
+$classId='2';
+$qq=$_POST['qq'];
+$email=$_POST['email'];
+$interestedPeople=$_POST['interestedPeople'];
+$interestedAffair=$_POST['interestedAffair'];
+$interestedFood=$_POST['interestedFood'];
+$dream=$_POST['dream'];
+$remark=$_POST['remark'];
+$id=$_POST['id'];
+																																									
+$sql="update kids set name='" . $name."' ,enName='" .$enName."' ,gender='" .$gender. "' ,isUse='" .$isUse. "',kidNO='" .$kidNO. "',rfId='" .$rfId. "',kidNO='" .$kidNO. "',registerTime='" .$registerTime. "',hasOnlineVideo='" .$hasOnlineVideo. "',videoExpirationDate='" .$videoExpirationDate. "',enPosition='" .$enPosition. "',address='" .$address. "',classId='" .$classId. "',qq='" .$qq. "',email='" .$email. "',interestedPeople='" .$interestedPeople. "',interestedAffair='" .$interestedAffair. "',interestedFood='" .$interestedFood. "' where id=" .$id;
+//echo $sql;
+$query = mysql_query($sql);
+if($query){
+		$arr['success']=true;
+		$arr['ecode']="E000000";
+		$arr['msg']="操作成功";
+}
+else{
+		$arr['success']=false;
+	  	$arr['ecode']="E000000";
+		$arr['msg']="操作失败";
+}
+
+echo json_encode($arr);
+
+
+?>

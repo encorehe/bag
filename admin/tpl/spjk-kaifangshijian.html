@@ -1,0 +1,111 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools"></span>
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="0" >停用</option>
+					  <option value="1">启用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="摄像头名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加宝贝"><i class="iconfont">&#xe618;</i>添加开放时间</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>	
+<script type="text/html" id="addTpl">
+	<form action="wwww.baidu.com" method="post" class="form form-horizontal J-addForm">
+			<div class="form-content">
+				<table class="table tableStyle">
+					<tbody>
+					<tr>
+						<td width="15%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+						<td width="45%">
+							<span class="J-school"></span>
+							<span class="J-class" style="display:block;"></span>
+						</td>
+						<td class="tdbg tc" width="15%">摄像头</td>
+						<td class="J-shexiangtou">
+						</td>
+					</tr>
+					<tr>
+						<td class="tdbg tc">开始时间</td>
+						<td><input class="input-text laydate-icon J-date" type="text" name="startTime" id="startTime" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" /></td>
+						<td class="tdbg tc">结束时间</td>
+						<td>
+							<input class="input-text laydate-icon J-date" type="text" name="endTime" id="endTime" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})"  />
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="wwww.baidu.com" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" value="{{ id }}" name="id">
+		<div class="form-content">
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="15%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+					<td width="45%">
+						<span class="J-school"></span>
+						<span class="J-class" style="display:block;"></span>
+					</td>
+					<td class="tdbg tc" width="15%">摄像头</td>
+					<td class="J-shexiangtou">
+					</td>
+				</tr>
+				<tr>
+					<td class="tdbg tc">开始时间</td>
+					<td><input class="input-text laydate-icon J-date" type="text" name="startTime" id="startTime" value="{{ startTime }}" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss',maxDate:'#F{$dp.$D(\'endTime\')}'})" /></td>
+					<td class="tdbg tc">结束时间</td>
+					<td>
+						<input class="input-text laydate-icon J-date" type="text" name="endTime" id="endTime"  value="{{ endTime }}" onFocus="WdatePicker({skin:'whyGreen',dateFmt:'H:mm:ss',minDate:'#F{$dp.$D(\'startTime\')}'})"  />
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</form>
+</script>
+
+<script type="text/html" id="tplShexiangtou">
+	 <input type="hidden" name="cameraId" datatype="*">
+	 {{ if list.length == 0 }}
+	 	没有摄像头
+	 	{{ else }}
+	 <span class="select-box">
+	 	<select class="select J-select-box">
+	 		{{ each list as val key }}
+	 			<option value="{{ val.id }}">{{ val.name }}</option>
+	 		{{/each}}
+	 	</select>
+	 </span>
+	 {{/if}}
+</script>
+
+
+<script type="text/javascript" src="../static/admin/js/service/spjk-kaifangshijian.js"></script>
+
+
+
+
+
+

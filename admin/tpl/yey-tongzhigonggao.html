@@ -1,0 +1,232 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+					<form action="" method="post" class="form form-horizontal J-searchForm">
+					<span class="J-schools"></span>
+					<span class="select-box w_auto">
+				 	<select class="select J-select" name="type" id="type">
+				 					  <option value="" selected>通知类型</option>
+									  <option value="1">校园公告</option>
+									  <option value="2">班级公告</option>
+									  <option value="3">员职工公告</option>
+									  <option value="4">个人通知</option>
+								  </select>
+				</span>
+						<span class="select-box w_auto">
+				 	<select class="select J-select" name="isUse" id="isUse">
+									  <option value="" selected>状态</option>
+									  <option value="0">待审</option>
+									  <option value="1">通过</option>
+									  <option value="2">已发送</option>
+									  <option value="3">拒绝</option>
+								  </select>
+				</span>
+						<input type="text" placeholder="公告关键词" value="" id="keyWord" name="keyWord" class="input-text" />
+						<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+					</form>
+				</div>
+			</div>
+			<div class="table-wrapper">
+				<table id="mmg"></table>
+				<div class="table-paginator">
+					<div id="paginator"></div>
+				</div>
+			</div>
+		<script type="text/html" id="addBtn">
+			<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加通知公告"><i class="iconfont">&#xe618;</i>添加通知公告</a>
+		</script>
+		<script type="text/html" id="delAllBtn">
+			<a href="javascript:void(0);" style="display:none;" class="btn btn-default radius J-tingyongAll" title="批量不通过"><i class="iconfont">&#xe625;</i>批量不通过</a>
+			<a href="javascript:void(0);" style="display:none;" class="btn btn-success radius J-qiyongAll" title="批量通过"><i class="iconfont">&#xe630;</i>批量通过</a>
+		</script>
+		<script type="text/html" id="chosenTpl">
+		  <span class="J-schools"></span>
+		  <span class="J-class"></span>
+		  <p style="margin:5px 0">选人：<label style="margin-left:2px"><input class="J-all-people" type="checkbox" />所有人</label></p>
+		  <div class="alink J-duixiang"></div>
+		  <input type="hidden" name="receiversid" datatype="*" nullmsg="必须选人">
+		  <input type="hidden" name="receiversName" nullmsg="必须选人">
+		</script>
+<script type="text/html" id="choserListTpl">
+	<ul class="selectUl J-users">
+		{{each list as val key }}
+		<li value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}} {{ if val.isCur && val.isCur == true }} style="display:none" {{/if}} >
+		<a href="javascript:void(0);">{{ if val.name == null }}{{ val.userName }}{{ else }}{{ val.name }}{{/if}}</a>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+<script type="text/html" id="personListTpl">
+	<ul class="selectUl J-users">
+		{{each list as val key }}
+		<li value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}} {{ if val.isCur && val.isCur == true }} style="display:none" {{/if}} >
+		<a href="javascript:void(0);">{{ className }}班-{{ if val.name == null }}{{ val.userName }}{{ else }}{{ val.name }}{{/if}}</a>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+<script type="text/html" id="choserListOldTpl">
+	<ul class="selectUl J-users">
+		{{each list as val key }}
+		<li value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}} >
+		<a href="javascript:void(0);">{{ if val.name == null }}{{ val.userName }}{{ else }}{{ val.name }}{{/if}}</a>
+		</li>
+		{{/each}}
+	</ul>
+</script>
+		<script type="text/html" id="addTpl">
+			<form action="" method="post" class="form form-horizontal J-addForm">
+				 <table class="table tableStyle">
+					<tbody>
+						<tr>
+							<td width="15%" class="tdbg tc">公告类型</td>
+							<td width="20%">
+									<span class="select-box">
+									  <select class="select" name="type" id="type">
+										  <option value="1" selected>校园公告</option>
+										  <option value="2">班级公告</option>
+										  <option value="3">员职工公告</option>
+										  <option value="4">个人通知</option>
+									  </select>
+									</span>
+							</td>
+							<td width="15%" class="tdbg tc">预发日期</td>
+							<td>
+								<input class="input-text laydate-icon J-date" type="text" name="sendDate" placeholder="YYYY-MM-DD" />
+							</td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>通知/公告对象</td>
+							<td colspan="3" class="J-content">全校</td>
+						</tr>
+						<tr class="J-yixuan" style="display:none">
+							<td class="tdbg tc"><span class="f-red">*</span>已选对象</td>
+							<td colspan="3" class="J-duixiangs"></td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>标题</td>
+							<td colspan="3"><input class="input-text" datatype="title" type="text" name="title" placeholder="标题" datatype="title" /></td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>内容</td>
+							<td colspan="3">
+								<textarea class="textarea" datatype="*" type="text" name="content" placeholder="内容" datatype="*"></textarea>
+								<p class="J-kery"></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</script>
+		<script type="text/html" id="editTpl">
+			<form action="" method="post" class="form form-horizontal J-editForm">
+				<input type="hidden" name="id" value="{{ id }}">
+				 <table class="table tableStyle">
+					<tbody>
+						<tr>
+							<td width="15%" class="tdbg tc">公告类型</td>
+							<td width="20%">
+								{{ if type=='1'}}校园公告{{/if}}
+								{{ if type=='2'}}班级公告{{/if}}
+								{{ if type=='3'}}员职工公告{{/if}}
+								{{ if type=='4'}}个人通知{{/if}}
+							</td>
+							<td width="15%" class="tdbg tc">预发日期</td>
+							<td>
+								<input class="input-text laydate-icon J-date" type="text" name="sendDate" value="{{ sendDate }}" />
+							</td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>通知/公告对象</td>
+							<td colspan="3" class="J-content">
+								{{ if type == '1' }}全校{{ /if }}
+								{{ if type == '2' }}{{ schoolName }}-{{ className }}{{ /if }}
+								{{ if type == '3' }}{{ schoolName }}-<span>{{ receiversName }}</span>{{ /if }}
+								{{ if type == '4' }}{{ receiversName }}{{ /if }}
+							</td>
+						</tr>
+						<tr class="J-yixuan" style="display:none">
+							<td class="tdbg tc"><span class="f-red">*</span>已选对象</td>
+							<td colspan="3" class="J-duixiangs"></td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>标题</td>
+							<td colspan="3"><input class="input-text" datatype="title" type="text" name="title" value="{{ title }}" datatype="title" /></td>
+						</tr>
+						<tr>
+							<td class="tdbg tc"><span class="f-red">*</span>内容</td>
+							<td colspan="3">
+								<textarea class="textarea" datatype="*" type="text" name="content" placeholder="内容" datatype="*">{{ content }}</textarea>
+								<p class="J-kery"></p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</script>
+		<script type="text/html" id="shuruTpl">
+			输入{{strLength}}字符 分为{{strNum}}条短信显示
+		</script>
+		<script type="text/html" id="chkTpl">
+			<form action="" method="post" class="form form-horizontal J-chkForm">
+				<input type="hidden" name="id" value="{{ id }}">
+				<table class="table tableStyle">
+					<tbody>
+						<tr>
+							<td width="15%" class="tdbg tc">公告类型</td>
+							<td >
+									{{ if type == '1' }}校园公告{{ /if }}
+									{{ if type == '2' }}班级公告{{ /if }}
+									{{ if type == '3' }}员职工公告{{ /if }}
+									{{ if type == '4' }}个人通知{{ /if }}
+							</td>
+							<td width="15%" class="tdbg tc">预发日期</td>
+							<td>
+								{{ sendDate }}
+							</td>
+						</tr>
+						<tr>
+							<td class="tdbg tc">通知/公告对象</td>
+							<td colspan="3" class="J-content">
+								{{ if type == '1' }}全校{{ /if }}
+								{{ if type == '2' }}{{ schoolName }}-{{ className }}{{ /if }}
+								{{ if type == '3' }}{{ schoolName }}-<span>{{ receiversName }}</span>{{ /if }}
+								{{ if type == '4' }}{{ receiversName }}{{ /if }}
+							</td>
+						</tr>
+						<tr>
+							<td class="tdbg tc">标题</td>
+							<td colspan="3">{{ title }}</td>
+						</tr>
+						{{ if sender != "" }}
+						<tr>
+							<td class="tdbg tc">提交者</td>
+							<td>{{ sender }}</td>
+							<td class="tdbg tc">提交日期</td>
+							<td>{{ insertDate }}</td>
+						</tr>
+						{{/if}}
+						<tr>
+							<td class="tdbg tc">状态</td>
+							<td colspan="3">
+								{{ if isUse == 0 }}待审{{/if}}
+								{{ if isUse == 1 }}{{ checker }}于{{ checkDate }}审核通过{{/if}}
+								{{ if isUse == 2 }}{{ checker }}于{{ checkDate }}审核通过并且已发送{{/if}}
+								{{ if isUse == 3 }}{{ checker }}<span style="margin:0 10px">于</span>{{ checkDate }}拒绝<p></p>{{/if}}
+								{{ if isUse == 4 }}{{ checker }}<span style="margin:0 10px">于</span>{{ checkDate }}进行停用操作<p></p>{{/if}}
+							</td>
+						</tr>
+						<tr>
+							<td class="tdbg tc">内容</td>
+							<td colspan="3">
+								{{ content }}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</script>
+
+		<script type="text/javascript" src="../static/admin/js/service/yey-tongzhigonggao.js"></script>
+
+		<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-tongzhigonggao.min.js"></script> -->

@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="../static/admin/css/base.min.css">
+    <link href="../static/admin/font/iconfont.css" rel="stylesheet" type="text/css" />
+    <link href="../static/admin/css/admin.css" rel="stylesheet" type="text/css" />
+    <title>贝安港后台管理</title>
+    <meta name="keywords" content="关键词,贝安港后台管理" />
+    <meta name="description" content="贝安港后台管理" />
+    <script type="text/javascript" src="../lib/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../lib/ueditor/ue.min.js"></script>
+
+    <!--<script type="text/javascript" src="../lib/Validform/5.3.2/Validform.js"></script>
+    <script type="text/javascript" src="../lib/mmGrid.js"></script>
+    <script type="text/javascript" src="../lib/mmPaginator.js"></script>
+    <script type="text/javascript" src="../lib/template.js"></script>
+    <script type="text/javascript" src="../lib/jQuery.print.js"></script>
+    <script type="text/javascript" src="../lib/jquery.cityselect.js"></script>
+    <script type="text/javascript" src="../lib/jquery.cookie.js"></script>
+    <script type="text/javascript" src="../lib/jquery.fly.js"></script>
+    <script type="text/javascript" src="../lib/jquery.hash.js"></script>
+    <script type="text/javascript" src="../lib/jquery.mCustomScrollbar.concat.js"></script>
+    <script type="text/javascript" src="../lib/layer/layer.js"></script>
+    <script type="text/javascript" src="../lib/layer/extend/layer.ext.js"></script>
+    <script type="text/javascript" src="../lib/laypage/laypage.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="../lib/jquery.alert.js"></script>
+    <script type="text/javascript" src="../lib/jquery.form.js"></script>
+    <script type="text/javascript" src="../lib/jquery.ba-throttle-debounce.js"></script>-->
+
+    <script type="text/javascript" src="../lib/lib.min.js"></script>
+    <script type="text/javascript" src="../static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="../static/admin/js/config.js"></script>
+    <script type="text/javascript" src="../static/admin/js/common.js"></script>
+    <script type="text/javascript" src="../static/admin/js/admin.js"></script>
+    <script type="text/javascript" src="../static/admin/js/main.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="Hui-wraper">
+            <ul class="userbar">
+                    <li class="">
+                        <span class="J-sc"></span>
+                        <span class="J-topRole" style="margin-left:10px;"></span>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0)" class="item user">
+                            <span class="J-user"></span>
+                            <i class="iconfont icon-jiantouxia"></i>
+                        </a>
+                        <div class="item-box">
+                            <a class="J-renPwd" data-title="修改密码" href="javascript:void(0);">修改密码</a>
+                            <a class="J-loginout" data-title="切换账号" href="javascript:void(0);">切换账户</a>
+                            <a class="J-otherSf" data-title="切换其他身份" href="javascript:void(0);">切换其他身份</a>
+                            <a class="J-checkout" data-title="退出成功！" href="javascript:void(0);">退出</a>
+                        </div>
+                    </li>
+                </ul>
+            <a href="javascript:void(0);" class="logo">贝安港</a>
+        </div>
+    </div>
+    <div class="main">
+        <div class="side-left">
+            <div class="bar">
+                <a href="javascript:void(0);" class="iconfont">&#xe609;</a>
+                <a href="javascript:void(0);" class="iconfont">&#xe60a;</a>
+                <a href="javascript:void(0);" class="iconfont J-sideClose">&#xe60b;</a>
+            </div>
+            <div class="menu-box">
+                <div class="J-menu"></div>
+            </div>
+        </div>
+        <div class="side-cont">
+            <div class="breadcrumb J-breadcrumb"></div>
+            <div class="article">
+               <!-- <iframe id="article-main" scrolling="yes" frameborder="0"></iframe>-->
+                <div id="article-main"></div>
+            </div>
+        </div>
+    </div>
+    <!--tplStart-->
+    <!--sideMenu-->
+    <script type="text/html" id="sideMenu">
+        {{each list as val key}}
+        <dl>
+            <dt>
+                <a class="J-dt" href="javascript:void(0);" title="{{ val.name }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}}>
+                    <i class="iconfont">{{ val.iconName }}</i>
+                    <span>{{ val.privName }}</span>
+                </a>
+            </dt>
+            <dd>
+                {{ each list[key].subNav as vvval kkkey }}
+                <a class="J-dd" title="{{ vvval.name }}" href="javascript:void(0);" {{each vvval as vvvval kkkkey}}data-{{kkkkey}}="{{vvvval}}" {{/each}}>
+                    <i class="iconfont">{{ vvval.iconName }}</i>
+                    <span>{{ vvval.privName }}</span>
+                </a>
+                {{ /each }}
+            </dd>
+        </dl>
+        {{/each}}
+    </script>
+    <!--readCrumb-->
+    <script type="text/html" id="readCrumb">
+        <li class="homes">
+            <a href="javascript:void(0)" title="首页"></a>
+        </li>
+        {{each list as val key}}
+        <li><a href="javascript:void(0);" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}}> {{val.privName}}</a></li>
+        <li class="line"></li>
+        {{/each}}
+    </script>
+    <!--tplEnd-->
+    <script type="text/html" id="tplRenPwd">
+        <form action="" class="J-pwdForm">
+            <input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle tableStyleNo">
+                <tbody>
+                    <tr>
+                        <td width="25%" class="tr">新密码</td>
+                        <td><input type="password" class="input-text" name="passWord" datatype="pwd" placeholder="6-20位数字或英文"></td>
+                    </tr>
+                    <tr>
+                        <td class="tr">确认密码</td>
+                        <td><input type="password" class="input-text" datatype="*" recheck="passWord"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/html" id="tplSchool">
+        
+        {{ if style == 1}}
+        <input type="hidden" name="schoolId" value="{{ if schoolCurrent && schoolCurrent.schoolId }}{{ schoolCurrent.schoolId }}{{/if}}" {{ if checkeds=="yes" }}  datatype="*" {{/if}} nullmsg="需要选择学校" />
+        <span class="span-title"></span>
+        <span class="select-box w_auto">
+		    <select class="select J-select" data-name="schoolId">
+                {{ if empty == 0}}
+                <option value="-1">{{ if schoolName }}{{ schoolName }}{{ else }}所有幼儿园{{/if}}</option>
+                {{/if }}
+                {{each list as val key }}
+                  <option {{ if cur && cur.schoolId == val.id }} selected {{/if}} value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.schoolName }}</option>
+                {{/each}}
+			</select>
+	    </span>
+        {{/if}}
+        {{ if style == 2}}
+        <input type="hidden" name="schoolId" value="{{ if schoolCurrent && schoolCurrent.schoolId }}{{ schoolCurrent.schoolId }}{{else}}-1{{/if}}" datatype="*" nullmsg="需要选择学校" />
+        园所:【<a href="javascript:void(0);" class="span-title J-choose"><span class="J-sname">{{ if schoolCurrent }}{{schoolCurrent.schoolName}}{{else}}所有幼儿园{{/if}}</span></a>】
+        <div class="J-all-school" style="display:none;">
+            <div class="alink J-school-a">
+                {{ if empty == 0}} <a href="javascript:void(0);" data-id="-1" data-schoolname="所有幼儿园"><span>所有幼儿园</span><span class="duigou">√</span></a>{{/if }}
+                {{each list as val key }}
+                 <a {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} {{ if val.id == schoolId }}active{{/if}} title="{{ val.schoolName }}" href="javascript:void(0);"><span>{{ val.schoolName }}</span><span class="duigou">√</span></a>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+    </script>
+    <script type="text/html" id="tplClass">
+        <input type="hidden" name="classId" value="" datatype="*" nullmsg="需要选择班级">
+        {{ if list && list.length==0}}<span class="select-box w_auto">无</span>{{/if}}
+        {{ if list && list.length>0}}
+        <span class="select-box w_auto">
+		    <select class="select J-select" data-name="classId">
+                {{ if empty == 0}}
+                        <option value="0">所有班</option>
+                {{/if}}
+				{{each list as val key }}
+                       <option  value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.className }}</option>
+                {{/each}}
+			</select>
+	    </span>
+        {{/if}}
+    </script>
+    <!--岗位-->
+    <script type="text/html" id="tplRole">
+        <input type="hidden" name="roleId" value="" datatype="*" nullmsg="需要选择班级">
+        {{ if list}}
+        <span class="select-box">
+		    <select class="select J-select" data-name="roleId">
+					{{each list as val key }}
+                       <option {{ if val.id == classId }}selected{{/if}} value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.roleName }}</option>
+                {{/each}}
+			</select>
+	    </span>
+        {{/if}}
+    </script>
+
+    <script type="text/html" id="errMsg">
+        <article class="page-404 minWP text-c">
+            <p class="error-title"><i class="iconfont va-m">&#xe609;</i></p>
+            <p class="error-description">不好意思，{{ msg }}~</p>
+        </article>
+    </script>
+    <script type="text/html" id="dataTpl">
+        <a href="javascript:void(0);" class="btn btn-primary radius J-daochu" title="数据导出成excel"><i class="iconfont" style="top:-2px;">&#xe64a;</i></a>
+        <a href="javascript:void(0);" class="btn btn-primary radius J-daoru" title="导入数据"><i class="iconfont" style="top:-2px">&#xe649;</i></a>
+        <a href="javascript:void(0);" class="J-moban">导入模板下载</a>
+    </script>
+    <script type="text/html" id="sfTpl">
+        <ul class="ul-list J-shenfen">
+            {{each list as val key}}
+                <li {{ if val.issCur && val.issCur == true }}class="active"{{/if}}><a href="javascript:void(0);" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}}> {{val.schoolName}}-{{val.roleName}}</a></li>
+            {{/each}}
+        </ul>
+    </script>
+     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9kXqMdGMbmq9jv9PxPV0DXd41lKBKHUS"></script> 
+</body>
+
+</html>

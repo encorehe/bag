@@ -1,0 +1,272 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+        <form action="" method="post" class="form form-horizontal J-searchForm">
+            <span class="J-schools"></span>
+            <span class="select-box w_70">
+                    <select class="select J-select" autocomplete="off" name="isUse" id="isUse">
+                        <option value="">状态</option>
+                        <option value="1" selected>启用</option>
+                        <option value="0">停用</option>
+                    </select>
+                </span>
+            <span class="select-box w_70">
+                    <select class="select J-select" name="gender" id="gender">
+                        <option value="" selected>性别</option>
+                        <option value="1">男</option>
+                        <option value="0">女</option>
+                    </select>
+                </span>
+            <span class="select-box w_70" style="display:none;">
+                    <select class="select J-select" name="smsSendMode" id="smsSendMode">
+                        <option value="" selected>短信发送模式</option>
+                        <option value="0">不发</option>
+                        <option value="1">及时发送</option>
+                        <option value="2">需要审核</option>
+                    </select>
+                </span>
+            <input type="text" placeholder="手机号/姓名/门禁卡" value="" id="keyWord" name="keyWord" class="input-text"/>
+            <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+<div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+        <div id="paginator"></div>
+    </div>
+</div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加教职工"><i class="iconfont">&#xe618;</i>添加教职工</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplCardForm">
+    <form action="" class="J-Form" style="margin:20px;">
+        <input type="hidden" name="teacherId" value="{{ teacherId }}">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc">班级</td>
+                <td class="J-class"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplCard">
+    <p>
+        <a href="javascript:void(0);" class="btn btn-primary radius J-cardBtn" title="分配班级">分配班级</a>
+    </p>
+    <div class="tableGrids hidLimt">
+        <table id="mmgJhr" style="width:100%;"></table>
+        <div class="table-paginator hidLimt">
+            <div id="paginatorJhr"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <p class="f-red">eg:教师岗位的教职工添加完成后，必须到对应人员的操作区进行分班操作，否则该职工账号无法登录!</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>学校</td>
+                <td>
+                    <span class="J-school"></span>
+
+                </td>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>岗位</td>
+                <td>
+                    <span class="J-gangwei"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>姓名</td>
+                <td>
+                    <input class="input-text" type="text" name="name" datatype="cname | ename" />
+                </td>
+                <td class="tdbg tr">英文名</td>
+                <td>
+                    <input class="input-text" type="text" name="enName" datatype="ename" ignore="ignore"  />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>手机号</td>
+                <td>
+                    <input class="input-text" type="text" name="telephone" datatype="m" />
+                </td>
+                <td class="tdbg tr">门禁卡号</td>
+                <td>
+                    <input class="input-text" type="text" name="rfId" datatype="rfId" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">性别</td>
+                <td>
+                    <label><input type="radio" name="gender" value="1" checked >男</label>
+                    <label style="margin-left:10px;"><input type="radio" name="gender" value="0" >女</label>
+                </td>
+                <td class="tdbg tr">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" checked >启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                </td>
+            </tr>
+            <tr>
+                <!--<td class="tdbg tr">短信发送模式</td>
+                <td>
+                    <label><input type="radio" name="smsSendMode" value="0">不收</label>
+                    <label style="margin-left:10px;margin-right:10px;"><input type="radio" name="smsSendMode" value="1" checked>及时发送</label>
+                    <label><input type="radio" name="smsSendMode" value="2" >需要审核</label>
+                </td>-->
+                <td class="tdbg tr">简介</td>
+                <td colspan="3"><textarea class="textarea" name="brief" cols="30" rows="10">{{ brief }}</textarea></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+</script>
+<script type="text/html" id="editTpl">
+    <p style="font-size:12px">eg:1、如果您添加的<span class="f-red">手机号</span>在教职工管理及家长管理中<span class="f-red">已存在</span>，那么对应的姓名、及性别信息<span class="f-red">同时会修改</span>、如性别不一致，请到家长管理中<span class="f-red">修改宝贝称呼</span>!</p>
+    <p style="font-size:12px">eg:2、如更改<span class="f-red">手机号</span>,那么对应的账户、及登录密码<span class="f-red">同时会修改成</span><span class="f-red">新手机号</span>!</p>
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <input type="hidden" name="accountId" value="{{ accountId }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>学校</td>
+                <td><span class="J-school"></span></td>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>岗位</td>
+                <td> <span class="J-gangwei"></span></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>姓名</td>
+                <td>
+                    <input class="input-text" type="text" name="name" value="{{ name }}" datatype="cname | ename" />
+                </td>
+                <td class="tdbg tr">英文名</td>
+                <td>
+                    <input class="input-text" type="text" name="enName" value="{{ enName }}" datatype="ename" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>手机号：</td>
+                <td>
+                    <input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m" />
+                </td>
+                <td class="tdbg tr">门禁卡号</td>
+                <td>
+                    <input class="input-text" type="text" name="rfId" value="{{ rfId }}" datatype="rfId" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">性别</td>
+                <td>
+                    <label><input type="radio" name="gender" value="1" {{ if gender == 1}} checked {{/if}}>男</label>
+                    <label style="margin-left:10px;"><input type="radio" name="gender" value="0" {{ if gender == 0}} checked {{/if}} >女</label>
+                </td>
+                <td class="tdbg tr">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" {{ if isUse == 1}} checked {{/if}} >启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" {{ if isUse == 0}} checked {{/if}} >停用</label>
+                </td>
+            </tr>
+            <tr>
+                <!--<td class="tdbg tr">短信发送模式</td>
+                <td>
+                    <label><input type="radio" name="smsSendMode" value="0" {{ if smsSendMode == 0}} checked {{/if}} >不收</label>
+                    <label style="margin-left:10px;margin-right:10px;"><input type="radio" name="smsSendMode" value="1" {{ if smsSendMode == 1}} checked {{/if}} >及时发送</label>
+                    <label><input type="radio" name="smsSendMode" value="2" {{ if smsSendMode == 2}} checked {{/if}} >需要审核</label>
+                </td>-->
+                <td class="tdbg tr">简介</td>
+                <td colspan="3"><textarea class="textarea" name="brief"  cols="30" rows="10">{{ brief }}</textarea></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr">学校:</td>
+                <td width="35%"><span>{{ schoolName }}</span></td>
+                <td width="13%" class="tdbg tr">岗位:</td>
+                <td width="35%">{{ roleName }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">姓名</td>
+                <td>{{ name }}</td>
+                <td class="tdbg tr">英文名</td>
+                <td>{{ enName }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">手机号：</td>
+                <td>{{ telephone }}</td>
+                <td class="tdbg tr">门禁卡号</td>
+                <td>{{ if rfId == null || rfId == "" }}{{ rfId8 }} {{ else }} {{ rfId }} {{/if}}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">性别</td>
+                <td>
+                    {{ if gender == 1}} 男 {{/if}}
+                    {{ if gender == 0}} 女 {{/if}}
+                </td>
+                <td class="tdbg tr">状态</td>
+                <td>
+                    {{ if isUse == 1}} 启用 {{/if}}
+                    {{ if isUse == 0}} 停用 {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <!-- <td class="tdbg tr">短信发送模式</td>
+                 <td>
+                     {{ if smsSendMode == 0}} 不收 {{/if}}
+                     {{ if smsSendMode == 1}} 及时发送 {{/if}}
+                     {{ if smsSendMode == 2}} 需要审核 {{/if}}</td>-->
+                <td class="tdbg tr">简介</td>
+                <td colspan="3"><div style="height:100px;">{{ remark }}</div></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplTeacherClass">
+    <table>
+        <tbody>
+        <tr>
+            <td>教职工姓名</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>选择班级</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<script type="text/html" id="tplDaoru">
+    <form class='J-form-daoru' id="index_form" name="index_form" method="post" enctype="multipart/form-data">
+        <span class='J-school'></span>
+        <br>
+        <input type="hidden" name="type" value="2" />
+        <span>忽略重复数据(门禁卡除外)：<span class='select-box w_auto'>
+            <select class='select' name="isRepeat">
+                <option value="1">是</option>
+                <option value="0">否</option>
+            </select>
+        </span>
+    </span>
+        <p>文件：<input type="file" name="file" id="file" accept=".xls"  /></p>
+    </form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/yhgl-worker.js"></script>
+
+<!--    <script type="text/javascript" src="../static/admin/js/serviceMin/yhgl-worker.min.js"></script> -->

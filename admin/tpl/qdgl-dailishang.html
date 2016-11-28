@@ -1,0 +1,193 @@
+﻿<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+                <span class="J-citys">
+                     <span class="select-box w_auto">
+                          <select class="select prov" name="provId">
+                              <option value="0">--请选择省份--</option>
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select city" name="cityId">
+                              <option value="0">--请选择城市--</option>
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select dist" name="distId">
+                              <option value="0">--请选择区/县--</option>
+                          </select>
+                        </span>
+                 </span>
+                 <span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+                 </span>
+				<input type="text" placeholder="手机号" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加代理商"><i class="iconfont">&#xe618;</i>添加代理商</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tr"><span class="f-red">*</span>负责人姓名</td>
+                    <td width="35%"><input class="input-text" type="text" name="agentName" value="{{ agentName }}" datatype="cname|ename" ></td>
+                    <td class="tdbg tc"><span class="f-red">*</span>手机号</td>
+                    <td>
+                        <input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tr"><span class="f-red">*</span>用户名</td>
+                    <td><input type="text" class="input-text" placeholder="英文+数字" name="userName" datatype="enShuzi" value="{{ userName }}"></td>
+                    <td class="tdbg tc"><span class="f-red">*</span>密码</td>
+                    <td>初始密码是手机号，添加成功后可到后台自行修改密码</td>
+                </tr>
+                <tr>
+                    <td class="tdbg tr"><span class="f-red">*</span>网站地址</td>
+                    <td colspan="3">
+                        <input class="input-text" type="text" name="homePageUrl" value="{{ homePageUrl }}" datatype="url" ignore="ignore">
+                    </td>
+                </tr>
+                <tr class="J-citys">
+                    <td class="tdbg tr">地址</td>
+                    <td colspan="3" class="J-citysAdd">
+                        <span class="select-box w_auto">
+                          <select class="select prov" name="provId">
+                             
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select city" name="cityId">
+                             
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select dist" name="distId">
+                            
+                          </select>
+                        </span>
+                        <input class="input-text" type="text" name="address" placeholder="详细地址"  />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <input type="hidden" name="accountId" value="{{ accountId  }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tr"><span class="f-red">*</span>姓名</td>
+                <td width="35%"><input class="input-text" type="text" name="agentName" value="{{ agentName }}" datatype="cname|ename" errMsg="请输入正确的姓名"></td>
+                <td class="tdbg tc"><span class="f-red">*</span>手机号</td>
+                <td>
+                    <input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m">
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>用户名</td>
+                <td><input type="text" class="input-text" placeholder="英文+数字" name="userName" datatype="enShuzi" value="{{ userName }}" readonly></td>
+                <td class="tdbg tc"><span class="f-red">*</span>密码</td>
+                <td>初始密码是手机号，添加成功后可到后台自行修改密码</td>
+            </tr>
+            <tr>
+
+                <td class="tdbg tr"><span class="f-red">*</span>网站地址</td>
+                <td colspan="3">
+                    <input class="input-text" type="text" name="homePageUrl" value="{{ homePageUrl }}" datatype="url" ignore="ignore">
+                </td>
+            </tr>
+            <tr class="J-citys">
+                <td class="tdbg tr">地址</td>
+                <td colspan="3" class="J-citysEdit">
+                        <span class="select-box w_auto">
+                          <select class="select prov" name="provId">
+                             
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select city" name="cityId">
+                             
+                          </select>
+                        </span>
+                        <span class="select-box w_auto">
+                          <select class="select dist" name="distId">
+                              
+                          </select>
+                        </span>
+                    <input class="input-text" type="text" name="address" value="{{ address }}"  />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tr">姓名</td>
+                <td width="35%">{{ agentName }}</td>
+                <td class="tdbg tc">手机号</td>
+                <td>
+                    {{ telephone }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>用户名</td>
+                <td>{{ userName }}</td>
+                <td class="tdbg tc"><span class="f-red">*</span>密码</td>
+                <td>初始密码是手机号，添加成功后可到后台自行修改密码</td>
+            </tr>
+            <tr>
+
+                <td class="tdbg tr">网站地址</td>
+                <td colspan="3">
+                    {{ homePageUrl }}
+                </td>
+            </tr>
+            <tr class="J-citys">
+                <td class="tdbg tr">地址</td>
+                <td colspan="3">
+                        {{ provName }}-{{ cityName }}-{{ distName }}
+                    {{ address }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/qdgl-dailishang.js"></script>
+<!--
+<script type="text/javascript" src="../static/admin/js/serviceMin/qdgl-dailishang.min.js"></script>-->
+
+
+
+
+
+

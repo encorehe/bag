@@ -1,0 +1,7 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="ue.js">
+    <sourcefile path=".\ueditor.config.js" />
+    <sourcefile path=".\ueditor.all.js" />
+    <sourcefile path=".\lang\zh-cn\zh-cn.js" />
+</combinefile>
+</jscompress>

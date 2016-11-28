@@ -1,0 +1,145 @@
+﻿<link rel="stylesheet" href="../static/app/font/iconfontApp.css" />
+<style>
+    body{ padding:0 !important;}
+</style>
+<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+        <form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+            <input type="text" placeholder="版本号" value="" id="keyWord" name="keyWord" class="input-text"/>
+            <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+<div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+        <div id="paginator"></div>
+    </div>
+</div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加app"><i class="iconfont">&#xe618;</i>添加模板</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"> <span class="f-red">*</span>模板名</td>
+                <td width="35%"><input class="input-text" type="text" name="modName" datatype="*" /></td>
+                <td width="13%" class="tdbg tr">模板类型</td>
+                <td>
+                    <span class="select-box w_auto">
+                        <select name="modType" class="select">
+                        <option value="1">用途</option>
+                        <option value="2">互动</option>
+                        <option value="3">场景</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">模板预览图</td>
+                <td colspan="3"><input type="file" class="input-text" id="fileName" name="fileName" accept="image/*"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">模板内容</td>
+                <td colspan="3">
+                    <div class="mod-wrapper mod-wrapper2">
+                        <div class="mobile-wrapper">
+                            <div class="mobile-ueditor">
+                                <div class="contents J-content" id="J-scroll-content"></div>
+                            </div>
+                        </div>
+                        <div class="mod-editor">
+                            <div id="myEditor" style="width:100%;height:420px;"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="modMsg" style="display:none">√模板定时保存成功!</div>
+    </form>
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"> <span class="f-red">*</span>模板名</td>
+                <td width="35%"><input class="input-text" type="text" name="modName" value="{{ modName }}" datatype="*" /></td>
+                <td width="13%" class="tdbg tr">模板类型</td>
+                <td>
+                    <span class="select-box w_auto">
+                        <select name="modType" class="select">
+                        <option value="1"{{ if modType == 1 }}selected{{/if}}>用途</option>
+                        <option value="2" {{ if modType == 2 }}selected{{/if}}>互动</option>
+                        <option value="3" {{ if modType == 3 }}selected{{/if}} >场景</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">模板预览图</td>
+                <td colspan="3"><input type="file" class="input-text" id="fileName" name="fileName" accept="image/*"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">模板内容</td>
+                <td colspan="3">
+                    <div class="mod-wrapper mod-wrapper2">
+                        <div class="mobile-wrapper">
+                            <div class="mobile-ueditor">
+                                <div class="contents J-content" id="J-scroll-content"></div>
+                            </div>
+                        </div>
+                        <div class="mod-editor">
+                            <div id="myEditor" style="width:100%;height:420px;"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="display:none">模板定时保存成功</div>
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr"> <span class="f-red">*</span>模板名</td>
+                <td width="35%">{{ modName }}</td>
+                <td width="13%" class="tdbg tr">模板预览图</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">模板内容</td>
+                <td colspan="3">
+                    <textarea class="textarea" name="remark" id="remark" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/javascript" src="../lib/qiniu/qn.min.js"></script>
+<script type="text/javascript" src="../static/admin/js/service/zhxy-mobanguanli.js"></script>
+
+
+
+
+

@@ -1,0 +1,144 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search J-citys">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools"></span>
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="岗位名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="岗位"><i class="iconfont">&#xe618;</i>添加岗位</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplProvies">
+	<div class="proviesWrap"></div>
+</script>
+<script type="text/html" id="addTpl">
+	<form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+                <tr>
+                    <td  width="15%" class="tdbg tc"><span class="f-red">*</span>岗位名</td>
+                    <td><input class="input-text" datatype="*" type="text" name="roleName" id="roleName" placeholder="岗位名" datatype="cname" /></td>
+                    <td class="tdbg tc"><span class="f-red">*</span>岗位CODE</td>
+                    <td><input class="input-text" type="text" name="code" id="code" datatype="AZ" placeholder="岗位code,一般为岗位名首字母大写"  /></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>学校</td>
+                    <td class="J-school"></td>
+                    <td class="tdbg tc">状态</td>
+                    <td>
+                        <label><input type="radio" name="isUse" value="1" checked>启用</label>
+                        <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td  width="15%" class="tdbg tc"><span class="f-red">*</span>岗位名</td>
+                <td><input class="input-text" datatype="*" type="text" name="roleName" id="roleName" placeholder="岗位名" datatype="cname" value="{{ roleName }}" /></td>
+                <td class="tdbg tc"><span class="f-red">*</span>岗位CODE</td>
+                <td><input class="input-text" type="text" name="code" id="code" datatype="AZ" placeholder="岗位code,一般为岗位名首字母大写" value="{{ code }}"  /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>学校</td>
+                <td class="J-school"></td>
+                <td class="tdbg tc">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1"  {{ if isUse ==1}} checked{{/if}}>启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" {{ if isUse ==0}} checked{{/if}} >停用</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td  width="15%" class="tdbg tc">岗位名</td>
+                <td>{{ roleName }}</td>
+                <td class="tdbg tc">岗位CODE</td>
+                <td>{{ code }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">学校</td>
+                <td class="J-school">{{ schoolName }}</td>
+                <td class="tdbg tc">状态</td>
+                <td>
+                    {{ if isUse == 1}}启用{{else}}停用{{/if}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+	<script type="text/html" id="tplRoleprivs">
+		<div class="table-wrapper">
+			<table class="table tableStyle" id="mmgRolePrivs">
+				<thead>
+					<tr>
+						<th width="8%">#</th>
+						<th width="5%"><input type="checkbox"></th>
+						<th>模块名</th>
+						<th width="8%">查</th>
+						<th width="8%">增</th>
+						<th width="8%">改</th>
+						<th width="8%">删</th>
+					</tr>
+				</thead>
+				<tbody>
+				{{ each list as val k}}
+					<tr {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}}>
+						<td>{{ k+1 }}<input type="hidden" name="privId" class="privId" value="{{ val.privId }}"><input type="hidden" name="roleId" class="roleId" value="{{ val.id }}"></td>
+						<td><input type="checkbox" class="J-all-check" {{ if val.flag=="1" }}checked{{/if}}  /></td>
+						<td>{{ val.privName }}<input type="hidden" class="privName" name="privName" value="{{ val.privName }}"></td>
+						<td><input type="checkbox" class="powerChk J-check" name="powerChk" {{ if val.flag=="1"&&val.powerChk=="1" }}checked{{/if}} ></td>
+						<td><input type="checkbox" class="powerAdd J-check" name="powerAdd" {{ if val.flag=="1"&&val.powerAdd=="1" }}checked{{/if}}></td>
+						<td><input type="checkbox" class="powerEdit J-check" name="powerEdit" {{ if val.flag=="1"&&val.powerEdit=="1" }}checked{{/if}}></td>
+						<td><input type="checkbox" class="powerDel J-check" name="powerDel" {{ if val.flag=="1"&&val.powerDel=="1" }}checked{{/if}}></td></td>
+					</tr>
+				{{/each}}
+				</tbody>
+			</table>
+			<div class="table-paginator">
+				<div id="paginatorMmg"></div>
+			</div>
+		</div>
+	</script>
+<script type="text/javascript" src="../static/admin/js/service/yey-gangwei.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-gangwei.min.js"></script> -->
+
+
+
+
+
+

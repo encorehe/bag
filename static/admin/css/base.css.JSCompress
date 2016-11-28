@@ -1,0 +1,11 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="base.css">
+    <css_fixedrelativeurl value="1" />
+    <sourcefile path=".\mCustomScrollbar.css" />
+    <sourcefile path=".\mmGrid.css" />
+    <sourcefile path=".\layer.css" />
+    <sourcefile path=".\layer.ext.css" />
+    <sourcefile path=".\alertJs.css" />
+    <sourcefile path=".\H-ui.css" />
+</combinefile>
+</jscompress>

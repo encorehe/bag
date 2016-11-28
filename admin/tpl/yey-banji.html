@@ -1,0 +1,205 @@
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search J-citys">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+                <span class="J-schools"></span>
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<span class="select-box w_auto">
+						  <select class="select J-select" name="isFixName" id="isFixName">
+							  <option value="">是否固定名称</option>
+							  <option value="1">是</option>
+							  <option value="0">否</option>
+						  </select>
+						</span>
+
+				<input type="text" placeholder="园名/年级/班级" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加班级"><i class="iconfont">&#xe618;</i>添加班级</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+    <script type="text/html" id="tplJzg">
+        <a style="display:none" href="javascript:void(0);" class="btn btn-primary radius J-addJhr" title="添加监护人">新增监护人</a>
+        <div class="tableGrids hidLimt">
+            <table id="mmgJhr" style="width:100%;"></table>
+            <div class="table-paginator hidLimt">
+                <div id="paginatorJhr"></div>
+            </div>
+        </div>
+    </script>
+<script type="text/html" id="addTpl">
+	<form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+                <td colspan="3" class="J-schools"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc" style="width:12%;"><span class="f-red">*</span>年级</td>
+                <td>
+                    <input class="input-text" type="text" name="grade" datatype="*" />
+                </td>
+                <td class="tdbg tc" style="width:12%;"><span class="f-red">*</span>班级</td>
+                <td>
+                    <input class="input-text"  type="text" name="className" datatype="*" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">班集体照</td>
+                <td colspan="3">
+                    <div class="upImg">
+                                    <ul class="J-img"></ul>
+                    </div>
+                    <input type="file" class="input-text" id="fileName" name="fileName" accept="image/*" >
+                    <input type="hidden" value="kid_" name="fileName" />
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tc">简介</td>
+                <td colspan="3" class="J-cityBox">
+                    <textarea class="textarea" name="brief" id="brief" cols="30" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">固定名称</td>
+                <td>
+                    <label><input type="radio" name="isFixName" value="1" checked>是</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isFixName" value="0" >否</label>
+                </td>
+                <td class="tdbg tc">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" checked>启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+                <td colspan="3" class="J-schools"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc" style="width:12%;"><span class="f-red">*</span>年级</td>
+                <td>
+                    <input class="input-text" type="text" name="grade" value="{{ grade }}" datatype="*" />
+                </td>
+                <td class="tdbg tc" style="width:12%;"><span class="f-red">*</span>班级</td>
+                <td>
+                    <input class="input-text"  type="text" name="className"  value="{{ className }}" datatype="*" />
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>班集体照</td>
+                <td colspan="3">
+                    <div class="upImg">
+                               <ul class="J-img"></ul>
+                        </div>
+                    <input type="file" class="input-text" id="fileName" name="fileName" accept="image/*">
+                    <input type="hidden" value="kid_" name="fileName" />
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tc">简介</td>
+                <td colspan="3" class="J-cityBox">
+                    <textarea class="textarea" name="brief" id="brief" cols="30" rows="10">{{ brief }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">固定名称</td>
+                <td>
+                    <label><input type="radio" name="isFixName" value="1" {{ if isFixName == 1}}checked{{/if}}>是</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isFixName" value="0" {{ if isFixName == 0}}checked{{/if}}>否</label>
+                </td>
+                <td class="tdbg tc">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" checked>启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tr">学校</td>
+                <td colspan="3">{{ schoolName }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc" style="width:12%;">年级</td>
+                <td>
+                    {{ grade }}
+                </td>
+                <td class="tdbg tc" style="width:12%;">班级</td>
+                <td>
+                   {{ className }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>班集体照</td>
+                <td colspan="3">
+                    <div class="upImg">
+                               <ul class="J-img"></ul>
+                        </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tr">简介</td>
+                <td colspan="3" class="J-cityBox">
+                    <div style="width:100%;height:260px;">{{ brief }}</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">固定名称</td>
+                <td>
+                    {{ if isFixName == 1}}是{{else}}否{{/if}}
+                </td>
+                <td class="tdbg tc">状态</td>
+                <td>
+                    {{ if isUse == 1}}启用{{else}}停用{{/if}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+
+    <script type="text/javascript" src="../lib/qiniu/qn.min.js"></script>
+<script type="text/javascript" src="../static/admin/js/service/yey-banji.js"></script>
+  <!--   <script type="text/javascript" src="../static/admin/js/serviceMin/yey-banji.min.js"></script> -->
+
+
+
+
+
+

@@ -1,0 +1,160 @@
+﻿<!--<div class="action" style="position:absolute;right:0;top:62px;" style="display:none;">-->
+    <!--<div class="btnsArea"><a href="javascript:void(0);" class="btn btn-primary radius J-add" title="发送信件"><i class="iconfont">&#xe618;</i>添加信件</a></div>-->
+<!--</div>-->
+	<div id="tab_demo" class="HuiTab" style="margin-top:20px;display:none;">
+		<div class="tabBar cl">
+			<span data-href="tpl/yey-yuanzhangxinxiang-rec.html">收件箱</span>
+			<span data-href="tpl/yey-yuanzhangxinxiang-set.html">已发送</span>
+		</div>
+		<div class="tabCon" style="display:block;"></div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="发送信件"><i class="iconfont">&#xe618;</i>添加信件</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a style="display:none;" href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量删除邮件"><i class="iconfont">&#xe625;</i>批量删除</a>
+</script>
+<script type="text/html" id="addTpl">
+    <table class="table tableStyle">
+        <tbody>
+        <tr>
+            <td width="12%" class="tdbg tr"><span class="f-red">*</span>标题:</td>
+            <td><input type="text" class="input-text" name="title"></td>
+        </tr>
+        <tr>
+            <td class="tdbg tr"><span class="f-red">*</span>收件人</td>
+            <td class="addPerson">
+                <span class="select-box"></span>
+                <div class="ccrDel J-users-add" id="usersdd">
+                    <ul >
+                        <li>请点右边图标，选择收件人</li>
+                    </ul>
+                </div>
+                <a class="iconfont addPerson-btn" title="添加收信人" href="javascript:void(0)">&#xe63c;</a>
+                <div class="ccr J-users" id="users">
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdbg tr"><span class="f-red">*</span>内容</td>
+            <td>
+                <textarea class="textarea" name="" id="" cols="30" rows="10"></textarea>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</script>
+<script type="text/html" id="chkTpl">
+    <input type="hidden" name="id" value="{{ id}}">
+    <table class="table tableStyle">
+        <tbody>
+        <tr>
+            <td width="15%"  class="tdbg tc">发信人</td>
+            <td width="25%">
+                {{ if isAnonymous == 1}}匿名{{/if}} 
+                {{ if isAnonymous == 0}}{{ senderName }}<br><i class='iconfont' style='position:relative;top:2px;'>&#xe60a;</i>{{ telephone }}{{/if}}
+            </td>
+            <td class="tdbg tc" width="10%">发信时间</td>
+            <td>
+                {{ insertDate }}
+            </td>
+        </tr>
+        <tr>
+            <td class="tdbg tc">标题</td>
+            <td colspan="3">{{ title }}</td>
+        </tr>
+        <tr>
+            <td class="tdbg tc">内容</td>
+            <td colspan="3">
+               <div style="height:240px;">{{ content }}</div>
+            </td>
+        </tr>
+        {{ if replyContent }}
+        <tr>
+            <td class="tdbg tc">{{ replyerName }}</td>
+            <td>于{{ replyDate }}</td>
+            <td class="tdbg tc">回复</td>
+            <td>
+               {{ replyContent }}
+            </td>
+        </tr>
+        {{/if}}
+        </tbody>
+    </table>
+</script>
+<script type="text/html" id="tplRep">
+    <form action="" method="post" class="form form-horizontal J-addsForm">
+    <input type="hidden" name="id" value="{{ id }}">
+    <input type="hidden" name="senderId" value="{{ senderId }}">
+    <table class="table tableStyle">
+        <tbody>
+        <tr>
+            <td width="10%" class="tdbg tc">标题</td>
+            <td colspan="3">{{ title }}</td>
+        </tr>
+        <tr>
+            <td class="tdbg tc">内容</td>
+            <td colspan="3">
+                <div style="height:160px;">{{ content }}</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="tdbg tc">发信人：</td>
+            <td>
+                {{ if isAnonymous == 1}}匿名{{/if}} 
+                {{ if isAnonymous == 0}}{{ senderName }}{{/if}}
+            </td>
+            <td class="tdbg tc">发信时间</td>
+            <td>
+                {{ insertDate }}
+            </td>
+        </tr>
+        <tr>
+            <td class="tdbg tc">回复内容</td>
+            <td colspan="3">
+                <textarea class="textarea" name="replyContent" id="replyContent" cols="30" rows="10"></textarea>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </form>
+</script>
+<script type="text/html" id="tplTeachers">
+        <ul style="max-height:180px;overflow:auto">
+            {{ if list.length == 0}}
+             <li style="margin:50px 0;text-align:center;">暂无收信人或收信人已被选完</li>
+            {{/if}}
+            {{each list as val key }}
+            <li {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}}>
+            <a href="javascript:void(0);">{{ val.userName }} <span>√</span></a>
+            </li>
+            {{/each}}
+        </ul>
+
+</script>
+<script type="text/html" id="tplTeachersDel">
+    <ul >
+        {{ if list.length == 0}}
+        <li>请点右边图标，选择收件人</li>
+        {{/if}}
+    {{each list as val key }}
+    <li {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}}>
+    <a href="javascript:void(0);">{{ val.userName }} <span>x</span></a>
+    </li>
+    {{/each}}
+    </ul>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/yey-yuanzhangxinxiang.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-yuanzhangxinxiang.min.js"></script> -->
+
+
+
+
+

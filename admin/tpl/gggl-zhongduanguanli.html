@@ -1,0 +1,133 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+        <div class="searchArea J-search">
+            <form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="2">停用</option>
+				  </select>
+				</span>
+                <input type="text" placeholder="广告位名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+                <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-wrapper">
+        <table id="mmg"></table>
+        <div class="table-paginator">
+            <div id="paginator"></div>
+        </div>
+    </div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加终端"><i class="iconfont">&#xe618;</i>添加终端</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a style="display:none" href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a style="display:none" href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplAdSpot">
+    <select class="select" name="adSpotId">
+        {{each list as val key }}
+        <option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.name }}</option>
+        {{/each}}
+    </select>
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>终端名称</td>
+                <td><input class="input-text" type="text" name="name" datatype="title"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    <span class="select-box">
+				        <select class="select" name="type" id="type">
+                            <option value="1">手机</option>
+                            <option value="2">门禁</option>
+                            <option value="3">手持</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>IP&端口</td>
+                <td >
+                    <input class="input-text" style="width:50%;" type="text" name="ip" placeholder="ip地址" datatype="ip">
+                    <input class="input-text" style="width:30%;" placeholder="端口号" type="text" name="port" datatype="initNum">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>终端名称</td>
+                <td><input class="input-text" type="text" name="name" value="{{ name }}"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    <span class="select-box">
+				        <select class="select" name="type" id="type">
+                            <option value="1" {{ if type ==1}}selected{{/if}}>手机</option>
+                            <option value="2" {{ if type ==2}}selected{{/if}}>门禁</option>
+                            <option value="3" {{ if type ==3}}selected{{/if}}>手持</option>
+                        </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">IP&端口</td>
+                <td>
+                    <input class="input-text" style="width:50%;" type="text" name="ip" value="{{ ip }}" datatype="ip">
+                    <input class="input-text" style="width:30%;" value="{{ port }}" type="text" name="port" datatype="initNum">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc">终端名称</td>
+                <td width="20%">{{ name }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    {{ if type ==1}}手机{{/if}}>
+                    {{ if type ==2}}门禁{{/if}}>
+                    {{ if type ==3}}手持{{/if}}>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">IP&端口</td>
+                <td colspan="5">
+                   ip:{{ ip }}端口:{{ port }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<!-- <script type="text/javascript" src="../static/admin/js/service/gggl-zhongduanguanli.js"></script> -->
+<script type="text/javascript" src="../static/admin/js/serviceMin/gggl-zhongduanguanli.min.js"></script>
+
+
+
+
+

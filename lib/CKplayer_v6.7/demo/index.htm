@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>使用联盟广告的演示-ckplayer应用示例</title>
+<style type="text/css">
+#a1 {
+	height: 400px;
+	width: 600px;
+	float: left;
+}
+.leftz {
+	float: left;
+	height: 400px;
+	width: 610px;
+}
+.left {
+	float: left;
+	width: 600px;
+	position: absolute;
+	z-index: 10;
+	height: 400px;
+}
+.yytf_1 {
+	position: absolute;
+	z-index: 100;
+	height: 400px;
+	width: 600px;
+	color: #FFF;
+}
+.yytf_1 a {
+	color: #FF0;
+	text-decoration: none;
+}
+.yytf_2 {
+	position: absolute;
+	z-index: 100;
+	height: 280px;
+	width: 336px;
+	margin-top: 60px;
+	margin-left: 132px;
+}
+#daojs {
+	text-align: right;
+	background-color: #000;
+	padding-right: 20px;
+	color: #FFF;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#picAdv{
+	height: 280px;
+	width: 336px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #FFFFFF;
+	display:none;
+}
+#angleAdv{
+	position: absolute;
+	z-index: 100;
+	height: 60px;
+	width: 60px;
+	margin-top: 30px;
+	margin-left: 500px;
+	display:none;
+}
+#djs{
+	color:#FFDD00;
+}
+#videolist{
+	display:none;
+}
+</style>
+<script type="text/jscript" src="ckplayer/ckplayer.js"></script>
+</head>
+<body>
+<span id="pauseAdv" style="display:none"><a href="http://www.ckplayer.com" target="_blank"><img src="temp/01.jpg"></a></span><!--暂停广告-->
+<span id="endAdv" style="display:none"><a href="http://www.ckplayer.com" target="_blank"><img src="temp/03.jpg"></a></span><!--暂停广告-->
+<!--结束后的列表开始-->
+<div id="videolist">
+	<ul>
+		<li><a href="http://www.ckplayer.com">视频标题一，这里也可以是图片</a></li>
+		<li><a href="http://www.ckplayer.com">视频标题2，这里也可以是图片</a></li>
+		<li><a href="http://www.ckplayer.com">视频标题3，这里也可以是图片</a></li>
+	</ul>
+</div>
+<!--结束后的列表结束-->
+<div class="leftz">
+		<div class="left">
+			<div id="yytf" class="yytf_1">
+				<div id="daojs">请稍等，离广告结束还有<span id="djs"></span>秒</div>
+				<div id="picAdv"></div>
+			</div>
+			<div id="angleAdv"><a href="http://www.ckplayer.com/tool/" target="_blank"><img src="temp/02.jpg"></a></div>
+			<div id="a1"></div>
+		</div>
+</div>
+<script type="text/javascript">
+	var _frist=true;
+	var endAdvTime=3;//结束广告的总时间
+	function loadedHandler(){
+		if(CKobject.getObjectById('ckplayer_a1').getType()){//说明使用html5播放器
+			if(_frist){
+				frontAdv();//调用前置广告广告
+			}
+			else{
+				CKobject.getObjectById('ckplayer_a1').addListener('play',playHandler);
+				CKobject.getObjectById('ckplayer_a1').addListener('pause',pauseHandler);
+				CKobject.getObjectById('ckplayer_a1').addListener('ended',endedHandler);
+			}
+		}
+		else{
+			CKobject.getObjectById('ckplayer_a1').addListener('ended','endedHandler');
+		}
+	}
+	function playHandler(){
+		CKobject._K_('yytf').style.display='none';
+	}
+	function pauseHandler(){
+		CKobject._K_('yytf').style.display='block';
+		CKobject._K_('yytf').className='yytf_2';
+		CKobject._K_('picAdv').style.display='block';
+		CKobject._K_('picAdv').innerHTML=CKobject._K_('pauseAdv').innerHTML;
+	}
+	function endedHandler(){//播放结束开始调用广告
+		CKobject._K_('yytf').style.display='block';
+		CKobject._K_('yytf').className='yytf_1';
+		CKobject._K_('picAdv').style.display='block';
+		CKobject._K_('picAdv').innerHTML=CKobject._K_('endAdv').innerHTML;
+		CKobject._K_('daojs').style.display='block';
+		CKobject._K_('angleAdv').style.display='none';
+		CKobject._K_('yytf').style.backgroundColor='#000000';
+		CKobject._K_('djs').innerHTML=endAdvTime;
+		setTimeend();
+	}
+	function setTimeend(){//后置广告倒计时
+		var nowT=parseInt(CKobject._K_('djs').innerHTML);
+		if(nowT>0){
+			CKobject._K_('djs').innerHTML=nowT-1;
+			setTimeout('setTimeend()',1000)
+		}
+		else{
+			CKobject._K_('yytf').innerHTML=CKobject._K_('videolist').innerHTML;
+		}
+	}
+	//==============================================
+	//调用正式视频
+	
+	function formalPlay(){
+		var _p=1;
+		if(_frist){
+			_p=0;
+		}
+		CKobject._K_('a1').innerHTML='';
+		var flashvars={
+				f:'http://movie.ks.js.cn/flv/2012/02/6-3.flv',
+				c:0,
+				p:_p,
+				e:0,
+				loaded:'loadedHandler'
+			};
+		CKobject.embed('/ckplayer/ckplayer.swf','a1','ckplayer_a1',600,400,true,flashvars,['http://movie.ks.js.cn/flv/other/2014/06/20-2.mp4->video/mp4']);
+	}
+	//==============================================
+	//html5的情况下使用前置视频广告的函数
+	function loadedHandlerAdv(){
+		CKobject.getObjectById('ckplayer_a1').addListener('ended',advEndedHandler);
+	}
+	function advEndedHandler(){
+		_frist=false;
+		CKobject.getObjectById('ckplayer_a1').removeListener('ended',advEndedHandler);
+		CKobject.getObjectById('ckplayer_a1').changeStatus(0);
+		CKobject._K_('yytf').style.display='none';
+		CKobject._K_('daojs').style.display='none';
+		CKobject._K_('angleAdv').style.display='block';
+		CKobject._K_('yytf').onclick=function(){}
+		formalPlay();
+	}
+	function ckplayer_status(str){
+		if(str.indexOf('time:')>-1 && _frist){
+			var nowT=parseInt(str.split(':')[1]);
+			var totalT=CKobject.getObjectById('ckplayer_a1').getStatus().totaltime;
+			CKobject._K_('djs').innerHTML=parseInt(totalT)-nowT;
+			if(nowT==3){
+				CKobject.getObjectById('ckplayer_a1').videoSeek(139);
+			}
+		}
+	}
+	function frontAdv(){
+		CKobject._K_('a1').innerHTML='';
+		var flashvars={
+				p:1,
+				e:2,
+				loaded:'loadedHandlerAdv'
+			};
+		var video=['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
+    	var support=['all'];
+    	CKobject.embedHTML5('a1','ckplayer_a1',600,400,video,flashvars,support,true);
+		CKobject._K_('yytf').onclick=function(){window.location.href='http://www.ckplayer.com';}
+		CKobject._K_('yytf').style.cursor='pointer';
+	}
+	//==============================================
+	formalPlay();
+</script>
+</body>
+</html>

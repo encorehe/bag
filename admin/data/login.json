@@ -1,0 +1,18 @@
+{
+    "command": "login",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "登录成功",
+    "totalCount": 0,
+    "list": [],
+    "map": {},
+    "data": {
+        "id": 1,
+        "userName": "admin",
+        "passWord": "49dd07b5b59391bf30f1c68a714f7a29",
+        "isUse": 1,
+        "regDate": 1455638400000,
+        "points": 0,
+        "roleTypeName": "管理员"
+    }
+}

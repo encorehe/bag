@@ -1,0 +1,134 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_70">
+				  <select class="select" size="1" name="isUse" id="isUse">
+					  <option value="" selected>全部</option>
+					  <option value="1" >启用</option>
+					  <option value="2">停用</option>
+				  </select>
+				</span>
+				<span class="select-box w_70">
+				  <select class="select" size="1" name="gender" id="gender">
+					  <option value="" selected>全部</option>
+					  <option value="1">男</option>
+					  <option value="2">女</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="订单号" value="" id="keyword" name="keyword" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加代理商" style="display:none;"><i class="iconfont">&#xe618;</i>下订单</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量取消"  style="display:none;"><i class="iconfont">&#xe625;</i>批量取消</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量完成"  style="display:none;"><i class="iconfont">&#xe630;</i>批量完成</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+			<div class="row cl row-line">
+				<div class="form-label col-4">
+					<strong>订单信息</strong>
+				</div>
+				<div class="formControls col-8">
+					<div class="row cl">
+						<label class="form-label col-3">商品：</label>
+						<div class="formControls col-8">
+							  <ul class="sp-box">
+							  </ul>
+						</div>
+					</div>
+					<div class="row cl">
+						<label class="form-label col-3">总金额：</label>
+						<div class="formControls col-8">
+							<input class="input-text" type="text" name="total" readonly />
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</script>
+<script type="text/html" id="tplGoods">
+	{{each list as val key }}
+	<li>
+		<label><input type="checkbox" />{{ val.proName }}</label>
+		<div class="sub-label">
+			<span>单价<span class="price">{{ val.price }}</span>(元)*</span>
+			<span><input type="text" />&nbps;个</span>
+		</div>
+	</li>
+	{{ /each }}
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<div class="row cl row-line">
+			<div class="form-label col-4">
+				<strong>订单信息</strong>
+			</div>
+			<div class="formControls col-8">
+				<div class="row cl">
+					<label class="form-label col-3"><span>*</span>订单号：</label>
+					<div class="formControls col-8">
+						<input class="input-text" datatype="proName" type="text" name="proName" errormsg="格式不正确！" nullmsg="姓名不能为空!" value="{{ proName }}" />
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3">状态：</label>
+					<div class="formControls col-8">
+						<span class="select-box w_70">
+							<select name="" id="">
+							  <option value="0">未完成</option>
+							  <option value="1">已支付</option>
+							  <option value="2">完成</option>
+							  <option value="3">取消</option>
+							</select>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<div class="row cl row-line">
+			<div class="form-label col-4">
+				<strong>订单信息</strong>
+			</div>
+			<div class="formControls col-8">
+				<div class="row cl">
+					<label class="form-label col-3"><span>*</span>订单号：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="proName" value="{{ proName }}" readonly />
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3">状态：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="brief" value="{{ brief }}" readonly />
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3">订单商品详情：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="price" value="{{ price }}" readonly />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</script>
+<!-- <script type="text/javascript" src="../static/admin/js/service/qdgl-dingdanwode.js"></script> -->
+<script type="text/javascript" src="../static/admin/js/serviceMin/qdgl-dingdanwode.min.js"></script>

@@ -1,0 +1,110 @@
+﻿{
+    "command": "acctpointlogsList",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "操作成功",
+    "totalCount": 152,
+    "list": [
+        {
+            "id": 152,
+            "pointTypeId": 2,
+            "accountId": 3328,
+            "insertDate": "2016-11-24 16:37:14",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "18627746377"
+        },
+        {
+            "id": 151,
+            "pointTypeId": 2,
+            "accountId": 3328,
+            "insertDate": "2016-11-24 16:28:49",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "18627746377"
+        },
+        {
+            "id": 150,
+            "pointTypeId": 2,
+            "accountId": 2644,
+            "insertDate": "2016-11-24 16:00:57",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13986126713"
+        },
+        {
+            "id": 149,
+            "pointTypeId": 2,
+            "accountId": 2644,
+            "insertDate": "2016-11-24 15:35:45",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13986126713"
+        },
+        {
+            "id": 148,
+            "pointTypeId": 2,
+            "accountId": 2644,
+            "insertDate": "2016-11-24 14:10:07",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13986126713"
+        },
+        {
+            "id": 147,
+            "pointTypeId": 2,
+            "accountId": 3335,
+            "insertDate": "2016-11-24 13:34:08",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13277665544"
+        },
+        {
+            "id": 146,
+            "pointTypeId": 2,
+            "accountId": 3335,
+            "insertDate": "2016-11-24 10:02:42",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13277665544"
+        },
+        {
+            "id": 145,
+            "pointTypeId": 2,
+            "accountId": 3335,
+            "insertDate": "2016-11-24 09:55:55",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13277665544"
+        },
+        {
+            "id": 144,
+            "pointTypeId": 2,
+            "accountId": 3335,
+            "insertDate": "2016-11-24 09:54:53",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13277665544"
+        },
+        {
+            "id": 143,
+            "pointTypeId": 2,
+            "accountId": 3335,
+            "insertDate": "2016-11-24 09:47:19",
+            "points": 0.3,
+            "detail": "发布老师说奖励",
+            "pointName": "发布老师说",
+            "userName": "13277665544"
+        }
+    ],
+    "nowDate": "2016-11-24 16:56:09"
+}

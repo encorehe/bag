@@ -1,0 +1,161 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<span class="select-box w_auto">
+				  <select class="select" name="channelType" id="channelType">
+					  <option value="" selected>渠道类型</option>
+					  <option value="T" >电信</option>
+					  <option value="M">移动</option>
+					  <option value="U">联通</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="渠道名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" style="display:none;" class="btn btn-primary radius J-add" title="添加短信渠道"><i class="iconfont">&#xe618;</i>添加短信渠道</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="12%" class="tdbg tr"><span class="f-red">*</span>渠道名称</td>
+					<td width="35%"><input class="input-text" type="text" name="channelName" datatype="title"></td>
+					<td width="13%" class="tdbg tr"><span class="f-red">*</span>渠道类型</td>
+					<td width="35%">
+						<span class="select-box">
+							<select class="select" name="channelType" id="channelType">
+							<option value="T" >电信</option>
+							<option value="M">移动</option>
+							<option value="U">联通</option>
+							</select>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdbg tr"><span class="f-red">*</span>账号</td>
+					<td><input class="input-text" type="text" name="userName" datatype="title"></td>
+					<td class="tdbg tr"><span class="f-red">*</span>密码</td>
+					<td><input class="input-text" type="password" name="passWord" datatype="title"></td>
+				</tr>
+				<tr>
+					<td class="tdbg tr"><span class="f-red">*</span>余额</td>
+					<td><input class="input-text" type="number" name="balance" value="{{ balance }}" min="1" datatype="zzs"></td>
+					<td class="tdbg tr"><span class="f-red">*</span>优先级</td>
+					<td><input class="input-text" type="text" name="priorities" value="{{ priorities }}" datatype="jibie"></td>
+				</tr>
+				<tr>
+					<td class="tdbg tr">短信条数</td>
+					<td colspan="3"><input class="input-text" type="number" name="smsNums" value="{{ smsNums }}" min="1" datatype="initNum"></td>
+				</tr>
+				</tbody>
+			</table>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr"><span class="f-red">*</span>渠道名称</td>
+				<td width="35%"><input class="input-text" type="text" name="channelName" value="{{ channelName }}" readonly datatype="*"></td>
+				<td width="13%" class="tdbg tr"><span class="f-red">*</span>渠道类型</td>
+				<td width="35%">
+						<span class="select-box">
+							<select class="select" name="channelType" id="channelType">
+							<option value="T" {{ if channelType == T}}selected{{/if}}>电信</option>
+							<option value="M" {{ if channelType == M}}selected{{/if}}>移动</option>
+							<option value="U" {{ if channelType == U}}selected{{/if}}>联通</option>
+							</select>
+						</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">账号</td>
+				<td><input class="input-text" type="text" name="userName" value="{{ userName }}" datatype="title"></td>
+				<td class="tdbg tr">密码</td>
+				<td><input class="input-text J-pwd" type="text" name="passWord" value="{{ passWord }}" datatype="title"></td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">平台地址</td>
+				<td colspan="3"><input class="input-text" type="text" name="managerUrl" value="{{ managerUrl }}" datatype="url"></td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">余额</td>
+				<td><input class="input-text" type="number" name="balance" value="{{ balance }}" min="1" datatype="zzs"></td>
+				<td class="tdbg tr">优先级</td>
+				<td><input class="input-text" type="text" name="priorities" value="{{ priorities }}" datatype="jibie"></td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">价格</td>
+				<td><input class="input-text" type="number" name="price" value="{{ price }}"  min="0" datatype="numFeifushu"></td>
+				<td class="tdbg tr">短信条数</td>
+				<td><input class="input-text" type="number" name="smsNums" value="{{ smsNums }}"  min="1" datatype="initNum"></td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr">渠道名称</td>
+				<td width="35%">{{ channelName }}</td>
+				<td width="13%" class="tdbg tr">渠道类型</td>
+				<td width="35%">
+					{{ if channelType == T}}电信{{/if}}
+					{{ if channelType == M}}移动{{/if}}
+					{{ if channelType == U}}联通{{/if}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">账号</td>
+				<td>{{ userName }}</td>
+				<td class="tdbg tr">密码</td>
+				<td>{{ passWord }}</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">平台地址</td>
+				<td colspan="3">{{ managerUrl }}</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">优先级</td>
+				<td colspan="3">{{ priorities }}</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/dxgl-duanxinqudao.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/dxgl-duanxinqudao.min.js"></script> -->
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="adMain.js">
+<sourcefile path=".\admin.js" />
+<sourcefile path=".\main.js" />
+</combinefile>
+</jscompress>

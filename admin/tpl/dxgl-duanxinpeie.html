@@ -1,0 +1,154 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm" style="display:none;">
+                <span class="J-school"></span>
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="渠道名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="分配短信额度"><i class="iconfont">&#xe618;</i>分配短信额度</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a style="display:none" href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a style="display:none" href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplDuanxin">
+	<select class="select" name="smsChannelId">
+		{{each list as val key }}
+		<option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.channelName }}</option>
+		{{/each}}
+	</select>
+</script>
+<script type="text/html" id="addTpl">
+	<form action="" method="post" class="form form-horizontal J-addForm">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr"><span class="f-red">*</span>渠道名称</td>
+				<td>
+					<span class="select-box w_auto J-qudao"></span>
+				</td>
+
+			</tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>短信额度</td>
+                <td class="J-nums"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>学校</td>
+                <td><span class="J-school"></span></td>
+            </tr>
+			<tr>
+				<td class="tdbg tr"><span class="f-red">*</span>短信条数</td>
+				<td><input class="input-text" type="number" name="smsNums"  min="1" datatype="zzs"></td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<input type="hidden" name="smsChannelId" value="{{ smsChannelId }}">
+		<input type="hidden" name="schoolId" value="{{ schoolId }}">
+		<table class="table tableStyle">
+        <tbody>
+			<tr>
+				<td width="12%" class="tdbg tr"><span class="f-red">*</span>渠道名称</td>
+				<td>
+					<span class="select-box w_auto J-qudao"></span>
+				</td>
+
+			</tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>短信额度</td>
+                <td class="J-nums"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>学校</td>
+                <td><span class="J-school"></span></td>
+            </tr>
+			<tr>
+				<td class="tdbg tr"><span class="f-red">*</span>短信条数</td>
+				<td><input class="input-text" type="number" name="smsNums" value="{{ smsNums }}" min="1" datatype="zzs"></td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr">渠道名称</td>
+				<td width="35%">{{ channelName }}</td>
+				<td width="13%" class="tdbg tr">渠道类型</td>
+				<td width="35%">
+					{{ if channelType == T}}电信{{/if}}
+					{{ if channelType == M}}移动{{/if}}
+					{{ if channelType == U}}联通{{/if}}
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">账号</td>
+				<td>{{ userName }}</td>
+				<td class="tdbg tr">密码</td>
+				<td>{{ passWord }}</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">优先级</td>
+				<td colspan="3">{{ priorities }}</td>
+			</tr>
+			</tbody>
+		</table>
+        <tbody>
+        <tr>
+            <td width="12%" class="tdbg tr"><span class="f-red">*</span>渠道名称</td>
+            <td>
+                {{ channelName }}
+            </td>
+
+        </tr>
+        <tr>
+            <td class="tdbg tr"><span class="f-red">*</span>短信额度</td>
+            <td class="J-nums"></td>
+        </tr>
+        <tr>
+            <td class="tdbg tr"><span class="f-red">*</span>学校</td>
+            <td><span class="J-school"></span></td>
+        </tr>
+        <tr>
+            <td class="tdbg tr"><span class="f-red">*</span>短信条数</td>
+            <td><input class="input-text" type="number" name="smsNums"  min="1" value="{{ smsNums }}" datatype="zzs"></td>
+        </tr>
+        </tbody>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/dxgl-duanxinpeie.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/dxgl-duanxinpeie.min.js"></script> -->
+
+
+
+
+
+

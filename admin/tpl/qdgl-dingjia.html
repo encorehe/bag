@@ -1,0 +1,128 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_70">
+				  <select class="select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >上架</option>
+					  <option value="0">下架</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="商品名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<!--sidebar-->
+<!--sidebar-->
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加定价"><i class="iconfont">&#xe618;</i>添加定价</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量下架</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量上架</a>
+</script>
+<script type="text/html" id="tplGoods">
+    <span class="select-box">
+				  <select class="select" name="proId" id="proId">
+					  {{each list as val key }}
+                        <option value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.proName }}</option>
+                        {{ /each}}
+				  </select>
+				</span>
+
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                    <td colspan="3" class="J-goods"></td>
+                </tr>
+                <tr>
+                    <td width="10%" class="tdbg tc"><span class="f-red">*</span>原价(元)</td>
+                    <td class="J-oldPrice"></td>
+                    <td width="13%" class="tdbg tc"><span class="f-red">*</span>自定义价格(元)</td>
+                    <td>
+                        <input type="text" name="price" class="input-text" datatype="zzs" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="15%" class="tdbg tc">描叙</td>
+                    <td colspan="3">
+                        <textarea class="textarea" name="biref" id="biref" cols="30" rows="10"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                <td colspan="3" class="J-goods"></td>
+            </tr>
+            <tr>
+                <td width="10%" class="tdbg tc"><span class="f-red">*</span>原价(元)</td>
+                <td class="J-oldPrice"></td>
+                <td width="13%" class="tdbg tc"><span class="f-red">*</span>自定义价格(元)</td>
+                <td>
+                    <input type="text" name="price" class="input-text" datatype="zzs" value="{{ price }}" />
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" class="tdbg tc">描叙</td>
+                <td colspan="3">
+                    <textarea class="textarea" name="biref" id="biref" cols="30" rows="10">{{ biref }}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                <td colspan="3" class="J-goods"></td>
+            </tr>
+            <tr>
+                <td width="10%" class="tdbg tc"><span class="f-red">*</span>原价(元)</td>
+                <td class="J-oldPrice"></td>
+                <td width="13%" class="tdbg tc"><span class="f-red">*</span>自定义价格(元)</td>
+                <td>
+                    {{ price }}
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" class="tdbg tc">描叙</td>
+                <td colspan="3">
+                    <textarea class="textarea" name="biref" id="biref" cols="30" rows="10">{{ biref }}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<!-- <script type="text/javascript" src="../static/admin/js/service/qdgl-dingjia.js"></script> -->
+<script type="text/javascript" src="../static/admin/js/serviceMin/qdgl-dingjia.min.js"></script>
+
+
+
+
+
+

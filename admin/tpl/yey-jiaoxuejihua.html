@@ -1,0 +1,267 @@
+﻿
+<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+        <form action="" method="post" class="form form-horizontal J-searchForm">
+            <span class="J-schools"></span>
+            <span class="J-classs"></span>
+            <span class="select-box w_auto">
+				  <select class="select J-select" name="planType">
+					  <option value="" selected>计划类型</option>
+					   <option value="1">学期计划</option>
+                       <option value="2" >月计划</option>
+                       <option value="3">周计划</option>
+				  </select>
+				</span>
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="0" >送审</option>
+					  <option value="1">送审通过发布</option>
+					  <option value="2">驳回</option>
+					  <option value="3">停用</option>
+				  </select>
+				</span>
+            <input type="text" placeholder="标题" value="" id="keyWord" name="keyWord" class="input-text"/>
+            <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+<div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+        <div id="paginator"></div>
+    </div>
+</div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加教学计划"><i class="iconfont">&#xe618;</i>添加教学计划</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量驳回"><i class="iconfont">&#xe625;</i>批量驳回</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量通过"><i class="iconfont">&#xe630;</i>批量通过</a>
+</script>
+<script type="text/html" id="tplXueqi">
+    <span class="select-box">
+        <select class="select" name="semesterId" id="semesterId">
+            {{ if list.length == 0}}
+             <option>无学期</option>
+            {{/if}}
+            {{each list as val key }}
+            <option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.semesterName }}</option>
+            {{/each}}
+        </select>
+    </span>
+</script>
+<script type="text/html" id="tplMonth">
+    <span class="select-box J-months">
+		<select class="select" name="month" id="month">
+            {{ if list.length == 0}}
+             <option>无月份</option>
+            {{/if}}
+			{{each list as val key }}
+			<option value="{{ val.id }}">{{ val.name }}</option>
+			{{/each}}
+		</select>
+	</span>
+</script>
+<script type="text/html" id="tplXuezhou">
+    <span class="select-box">
+		<select class="select" name="weekId" id="weekId">
+             {{ if list.length == 0}}
+             <option>无学周</option>
+            {{/if}}
+			{{each list as val key }}
+			<option value="{{ val.id }}">第{{ key+1 }}周{{ val.startDate}}至{{ val.endDate}}</option>
+			{{/each}}
+		</select>
+	</span>
+</script>
+<script type="text/html" id="addTpl">
+    <p>eg:如无学周或月份，需先到日历管理里面去建立所需学期</p>
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td class="tdbg tc" width="15%"><span class="f-red">*</span>学校和班级</td>
+                <td>
+                    <span class="J-school"></span>
+                    <span class="J-class"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">计划类型</td>
+                <td>
+                    <span class="select-box w_auto">
+                      <select class="select" name="planType" id="planType">
+                          <option value="1">学期计划</option>
+                          <option value="2" >月计划</option>
+                          <option value="3">周计划</option>
+                      </select>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">教学时间</td>
+                <td width="60%" class="J-content">
+                    <div class="J-xueqi"></div>
+                    <div class="J-month"></div>
+                    <div class="J-day"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">目标</td>
+                <td>
+                    <input type="text" class="input-text" name="target" datatype="title" >
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">标题</td>
+                <td>
+                    <input type="text" class="input-text" name="title" datatype="title" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">内容</td>
+                <td class="edui-static">
+                    <!-- <textarea class="textarea" name="content" id="content" cols="30" rows="10"></textarea> -->
+                    <div id="myEditor" style="width:100%;height:460px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">家长合作</td>
+                <td><textarea class="textarea" name="cooperation" id="cooperation" cols="30" rows="10"></textarea></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td class="tdbg tc" width="15%"><span class="f-red">*</span>学校和班级</td>
+                <td>
+                    <span class="J-school"></span>
+                    <span class="J-class"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">计划类型</td>
+                <td>
+                    <span class="select-box w_auto">
+                      <select class="select" name="planType">
+                          <option value="1" {{ if planType == 1 }}selected{{/if}}>学期计划</option>
+                          <option value="2" {{ if planType == 2 }}selected{{/if}}>月计划</option>
+                          <option value="3" {{ if planType == 3 }}selected{{/if}}>周计划</option>
+                      </select>
+                    </span>
+                    <span class="J-xueqis"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">教学时间</td>
+                <td width="60%" class="J-content">
+                    <div class="J-xueqi"></div>
+                    <div class="J-month"></div>
+                    <div class="J-day"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">目标</td>
+                <td>
+                    <input type="text" class="input-text" name="target" datatype="title" value="{{ target }}" >
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">标题</td>
+                <td>
+                    <input type="text" class="input-text" name="title" datatype="title" value="{{ title }}" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">内容</td>
+                <td class="edui-static">
+                    <!-- <textarea class="textarea" name="content" id="content" cols="30" rows="10">{{ content }}</textarea> -->
+                    <div id="myEditor" style="width:100%;height:460px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">家长合作</td>
+                <td><textarea class="textarea" name="cooperation" id="cooperation" cols="30" rows="10">{{ cooperation }}</textarea></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <a href="javascript:void(0);" class="J-print">打印</a>
+    <form action="" method="post" class="form form-horizontal J-chkForm" id="myElementId">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td class="tdbg tc" width="15%">学校</td>
+                <td >
+                    {{ schoolName }}
+                </td>
+                 <td class="tdbg tc" width="15%">班级</td>
+                <td>
+                    {{ className }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">计划类型</td>
+                <td colspan="3">
+                    {{ if planType == 1}}学期计划{{/if}}
+                    {{ if planType == 2}}月计划{{/if}}
+                    {{ if planType == 3}}周计划{{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">教学时间</td>
+                <td colspan="3">
+                    {{ if planType == 1}}{{ semesterName }}{{/if}}
+                    {{ if planType == 2}}{{ month }}月{{/if}}
+                    {{ if planType == 3}}开始日期：{{ weekEndDate }}-结束日期：{{ weekEndDate }}{{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red"></span>目标</td>
+                <td colspan="3">
+                    {{ target }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red"></span>标题</td>
+                <td colspan="3">
+                    {{ title }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red"></span>内容</td>
+                <td colspan="3">
+                   <div style="height:600px;" class="J-content"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">家长合作</td>
+                <td colspan="3">
+                    {{ cooperation }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/yey-jiaoxuejihua.js"></script>
+<!-- 
+<script type="text/javascript" src="../static/admin/js/serviceMin/yey-jiaoxuejihua.min.js"></script> -->
+
+
+
+
+
+

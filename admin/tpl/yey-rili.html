@@ -1,0 +1,141 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools">
+				</span>
+				<span class="select-box w_70">
+				  <select class="select" size="1" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="2">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="学期名" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加学期"><i class="iconfont">&#xe618;</i>添加学期</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplXueqi">
+	<select class="select" size="1" name="semesterId" id="semesterId">
+		{{each list as val key }}
+		<option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.semesterName }}</option>
+		{{/each}}
+	</select>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+		  <p class="f-red">eg:请慎重选择开学日和放假日，一经添加不可修改!</p>
+		  <table  class="table tableStyle">
+			<tbody>
+				<tr>
+				  <td  width="15%" class="tdbg tc">学校</td>
+				  <td><span class="J-schools"></span></td>
+				  <td  width="15%" class="tdbg tc">是否启用</td>
+				  <td>	
+				  <span class="select-box">
+						  <select class="select" name="isUse">
+							  <option value="1">是</option>
+							  <option value="0">否</option>
+						  </select>
+						</span>
+				</td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期名</td>
+				  <td colspan="3"><input class="input-text" datatype="title" type="text" name="semesterName" placeholder="例如：上学期" datatype="title"  /></td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期开始日</td>
+				  <td><input class="input-text laydate-icon" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'endDate\')||\'2099-10-01\'}'})" type="text" name="startDate" id="startDate" datatype="*" /></td>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期结束日</td>
+				  <td><input class="input-text laydate-icon J-date" type="text" name="endDate" id="endDate" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',maxDate:'2099-10-01'})" datatype="*" /></td>
+				</tr>
+			</tbody>
+		  </table>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table  class="table tableStyle">
+			<tbody>
+				<tr>
+				  <td  width="15%" class="tdbg tc">学校</td>
+				  <td><span class="J-schools"></span></td>
+				  <td  width="15%" class="tdbg tc">是否启用</td>
+				  <td>	
+				  <span class="select-box">
+						  <select class="select" name="isUse">
+							  <option value="1" {{ if isUse==1}}selected{{/if}} >是</option>
+							  <option value="0" {{ if isUse==0}}selected{{/if}} >否</option>
+						  </select>
+						</span>
+				</td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期名</td>
+				  <td colspan="3"><input class="input-text" datatype="title" type="text" name="semesterName" placeholder="例如：上学期" datatype="title" value="{{ semesterName }}"  /></td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期开始日</td>
+				  <td>
+				  	<input class="input-text laydate-icon"  id="startDate" value="{{ startDate }}" readonly="" />
+				  	</td>
+				  <td class="tdbg tc"><span class="f-red">*</span>学期结束日</td>
+				  <td><input class="input-text laydate-icon J-date" type="text" name="endDate" id="endDate" value="{{ endDate }}" readonly="" /></td>
+				</tr>
+			</tbody>
+		  </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<table  class="table tableStyle">
+			<tbody>
+				<tr>
+				  <td  width="15%" class="tdbg tc">学校</td>
+				  <td><span>{{ schoolName }}</span></td>
+				  <td  width="15%" class="tdbg tc">是否启用</td>
+				  <td>	
+				  {{ if isUse==1}}是{{/if}}
+				  {{ if isUse==-0}}否{{/if}}
+				</td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc">学期名</td>
+				  <td colspan="3">{{ semesterName }}</td>
+				</tr>
+				<tr>
+				  <td class="tdbg tc">学期开始日</td>
+				  <td>{{ startDate }}</td>
+				  <td class="tdbg tc">学期结束日td>
+				  <td>{{ endDate }}</td>
+				</tr>
+			</tbody>
+		  </table>
+	</form>
+</script>
+ <script type="text/javascript" src="../static/admin/js/service/yey-rili.js"></script>
+<!--<script type="text/javascript" src="../static/admin/js/serviceMin/yey-rili.min.js"></script>-->
+
+
+
+
+
+

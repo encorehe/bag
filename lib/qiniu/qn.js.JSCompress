@@ -1,0 +1,6 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="qn.js">
+    <sourcefile path=".\qiniu.js" />
+    <sourcefile path=".\qiniu.uploader.js" />
+</combinefile>
+</jscompress>

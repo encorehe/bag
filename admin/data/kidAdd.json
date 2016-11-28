@@ -1,0 +1,44 @@
+<?php
+header("Content-type: text/html; charset=UTF-8");
+include_once('connect.php');
+
+$token=$_POST['token'];
+$name=isset($_POST['name'])?$_POST['name']:"";
+$enName=isset($_POST['enName'])?$_POST['enName']:"";
+$gender=isset($_POST['gender'])?$_POST['gender']:"1";
+$isUse=isset($_POST['isUse'])?$_POST['isUse']:"1";
+$kidNO=isset($_POST['kidNO'])?$_POST['kidNO']:"";
+$rfId=isset($_POST['rfId'])?$_POST['rfId']:"";
+$registerTime=isset($_POST['registerTime'])?$_POST['registerTime']:"";
+$hasOnlineVideo=isset($_POST['hasOnlineVideo'])?$_POST['hasOnlineVideo']:"1";
+$videoExpirationDate=isset($_POST['videoExpirationDate'])?$_POST['videoExpirationDate']:"";
+$enPosition=isset($_POST['enPosition'])?$_POST['enPosition']:"";
+$address=isset($_POST['address'])?$_POST['address']:"";
+$classId=isset($_POST['classId'])?$_POST['classId']:"";
+$qq=isset($_POST['qq'])?$_POST['qq']:"";
+$email=isset($_POST['email'])?$_POST['email']:"";
+$hasOnlineVideo=isset($_POST['hasOnlineVideo'])?$_POST['hasOnlineVideo']:"";
+$interestedPeople=isset($_POST['interestedPeople'])?$_POST['interestedPeople']:"";
+$interestedAffair=isset($_POST['interestedAffair'])?$_POST['interestedAffair']:"";
+$interestedFood=isset($_POST['interestedFood'])?$_POST['interestedFood']:"";
+$dream=isset($_POST['dream'])?$_POST['dream']:"";
+$remark=isset($_POST['remark'])?$_POST['remark']:"";
+
+
+$sql = "INSERT INTO kids(name,enName,gender,isUse,kidNO,rfId,registerTime,hasOnlineVideo,videoExpirationDate,enPosition,address,classId,qq,email,interestedPeople,interestedAffair,interestedFood)VALUES('$name','$enName','$gender','$isUse','$kidNO','$rfId','$registerTime','$hasOnlineVideo','$videoExpirationDate','$enPosition','$address','$classId','$qq','$email','$interestedPeople','$interestedAffair','$interestedFood')";
+
+$query = mysql_query($sql);
+if($query){
+	  	$arr['success']=true;
+	  	$arr['ecode']="E000000";
+		$arr['msg']="操作成功";
+}
+else{
+	$arr['success']=false;
+	$arr['ecode']="E000000";
+	$arr['msg']="操作失败";
+}
+	  echo json_encode($arr);
+
+
+?>

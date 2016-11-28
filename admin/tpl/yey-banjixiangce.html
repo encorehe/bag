@@ -1,0 +1,179 @@
+﻿<link rel="stylesheet" href="../static/admin/css/lightgallery.css">
+<div class="action">
+            <div class="btnsArea"></div>
+            <div class="searchArea J-search">
+                <form action="" method="post" class="form form-horizontal J-searchForm">
+                    <span class="J-schools"></span>
+                    <span class="J-classs"></span>
+                    <span class="select-box w_auto">
+                      <select class="select J-select" name="isUse" id="isUse">
+                          <option value="" selected>状态</option>
+                          <option value="1" >使用</option>
+                          <option value="0">停用</option>
+                      </select>
+                    </span>
+                    <input type="text" placeholder="相册名" value="" id="keyWord" name="keyWord" class="input-text" />
+                    <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+                </form>
+            </div>
+</div>
+<div class="table-wrapper">
+        <table id="mmg"></table>
+        <div class="table-paginator">
+            <div id="paginator"></div>
+        </div>
+</div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加相册"><i class="iconfont">&#xe618;</i>添加相册</a>
+</script>
+    <script type="text/html" id="delAllBtn">
+        <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+        <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+    </script>
+    <script type="text/html" id="addTpl">
+        <form action="" method="post" class="form form-horizontal J-addForm">
+        <input type="hidden" name="albumType" value="1" >
+            <table class="table tableStyle">
+                <tbody>
+                   <tr>
+                       <td class="tdbg tc" width="12%"><span class="f-red">*</span>学校</td>
+                       <td class="J-school"></td>
+                       <td class="tdbg tc" width="8%"><span class="f-red">*</span>班级</td>
+                       <td class="J-class"></td>
+                   </tr>
+                   <tr>
+                       <td class="tdbg tc"><span class="f-red">*</span>名字</td>
+                       <td width="30%"><input class="input-text" type="text" name="title" datatype="title"  /></td>
+                       <td class="tdbg tc">类型</td>
+                       <td ><span class="select-box">
+							  <select class="select" name="fileType" id="fileType">
+								  <option value="1" selected>照片</option>
+							  </select>
+							</span>
+                       </td>
+                   </tr>
+                   <tr>
+                       <td class="tdbg tc">描叙</td>
+                       <td colspan="3"> <textarea class="textarea" style="height:143px" name="brief" ></textarea></td>
+                   </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/html" id="editTpl">
+        <form action="" method="post" class="form form-horizontal J-editForm">
+            <input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td class="tdbg tc" width="12%"><span class="f-red">*</span>学校</td>
+                    <td class="J-school"></td>
+                    <td class="tdbg tc" width="8%"><span class="f-red">*</span>班级</td>
+                    <td class="J-class"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>名字</td>
+                    <td><input class="input-text" type="text" name="title" value="{{ title }}" datatype="title" /></td>
+                    <td class="tdbg tc">类型</td>
+                    <td><span class="select-box">
+							  <select class="select" name="fileType" id="fileType">
+								  <option value="1" {{ if fileType == 1 }}selected{{/if}}>照片</option>
+							  </select>
+							</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">描叙</td>
+                    <td colspan="3"> <textarea class="textarea" style="height:143px;" name="brief">{{ brief }}</textarea></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/html" id="chkTpl">
+        <form action="" method="post" class="form form-horizontal J-chkForm">
+            <input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td class="tdbg tc" width="15%">学校和班级</td>
+                    <td>{{ schoolName }}-{{ className }}</td>
+                    <td class="tdbg tc" width="8%">类型</td>
+                    <td>
+                        {{ if fileType == 1 }}照片{{/if}}
+                        {{ if fileType == 2 }}视频{{/if}}
+                        {{ if fileType != 2 &&  fileType != 1 }}照片/视频{{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc" width="12%">相册名</td>
+                    <td width="40%">{{ title }}</td>
+                    <td class="tdbg tc">描叙</td>
+                    <td > <div style="height:158px;">{{ brief }}</div></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+<script type="text/html" id="photoList">
+        <div class="layer-main">
+            <div class="actions">
+                 <a href="javascript:void(0);" class="btn btn-primary radius J-addPic" title="添加照片"><i class="iconfont">&#xe618;</i>添加照片</a>
+                <span class="dropDown"> 
+                    <a class="btn btn-success radius" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">管理照片</a>
+                    <ul class="dropDown-menu menu radius box-shadow">
+                        <li><a href="javascript:void(0);" class="J-delAll">批量删除</a></li>
+                    </ul>
+                </span>
+             </div>
+             <div class="wu-example" style="height:300px;">
+                <div class="J-photo layerPhoto" id="lightgallery"></div>
+                <p class="no-empty">此相册暂无照片</p>
+            </div>
+            <div id="biuuu_city"></div>
+            <div class="del-action">
+                <span class="J-checkAlls"><input type="checkbox" name="imgIdAll" />全选</span>
+                <a href="javascript:void(0);" class="btn btn-primary radius J-yes-btn" title="确定">确定</a>
+                <a href="javascript:void(0);" class="btn btn-default radius J-reset-btn" title="取消">取消</a>
+            </div>
+        </div>
+</script>
+<script type="text/html" id="tplPhotos">
+    {{ each list as val key}}    
+                <a href="http://image.bag61.com/{{ val.filePath }}?t={{ time }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}}>
+                    <span>
+                        <input type="checkbox" name="imgId">
+                    </span>
+                    <img  src="http://image.bag61.com/{{ val.filePath }}?t={{ time }}">
+                </a>
+    {{/each}}
+</script>
+    <script type="text/html" id="tplUp">
+        <div id="uploader" class="wu-example">
+                <div id="images"></div>
+                <div class="upImg J-img">
+                    <ul></ul>
+                </div>
+                <form action="" class="J-upPhoto">
+                    <input type="hidden" id="images" name="images" />
+                    <input type="file" class="input-text" id="fileName" name="fileName" multiple="multiple" accept="image/*">
+                    <p style="margin-top:10px;"><a href="javascript:void(0);" class="btn btn-primary disabled J-up">确定</a></p>
+                </form>
+                
+        </div>
+        
+    </script>
+<script type="text/javascript" src="../lib/qiniu/qn.min.js"></script>
+<script src="../lib/lightbox/picturefill.min.js"></script>
+<script src="../lib/lightbox/lightgallery.js"></script>
+<script src="../lib/lightbox/lg-fullscreen.js"></script>
+<script src="../lib/lightbox/lg-thumbnail.js"></script>
+<script src="../lib/lightbox/lg-video.js"></script>
+<script src="../lib/lightbox/lg-autoplay.js"></script>
+<script src="../lib/lightbox/lg-zoom.js"></script>
+<script src="../lib/lightbox/lg-hash.js"></script>
+<script src="../lib/lightbox/lg-pager.js"></script>
+<script src="../lib/lightbox/jquery.mousewheel.min.js"></script>
+
+<script type="text/javascript" src="../static/admin/js/service/yey-banjixiangce.js"></script>
+  <!--   <script type="text/javascript" src="../static/admin/js/serviceMin/yey-banjixiangce.min.js"></script> -->

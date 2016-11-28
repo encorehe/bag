@@ -1,0 +1,37 @@
+﻿
+<div class="action">
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="pointTypeId" id="pointTypeId">
+					  <option value="" selected>积分类型</option>
+					  <option value="1" >收入</option>
+					  <option value="0">支出</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="账户" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加园长" style="display:none;"><i class="iconfont">&#xe618;</i>添加园长</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用" style="display:none;"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用" style="display:none;"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+
+<script type="text/javascript" src="../static/admin/js/service/yhgl-jiaoyi.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yhgl-jiaoyi.min.js"></script> -->
+
+
+
+
+

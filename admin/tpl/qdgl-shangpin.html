@@ -1,0 +1,177 @@
+﻿<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select"name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >上架</option>
+					  <option value="0">下架</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="商品名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<!--sidebar-->
+<div class="sidebar">
+	<div class="sidebarWrapper">
+		 <a href="javascript:void(0);" class="sidebarBtn J-shopbtn" id="end">
+		    <span class="counts J-counts">0</span>
+		 	<i class="iconfont">&#xe632;</i>
+		 </a>
+		<div id="msg">已成功加入购物车！</div>
+		 <div class="sidebarBoxs">
+		 	<div class="sidebarHeader">
+		 		<i class="iconfont">&#xe632;</i>购物车
+		 		<a href="javascript:void(0);" class="J-closeSide">X</a>
+		 	</div>
+			<div class="J-shop-cont">
+
+			</div>
+
+		 </div>
+	</div>
+</div>
+<script type="text/html" id="tplShop">
+	<div class="sidebarItems">
+		{{ if list.length == 0}}
+			暂无商品
+		{{ else }}
+		<ul>
+			{{each list as val key }}
+			<li>
+				<p class="p-title">{{ val.proName}}</p>
+				<p class="p-sub">
+					<span class="f-red">￥<i class="J-price">{{ val.price }}</i></span>
+					<span class="cheng">X</span>
+					<input type="number" class="input-text count-input J-count" value="1" min="1" max="10" readonly>
+					<span>=</span>
+					<span class="f-red"><i class="J-result">{{ val.price }}</i>元</span>
+				</p>
+				<div class="action">
+					<a href="javascript:void(0);" class="f-blue  J-edits">修改</a>
+					<a href="javascript:void(0);"  class="f-red J-dels">删除</a>
+				</div>
+			</li>
+			{{/each}}
+		</ul>
+		{{ /if }}
+	</div>
+	<div class="sidebarFooter">
+		<p><span class="f-red">{{ list.length }}</span>件商品</p>
+		<p>共计<span class="f-red f-big J-total">0</span>元</p>
+		<a href="javascript:void(0);" class="btn btn-success radius btn-jiesuan J-xiadan">去下单</a>
+	</div>
+</script>
+<!--sidebar-->
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加代理商"><i class="iconfont">&#xe618;</i>添加商品</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量下架</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量上架</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                    <td><input class="input-text" type="text" name="proName" value="{{ proName }}" datatype="*" /></td>
+                    <td width="15%" class="tdbg tc"><span class="f-red">*</span>终端应用名称</td>
+                    <td><input class="input-text" type="text" name="appName" value="{{ appName }}" datatype="ename" /></td>
+                </tr>
+
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>价格</td>
+                    <td ><input class="input-text" type="text" name="price" value="{{ price }}" datatype="numZero" /></td>
+                    <td width="13%" class="tdbg tc">状态</td>
+                    <td><label><input type="radio" name="isUse" value="1" checked >上架</label>
+                        <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >下架</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">描叙</td>
+                    <td colspan="3">
+						<textarea class="textarea" name="brief" id="brief" cols="30" rows="10">{{ brief }}</textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                <td><input class="input-text" type="text" name="proName" value="{{ proName }}" datatype="*" /></td>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>终端应用名称</td>
+                    <td><input class="input-text" type="text" name="appName" value="{{ appName }}" datatype="ename" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>价格</td>
+                <td ><input class="input-text" type="text" name="price" value="{{ price }}" datatype="numZero" /></td>
+                <td width="13%" class="tdbg tc">状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" {{ if isUse == 1 }} checked {{/if}}>上架</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" {{ if isUse == 0 }} checked {{/if}} >下架</label>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">描叙</td>
+                <td colspan="3">
+					<textarea class="textarea" name="brief" id="brief" cols="30" rows="10">{{ brief }}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>商品名称</td>
+                <td>{{ proName }}</td>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>终端应用名称</td>
+                <td>{{ appName }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">价格</td>
+                <td>{{ price }}</td>
+                <td width="13%" class="tdbg tc">状态</td>
+                <td>
+                    {{ if isUse == 1}}已上架{{ else }}已下架{{/if}}
+                 </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">描叙</td>
+                <td colspan="3">
+					<textarea class="textarea" name="brief" id="brief" cols="30" rows="10">{{ brief }}</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/javascript" src="../lib/jquery.fly.min.js"></script>
+<script type="text/javascript" src="../static/admin/js/service/shoppingcart.js"></script>
+<script type="text/javascript" src="../static/admin/js/service/qdgl-shangpin.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/shoppingcart.min.js"></script>
+<script type="text/javascript" src="../static/admin/js/serviceMin/qdgl-shangpin.min.js"></script> -->
+
+
+
+

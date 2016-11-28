@@ -1,0 +1,21 @@
+﻿<jscompress public="http://www.jscompress.cn/" command="import-combineset">
+<combinefile path="lib.js">
+    <sourcefile path=".\Validform\5.3.2\Validform.js" />
+    <sourcefile path=".\mmGrid.js" />
+    <sourcefile path=".\mmPaginator.js" />
+    <sourcefile path=".\template.js" />
+    <sourcefile path=".\jQuery.print.js" />
+    <sourcefile path=".\jquery.cityselect.js" />
+    <sourcefile path=".\jquery.cookie.js" />
+    <sourcefile path=".\jquery.fly.js" />
+    <sourcefile path=".\jquery.hash.js" />
+    <sourcefile path=".\jquery.mCustomScrollbar.concat.js" />
+    <sourcefile path=".\layer\layer.js" />
+    <sourcefile path=".\layer\extend\layer.ext.js" />
+    <sourcefile path=".\laypage\laypage.js" />
+    <sourcefile path=".\My97DatePicker\WdatePicker.js" />
+    <sourcefile path=".\jquery.alert.js" />
+    <sourcefile path=".\jquery.form.js" />
+    <sourcefile path=".\jquery.ba-throttle-debounce.js" />
+</combinefile>
+</jscompress>

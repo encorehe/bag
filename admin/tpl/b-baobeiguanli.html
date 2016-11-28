@@ -1,0 +1,564 @@
+﻿<div class="action">
+        <div class="btnsArea">
+		</div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+			<span class="J-schools"></span>
+			<span class="J-classs"></span>
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" >状态</option>
+					  <option value="1">启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<span class="select-box w_70">
+				  <select class="select J-select" name="gender" id="gender">
+					  <option value="" selected>性别</option>
+					  <option value="1">男</option>
+					  <option value="0">女</option>
+				  </select>
+				</span>
+				<input style="width:91px;" type="text" placeholder="门禁卡" value="" id="rfId" name="rfId" class="input-text"/>
+				<input style="width:91px;" type="text" placeholder="监护人手机号" value="" id="telephone" name="telephone" class="input-text"/>
+				<input style="width:91px" type="text" placeholder="姓名/贝贝号" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+	</div>
+	<div class="table-paginator">
+		<div id="paginator"></div>
+	</div>
+
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加宝贝"><i class="iconfont">&#xe618;</i>添加宝贝</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+
+	<script type="text/html" id="addTpl">
+		<form action="wwww.baidu.com" method="post" class="form form-horizontal J-addForm">
+			<div class="form-content">
+				<p style="margin-top:-10px;">第一步：添加宝贝所在学校信息</p>
+				<table class="table tableStyle">
+					<tbody>
+					<tr>
+						<td width="15%" class="tdbg tc"><span class="f-red">*</span>学校和班级</td>
+						<td width="45%">
+							<span class="J-school"></span>
+							<span class="J-class" style="display:block;"></span>
+						</td>
+						<td class="tdbg tc" width="15%">状态</td>
+						<td>
+							<label><input type="radio" name="isUse" value="1" checked >启用</label>
+							<label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+						</td>
+					</tr>
+					<tr>
+						<td class="tdbg tc">入学日期</td>
+						<td><input class="input-text laydate-icon J-date" type="text" name="registerTime"  /></td>
+						<td class="tdbg tc">定位信息</td>
+						<td>
+							<label><input type="radio" name="enPosition" value="1" checked >有</label>
+							<label style="margin-left:10px;"><input type="radio" name="enPosition" value="0" >无</label>
+						</td>
+					</tr>
+					<!--
+					<tr>
+						<td class="tdbg tc">在线视频</td>
+						<td colspan="3">
+							<label><input type="radio" name="hasOnlineVideo" value="1" >有</label>
+							<label style="margin-left:10px;"><input type="radio" name="hasOnlineVideo" value="0" checked >无</label>
+							<span class="emptys" style="display:none;">
+								视频到期日
+							<input class="input-text laydate-icon w_auto J-date" type="text" name="videoExpirationDate" />
+							</span>
+						</td>
+					</tr>
+					-->
+					<tr>
+
+					</tr>
+					</tbody>
+				</table>
+				<p style="margin-top:10px;">第二步：添加宝贝信息</p>
+				<table class="table tableStyle">
+					<tbody>
+					<tr>
+						<td width="12%" class="tdbg tc"><span class="f-red">*</span>中文名</td>
+						<td width="35%"><input class="input-text" type="text" name="name" datatype="cname"  /></td>
+						<td width="13%" class="tdbg tc">英文名</td>
+						<td width="35%"><input class="input-text" type="text" name="enName" datatype="ename" ignore="ignore" /></td>
+					</tr>
+                    <tr>
+                        <td width="12%" class="tdbg tc">头像</td>
+                        <td colspan="3">
+                             <div id="localImag">
+		                        <img id="preview" src="" width="60px" height="60px">
+		                    </div>
+		                    <input type="file" class="input-text" id="fileName" name="fileName" accept="image/*" />
+                        </td>
+                    </tr>
+					
+					<tr>
+						<td class="tdbg tc">性别</td>
+						<td>
+							<label><input type="radio" name="gender" value="1" checked>男</label>
+							<label style="margin-left:10px;"><input type="radio" name="gender" value="0" >女</label>
+						</td>
+						<td class="tdbg tc">地址</td>
+						<td>
+							<input class="input-text" type="text" name="address" placeholder="家庭住址" datatype="*" ignore="ignore"   />
+						</td></tr>
+					<tr>
+						<td class="tdbg tc">QQ号</td>
+						<td><input class="input-text" type="text" name="qq" datatype="qq" ignore="ignore"   /></td>
+						<td class="tdbg tc">邮箱</td>
+						<td>
+							<input class="input-text" type="text" name="email" datatype="e"  ignore="ignore"  placeholder="**@xx.com类似这种格式" />
+						</td>
+					</tr>
+					</tbody>
+				</table>
+				<!-- 
+				<p>第三步：宝贝其他信息</p>
+				<table class="table tableStyle">
+					<tbody>
+					<tr>
+						<td width="12%" class="tdbg tc">喜欢的人</td>
+						<td width="35%"><input class="input-text" type="text" name="interestedPeople"  /></td>
+						<td width="13%" class="tdbg tc">喜欢的事</td>
+						<td width="35%"><input class="input-text" type="text" name="interestedAffair"  /></td>
+					</tr>
+					<tr>
+						<td class="tdbg tc">喜欢的食物</td>
+						<td>
+							<input class="input-text" type="text" name="interestedFood"  />
+						</td>
+						<td class="tdbg tc">梦想</td>
+						<td>
+							<input class="input-text" type="text" name="dream"  />
+						</td></tr>
+					<tr>
+						<td class="tdbg tc">备注</td>
+						<td colspan="3"><textarea class="textarea" name="remark" id="remark" cols="30" rows="10"></textarea></td>
+					</tr>
+					</tbody>
+				</table> -->
+			</div>
+		</form>
+	</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<div class="form-content">
+			<p style="margin-top:-10px;">第一步：添加宝贝所在学校信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="15%" class="tdbg tc"><span class="f-red">*</span>学校和班级</td>
+					<td width="45%">
+						<span class="J-school"></span>
+						<span class="J-class" style="display:block;"></span>
+					</td>
+					<td class="tdbg tc" width="15%">状态</td>
+					<td>
+						<label><input type="radio" name="isUse" value="1" {{ if isUse == 1}} checked{{/if}} >启用</label>
+						<label style="margin-left:10px;"><input type="radio" name="isUse" value="0" {{ if isUse == 0 || isUse == null }} checked{{/if}}>停用</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdbg tc">入学日期</td>
+					<td><input class="input-text laydate-icon J-date" type="text" id="registerTime" name="registerTime" value="{{ registerTime }}" /></td>
+					<td class="tdbg tc">定位信息</td>
+					<td>
+						<label><input type="radio" name="enPosition" value="1"  {{ if enPosition == 1}} checked{{/if}} >有</label>
+						<label style="margin-left:10px;"><input type="radio" name="enPosition" value="0" {{ if enPosition == 0 || enPosition == null}} checked{{/if}} >无</label>
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<td class="tdbg tc">在线视频</td>
+					<td colspan="3">
+
+						<label><input type="radio" name="hasOnlineVideo" value="1" {{ if hasOnlineVideo == 1}} checked{{/if}}>有</label>
+						<label style="margin-left:10px;"><input type="radio" name="hasOnlineVideo" value="0" {{ if hasOnlineVideo == 0 || hasOnlineVideo == null  }} checked{{/if}} >无</label>
+							<span class="emptys" style="{{ if hasOnlineVideo == 0 || hasOnlineVideo == null }} display:none {{/if}}">
+								视频到期日
+							<input class="input-text laydate-icon w_auto J-date" type="text" name="videoExpirationDate" value="{{ videoExpirationDate }}" />
+							</span>
+					</td>
+				</tr>
+				-->
+				<tr>
+
+				</tr>
+				</tbody>
+			</table>
+			<p style="margin-top:10px;">第二步：添加宝贝信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="12%" class="tdbg tc"><span class="f-red">*</span>中文名</td>
+					<td width="35%"><input class="input-text" type="text" name="name" datatype="cname"  value="{{ name }}" /></td>
+					<td width="13%" class="tdbg tc">英文名</td>
+					<td width="35%"><input class="input-text" type="text" name="enName" datatype="ename" ignore="ignore" value="{{ enName }}" /></td>
+				</tr>
+                <tr>
+                    <td width="12%" class="tdbg tc">头像</td>
+                    <td colspan="3">
+                       <div id="localImag">
+		                    {{ if icon == "" || icon == null }}
+	                           <img {{ if gender == null || gender == 1}} class="avatarMan" {{/if }} {{ if gender == 0 }} class="avatarWomen" {{/if}} src="" id="preview" width="60px" height="60px" alt="">
+	                        {{/if}}
+	                        {{ if icon != "" && icon != null }}<span class='imgPhoto'><img id="preview"  width='60px' height='60px' /></span>{{/if}}
+		                </div>
+		                <input type="file" class="input-text" id="fileName" name="fileName" accept="image/*">
+                    </td>
+                </tr>
+				<tr>
+					<td class="tdbg tc">性别</td>
+					<td>
+						<label><input type="radio" name="gender" value="1" {{ if gender == 1}} checked{{/if}}>男</label>
+						<label style="margin-left:10px;"><input type="radio" name="gender" value="0" {{ if gender == 0}} checked{{/if}} >女</label>
+					</td>
+					<td class="tdbg tc">地址</td>
+					<td>
+						<input class="input-text" type="text" name="address" placeholder="家庭住址" datatype="*" ignore="ignore"  value="{{ address }}"  />
+					</td></tr>
+				<tr>
+					<td class="tdbg tc">QQ号</td>
+					<td><input class="input-text" type="text" name="qq" datatype="qq" ignore="ignore" value="{{ qq }}"  /></td>
+					<td class="tdbg tc">邮箱</td>
+					<td>
+						<input class="input-text" type="text" name="email" datatype="e"  ignore="ignore" value="{{ email }}"  placeholder="**@xx.com类似这种格式" />
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- <p>第三步：宝贝其他信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="12%" class="tdbg tc">喜欢的人</td>
+					<td width="35%"><input class="input-text" type="text" name="interestedPeople" value="{{ interestedPeople }}" /></td>
+					<td width="13%" class="tdbg tc">喜欢的事</td>
+					<td width="35%"><input class="input-text" type="text" name="interestedAffair"  value="{{ interestedAffair }}" /></td>
+				</tr>
+				<tr>
+					<td class="tdbg tr">喜欢的食物</td>
+					<td>
+						<input class="input-text" type="text" name="interestedFood" value="{{ interestedFood }}" />
+					</td>
+					<td class="tdbg tr">梦想</td>
+					<td>
+						<input class="input-text" type="text" name="dream" value="{{ dream }}" />
+					</td></tr>
+				<tr>
+					<td class="tdbg tr">备注</td>
+					<td colspan="3"><textarea class="textarea" name="remark" id="remark" cols="30" rows="10">{{ remark }}</textarea></td>
+				</tr>
+				</tbody>
+			</table> -->
+		</div>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<div class="form-content">
+			<p style="margin-top:-10px;">第一步：添加宝贝所在学校信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="15%" class="tdbg tc"><span class="f-red">*</span>学校和班级</td>
+					<td width="45%">
+						<span>{{ schoolName }}</span>
+						<span>{{ className }}</span>
+					</td>
+					<td class="tdbg tc" width="15%">状态</td>
+					<td>
+						{{ if isUse == 1}}启用{{/if}}
+						{{ if isUse == 0}}停用{{/if}}
+					</td>
+				</tr>
+				<tr>
+					<td class="tdbg tc">入学日期</td>
+					<td>{{ registerTime }}</td>
+					<td class="tdbg tc">定位信息</td>
+					<td>
+						{{ if enPosition == 1}}有{{/if}}
+						{{ if enPosition == 0}}无{{/if}}
+					</td>
+				</tr>
+				<!--
+				<tr>
+					<td class="tdbg tc">在线视频</td>
+					<td colspan="3">
+
+						<label><input type="radio" name="hasOnlineVideo" value="1" {{ if hasOnlineVideo == 1}} checked{{/if}}>有</label>
+						<label style="margin-left:10px;"><input type="radio" name="hasOnlineVideo" value="0" {{ if hasOnlineVideo == 0 || hasOnlineVideo == null  }} checked{{/if}} >无</label>
+							<span class="emptys" style="{{ if hasOnlineVideo == 0 || hasOnlineVideo == null }} display:none {{/if}}">
+								视频到期日
+							<input class="input-text laydate-icon w_auto J-date" type="text" name="videoExpirationDate" value="{{ videoExpirationDate }}" />
+							</span>
+					</td>
+				</tr>
+				-->
+				<tr>
+
+				</tr>
+				</tbody>
+			</table>
+			<p style="margin-top:10px;">第二步：添加宝贝信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="12%" class="tdbg tc"><span class="f-red">*</span>中文名</td>
+					<td width="35%">{{ name }}</td>
+					<td width="13%" class="tdbg tc">英文名</td>
+					<td width="35%">{{ enName }}</td>
+				</tr>
+				<tr>
+					<td width="12%" class="tdbg tc">头像</td>
+					<td colspan="3">
+						<div id="localImag">
+							{{ if icon == "" || icon == null }}
+							<img {{ if gender == null || gender == 1}} class="avatarMan" {{/if }} {{ if gender == 0 }} class="avatarWomen" {{/if}} src="" id="preview" width="60px" height="60px" alt="">
+							{{/if}}
+							{{ if icon != "" && icon != null }}<span class='imgPhoto'><img id="preview"  width='60px' height='60px' /></span>{{/if}}
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="tdbg tc">性别</td>
+					<td>
+						{{ if gender == 1}}男{{/if}}
+						{{ if gender == 0}}女{{/if}}
+					</td>
+					<td class="tdbg tc">地址</td>
+					<td>
+						{{ address }}
+					</td></tr>
+				<tr>
+					<td class="tdbg tc">QQ号</td>
+					<td>{{ qq }}</td>
+					<td class="tdbg tc">邮箱</td>
+					<td>
+						{{ email }}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+			<!-- <p>第三步：宝贝其他信息</p>
+			<table class="table tableStyle">
+				<tbody>
+				<tr>
+					<td width="12%" class="tdbg tc">喜欢的人</td>
+					<td width="35%"><input class="input-text" type="text" name="interestedPeople" value="{{ interestedPeople }}" /></td>
+					<td width="13%" class="tdbg tc">喜欢的事</td>
+					<td width="35%"><input class="input-text" type="text" name="interestedAffair"  value="{{ interestedAffair }}" /></td>
+				</tr>
+				<tr>
+					<td class="tdbg tr">喜欢的食物</td>
+					<td>
+						<input class="input-text" type="text" name="interestedFood" value="{{ interestedFood }}" />
+					</td>
+					<td class="tdbg tr">梦想</td>
+					<td>
+						<input class="input-text" type="text" name="dream" value="{{ dream }}" />
+					</td></tr>
+				<tr>
+					<td class="tdbg tr">备注</td>
+					<td colspan="3"><textarea class="textarea" name="remark" id="remark" cols="30" rows="10">{{ remark }}</textarea></td>
+				</tr>
+				</tbody>
+			</table> -->
+		</div>
+	</form>
+</script>
+<script type="text/html" id="tplJhr">
+		<a href="javascript:void(0);" class="btn btn-primary radius J-addJhr" title="添加监护人">新增监护人</a>
+	<div class="tableGrids hidLimt">
+		<table id="mmgJhr" style="width:100%;"></table>
+		<div class="table-paginator hidLimt">
+			<div id="paginatorJhr"></div>
+		</div>
+	</div>
+</script>
+<script type="text/html" id="tplTel">
+		<form action="" class="J-telForm" style="margin:20px;">
+			<table class="table tableStyle">
+				<tbody>
+					<tr>
+						<td width="15%" class="tdbg tc">手机号</td>
+						<td><input class="input-text" type="text" datatype="m" name="telephone"  /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+</script>
+<script type="text/html" id="tplCard">
+		<p>
+			<a href="javascript:void(0);" class="btn btn-primary radius J-cardBtn" title="添加门禁卡">添加门禁卡</a>
+			<a href="javascript:void(0);" class="btn btn-default radius J-delBtnAll" title="批量删除">批量删除</a>
+		</p>
+		<div class="tableGrids hidLimt">
+			<table id="mmgJhr" style="width:100%;"></table>
+			<div class="table-paginator hidLimt">
+				<div id="paginatorJhr"></div>
+			</div>
+		</div>
+</script>
+<script type="text/html" id="tplCardForm">
+		<form action="" class="J-Form" style="margin:20px;">
+            <input type="hidden" name="kidId" value="{{ kidId }}">
+            <input type="hidden" name="id" value="{{ id }}">
+			<table class="table tableStyle">
+				<tbody>
+					<tr>
+						<td width="15%" class="tdbg tc">卡号</td>
+						<td><input class="input-text" type="text" datatype="rfId" name="rfId" value="{{ rfId }}" /></td>
+					</tr>
+                    <tr>
+                        <td width="15%" class="tdbg tc">监护人</td>
+                        <td>
+                            <span class="select-box">
+                                <select class="select J-select" name="accountId">
+                                    {{each list as val key }}
+                                      <option value="{{ val.accountId }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.name }}</option>
+                                    {{/each}}
+                                </select>
+                            </span>
+                        </td>
+                    </tr>
+				</tbody>
+			</table>
+		</form>
+</script>
+
+<script type="text/html" id="tplJhrForm">
+	<form action="" method="post" class="form form-horizontal J-jhrForm" style="margin:20px;">
+		<input type="hidden" name="accountId" value="{{ accountId }}" />
+		<input type="hidden" name="kidId" value="{{ kidId }}" />
+		<input type="hidden" name="classId" value="{{ classId }}" />
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="12%" class="tdbg tr">姓名</td>
+				<td width="35%"><input class="input-text" type="text" name="name" value="{{ name }}" datatype="cname" /></td>
+				<td width="13%" class="tdbg tr">英文名</td>
+				<td width="35%"><input class="input-text" type="text" name="enName" value="{{ enName }}" datatype="ename" ignore="ignore" /></td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">手机号</td>
+				<td>
+					<input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m" readonly  />
+				</td>
+				<td class="tdbg tr">性别</td>
+				<td>
+					<label><input type="radio" name="gender" value="1" {{ if gender == 1 }} checked{{/if}}>男</label>
+					<label style="margin-left:10px;"><input type="radio" name="gender" value="0" {{ if gender == 0 || gender == undefined }} checked{{/if}}>女</label>
+				</td>
+			</tr>
+			<tr>
+				<td class="tdbg tr">称呼</td>
+				<td colspan="3">
+						 <span class="select-box">
+						  <select class="select J-select" name="relationshipId" id="relationshipId">
+						    {{ if gender == 1 || gender == nulll || gender == undefined  }} 
+									<option value="1" {{ if relationshipId == 1}} selected{{/if}}>父亲</option>
+									<option value="3" {{ if relationshipId == 3}} selected{{/if}}>祖父</option>
+									<option value="5" {{ if relationshipId == 5}} selected{{/if}}>外祖父</option>
+									<option value="7" {{ if relationshipId == 7}} selected{{/if}}>伯父</option>
+									<option value="9" {{ if relationshipId == 9}} selected{{/if}}>叔父</option>
+									<option value="11" {{ if relationshipId == 11}} selected{{/if}}>舅舅</option>
+									<option value="13" {{ if relationshipId == 13}} selected{{/if}}>姨父</option>
+						     {{/if}}
+							  {{ if gender == 0 }}
+							  <option value="2" {{ if relationshipId == 2}} selected{{/if}}>母亲</option>
+							  <option value="4" {{ if relationshipId == 4}} selected{{/if}}>祖母</option>
+							  <option value="6" {{ if relationshipId == 6}} selected{{/if}}>外祖母</option>
+							  <option value="8" {{ if relationshipId == 8}} selected{{/if}}>伯母</option>
+							  <option value="10" {{ if relationshipId == 10}} selected{{/if}}>叔母</option>
+							  <option value="12" {{ if relationshipId == 12}} selected{{/if}}>舅妈</option>
+							  <option value="14" {{ if relationshipId == 14}} selected{{/if}}>姨妈</option>
+							  {{/if}}
+						  </select>
+						</span>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+
+<script type="text/html" id="tplSex">
+	{{ if gender == 1 || gender == nulll || gender == undefined  }} 
+					<option value="1" >父亲</option>
+					<option value="3">祖父</option>
+					<option value="5">外祖父</option>
+					<option value="7">伯父</option>
+					<option value="9">叔父</option>
+					<option value="11">舅舅</option>
+					<option value="13">姨父</option>
+   {{/if}}
+   {{ if gender == 0 }}
+				  <option value="2">母亲</option>
+				  <option value="4">祖母</option>
+				  <option value="6">外祖母</option>
+				  <option value="8">伯母</option>
+				  <option value="10">叔母</option>
+				  <option value="12">舅妈</option>
+				  <option value="14">姨妈</option>
+	{{/if}}
+</script>
+
+<script type="text/html" id="tplDaochu">
+	<form class='J-form-daochu'>
+		<span class='J-school'></span>
+		<span class='J-class'></span>
+	</form>
+</script>
+<script type="text/html" id="tplDaoru">
+	<form class='J-form-daoru' id="index_form" name="index_form" method="post" enctype="multipart/form-data">
+	<span class='J-school'></span>
+		<br>
+		<input type="hidden" name="type" value="1" />
+		<span>忽略重复数据(门禁卡除外)：<span class='select-box w_auto'>
+			<select class='select' name="isRepeat">
+				<option value="1">是</option>
+				<option value="0">否</option>
+			</select>
+		</span>
+	</span>
+	<p>文件：<input type="file" name="file" id="file" accept=".xls"  /></p>
+	</form>
+</script>
+<script type="text/html" id="tplDate">
+	<form class='J-form-date' method="post">
+		<input type="hidden" name="id" value="{{ acctRoleId }}">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width="25%" class="tdbg tr">视频到期日</td>
+				<td><input class="input-text J-date" type="text" name="videoExpirationDate" value="{{ videoExpirationDate }}" datatype="*" readonly /></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/javascript" src="../lib/qiniu/qn.min.js"></script>
+<script type="text/javascript" src="../static/admin/js/service/b-baobeiguanli.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/b-baobeiguanli.min.js"></script> -->
+
+
+
+
+
+

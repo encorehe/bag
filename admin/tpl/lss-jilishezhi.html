@@ -1,0 +1,66 @@
+﻿<div class="action" style="display:none;">
+    <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_70">
+				  <select class="select" size="1" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >上架</option>
+					  <option value="0">下架</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="激励名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+		<div class="row cl row-line">
+			<div class="form-label col-4">
+				<strong>积分信息</strong>
+			</div>
+			<div class="formControls col-8">
+				<div class="row cl">
+					<label class="form-label col-3"><span class="f-red">*</span>积分名称：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="pointName" value="{{ pointName }}" readonly />
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3"><span class="f-red">*</span>积分数：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="points" value="{{ points }}"  />
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3">状态：</label>
+					<div class="formControls col-8">
+							<label><input type="radio" name="isUse" value="1" checked="">启用</label>
+							<label style="margin-left:10px;"><input type="radio" name="isUse" value="0">停用</label>
+					</div>
+				</div>
+				<div class="row cl">
+					<label class="form-label col-3">上限：</label>
+					<div class="formControls col-8">
+						<input class="input-text" type="text" name="upperLimit" value="{{ upperLimit }}"  />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/lss-jilishezhi.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/lss-jilishezhi.min.js"></script> -->
+
+
+
+
+

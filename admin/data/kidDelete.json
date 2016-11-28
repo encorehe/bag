@@ -1,0 +1,9 @@
+{
+    "command": "kidDelete",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "成功",
+    "totalCount": 0,
+    "list": [],
+    "map": {}
+}

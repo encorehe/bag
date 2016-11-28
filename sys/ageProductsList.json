@@ -1,0 +1,28 @@
+﻿{
+    "command": "ageproductsList",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "操作成功",
+    "totalCount": 2,
+    "list": [
+        {
+            "id": 2,
+            "proName": "pos道闸设备",
+            "brief": "",
+            "price": 200,
+            "isUse": 1,
+            "insertDate": "2016-06-17 11:01:42",
+            "appName": "pos"
+        },
+        {
+            "id": 1,
+            "proName": "pos机器",
+            "brief": "11111",
+            "price": 10,
+            "isUse": 0,
+            "insertDate": "2016-06-17 11:01:20",
+            "appName": "appNames"
+        }
+    ],
+    "nowDate": "2016-11-24 17:03:21"
+}

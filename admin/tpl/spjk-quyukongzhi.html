@@ -1,0 +1,182 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools"></span>
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="区域" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加设备"><i class="iconfont">&#xe618;</i>添加设备</a>
+</script>
+<script type="text/html" id="delAllBtn">
+
+	<a style="display:none;" href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a style="display:none;" href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+            <table  class="table tableStyle J-shipin">
+                <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tc"><span class="f-red"></span>摄像头名称</td>
+                    <td>
+                        <input class="input-text" type="text" name="name" datatype="title" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">类型</td>
+                    <td>
+                        <label><input type="radio" name="type" value="0" {{ if classId == 0}}checked{{/if}} />公共区域</label>
+                        <label><input type="radio" name="type" value="1" {{ if classId != 0}}checked{{/if}} >班级</label>
+                    </td>
+                </tr>
+                <tr class="J-area">
+                    <td class="tdbg tc"><span class="f-red"></span><span class="J-title">园所</span></td>
+                    <td>
+                        <span class="J-school"></span>
+                        <span class="J-class" style="display:block;"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red"></span>编号</td>
+                    <td><input class="input-text" type="text" name="code" datatype="*" /></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">状态</td>
+                    <td><label><input type="radio" name="isUse" value="1" checked />启用</label>
+                        <label><input type="radio" name="isUse" value="0">停用</label></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">序列号</td>
+                    <td><input class="input-text" type="text" name="deviceSN" datatype="*" /></td>
+                </tr>
+                </tbody>
+            </table>
+		</form>
+	</script>
+<script type="text/html" id="tplHaikang">
+    <tr class="J-row-hidden2">
+        <td class="tdbg tc">设备验证码</td>
+        <td><input class="input-text" type="text" name="validateCode" value="{{ validateCode }}" /></td>
+    </tr>
+    <!--
+    <tr  class="J-row-hidden2">
+        <td class="tdbg tc">节点名(通道号)</td>
+        <td><input class="input-text" type="text" name="nodeNames" value="{{ nodeNames }}" /></td>
+    </tr>
+    -->
+</script>
+<script type="text/html" id="tplHuaimai">
+    <tr class="J-row-hidden">
+        <td class="tdbg tc">方案商</td>
+        <td><input class="input-text" type="text" name="vars" value="{{ vars }}" /></td>
+    </tr>
+    <tr class="J-row-hidden">
+        <td class="tdbg tc">节点名</td>
+        <td><input class="input-text" type="text" name="nodeNames" value="{{ nodeNames }}" /></td>
+    </tr>
+    <tr class="J-row-hidden">
+        <td class="tdbg tc"><span class="f-red"></span>IP</td>
+        <td><input class="input-text" type="text" name="ip" datatype="*" value="{{ ip }}"  /></td>
+    </tr>
+    <tr class="J-row-hidden">
+        <td class="tdbg tc"><span class="f-red"></span>端口</td>
+        <td><input class="input-text" type="text" name="port" datatype="initNum" value="{{ port }}" /></td>
+    </tr>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table  class="table tableStyle J-shipin">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red"></span>摄像头名称</td>
+                <td>
+                    <input class="input-text" type="text" name="name" value="{{ name }}" datatype="title" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    <label><input type="radio" name="type" value="0"  checked>公共区域</label>
+                    <label><input type="radio" name="type" value="1">班级</label>
+                </td>
+            </tr>
+            <tr class="J-area">
+                <td class="tdbg tc"><span class="f-red"></span><span class="J-title">园所</span></td>
+                <td>
+                    <span class="J-school"></span>
+                    <span class="J-class" style="display:block;"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">状态</td>
+                <td><label><input type="radio" name="isUse" value="1" {{ if isUse == 1 }} checked {{/if}} />启用</label>
+                    <label><input type="radio" name="isUse" value="0" {{ if isUse == 0 }} checked {{/if}} >停用</label></td>
+            </tr>
+                 <tr>
+                    <td class="tdbg tc">序列号</td>
+                    <td><input class="input-text" type="text" name="deviceSN" value="{{ deviceSN }}" datatype="*" /></td>
+                </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table  class="table tableStyle J-shipin">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red"></span>摄像头名称</td>
+                <td>
+                    {{ name }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    {{ if classId == 0 }}公共区域{{else}}班级{{/if}}
+                </td>
+            </tr>
+            <tr class="J-area">
+                <td class="tdbg tc"><span class="f-red"></span>学校和班级</td>
+                <td>
+                    <span>{{ schoolName }}</span>
+                    {{ if className }}
+                    <span class="J-classs">-{{ className }}</span>
+                    {{/if}}
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc">序列号</td>
+                <td>{{ deviceSN }}</td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/spjk-quyukongzhi.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/spjk-quyukongzhi.min.js"></script> -->
+
+
+
+
+
+

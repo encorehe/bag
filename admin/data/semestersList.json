@@ -1,0 +1,19 @@
+{
+    "command": "semestersList",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "操作成功",
+    "totalCount": 1,
+    "list": [
+        {
+            "id": 9,
+            "schoolId": 8,
+            "semesterName": "2016年上学期",
+            "startDate": "2016-02-20",
+            "endDate": "2016-08-12",
+            "isUse": 1,
+            "schoolName": "测试的幼儿园"
+        }
+    ],
+    "nowDate": "2016-03-18 17:26:56"
+}

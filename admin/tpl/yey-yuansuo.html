@@ -1,0 +1,435 @@
+﻿    <div class="btnsArea"></div>
+	<div class="action">
+		<div class="searchArea J-search J-citys">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>全部</option>
+					  <option value="1" >启用</option>
+					  <option value="2">停用</option>
+				  </select>
+				</span>
+				<span class="select-box w_auto">
+						  <select class="select prov J-select" name="provId" id="provId">
+						  </select>
+						</span>
+						<span class="select-box w_auto J-select">
+						  <select class="select city" name="cityId" id="cityId">
+						  </select>
+						</span>
+						<span class="select-box w_auto J-select">
+						  <select class="select dist" name="distId" id="distId">
+						  </select>
+						</span>
+				<input type="text" placeholder="园名" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加幼儿园"><i class="iconfont">&#xe618;</i>添加幼儿园</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplDaili">
+    <span  class="select-box">
+        <select class="select" name="agentId" id="agentId">
+            <option value="0">直营</option>
+            {{each list as val key }}
+                <option  selected  value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.agentName }}</option>
+            {{/each}}
+        </select>
+    </span>
+</script>
+<script type="text/html" id="addTpl">
+	<form action="" method="post" class="form form-horizontal J-addForm">
+        <p style="margin-top:-10px;">第一步：填写园所基本信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>园名</td>
+                <td width="30%"><input class="input-text" type="text" name="schoolName" value="{{ schoolName }}" datatype="*" /></td>
+                <td class="tdbg tc" width="15%">状态</td>
+                <td colspan="3">
+                    <label><input type="radio" name="isUse" value="1" checked>启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tc">地址</td>
+                <td colspan="5" class="J-cityBox">
+                    <span class="select-box w_auto">
+						  <select class="select prov" name="provId">
+
+						  </select>
+						</span>
+						<span class="select-box w_auto">
+						  <select class="select city" name="cityId">
+
+						  </select>
+						</span>
+						<span class="select-box w_auto">
+						<select class="select dist" name="distId" id="distId">
+
+						</select>
+						</span>
+                    <input type="text" class="input-text" name="address" placeholder="详细地址" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">学校电话</td>
+                <td>
+                    <input class="input-text" type="text" name="schoolTel" value="{{ schoolTel }}" datatype="t" ignore="ignore" />
+                </td>
+                <td class="tdbg tc">学校传真</td>
+                <td colspan="3">
+                    <input class="input-text" type="text" name="fax" value="{{ fax }}" datatype="fax" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">顶级域名</td>
+                <td><input class="input-text" type="text" name="ownDomain" value="{{ ownDomain }}" datatype="url" ignore="ignore" /></td>
+                <td class="tdbg tc"><span class="f-red">*</span>二级域名</td>
+                <td colspan="3"><input class="input-text" type="text" name="domain" value="{{ domain }}" datatype="url" ignore="ignore" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">视频账号</td>
+                <td><input class="input-text" type="text" name="deviceUn" value="{{ deviceUn }}" ignore="ignore" /></td>
+                <td class="tdbg tc">密码</td>
+                <td><input class="input-text J-pwd" type="text" name="devicePw" value="{{ devicePw }}" /></td>
+                <td class="tdbg tc">视频提供商</td>
+                <td>
+                    <span class="select-box w_auto">
+						<select class="select dist" name="cameraType">
+                            <option value="0">无</option>
+                            <option value="1">华麦</option>
+                            <option value="2">海康</option>
+						</select>
+                    </span>
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>短信发送间隔(秒)</td>
+                <td><input class="input-text" type="text" name="smsInterval" value="{{ smsInterval }}" datatype = "numFeifu" placeholder="0" /></td>
+                <td class="tdbg tc">考勤短信</td>
+                <td width="20%"> <label><input type="radio" name="smsFlag" value="1" >开</label>
+                    <label><input type="radio" name="smsFlag" value="0" checked>关</label></td>
+                 <td class="tdbg tc">通知公告短信</td>
+                 <td> <label><input type="radio" name="noticesSmsFlag" value="1" >开</label>
+                     <label ><input type="radio" name="noticesSmsFlag" value="0" checked>关</label></td>
+            </tr>
+             <tr>
+                <td class="tdbg tc">宝贝门禁控制</td>
+                <td><label><input type="radio" name="kidRfFlag" value="1" checked>开</label>
+                    <label style="margin-left:10px;"><input type="radio" name="kidRfFlag" value="0" >关</label></td>
+                <td class="tdbg tc">教师门禁控制</td>
+                <td colspan="3"> <label><input type="radio" name="teacherRfFlag" value="1" checked>开</label>
+                    <label style="margin-left:10px;"><input type="radio" name="teacherRfFlag" value="0" >关</label></td>
+            </tr>            
+            </tbody>
+        </table>
+        <p>第二步：填写园所联系人信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>联系人</td>
+                <td width="35%"><input class="input-text" type="text" name="contactName" value="{{ contactName }}" datatype="cname|ename" /></td>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>手机号</td>
+                <td><input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">电话</td>
+                <td>
+                    <input class="input-text" type="text" name="contactTel" value="{{ contactTel }}" datatype="t" ignore="ignore" />
+                </td>
+                <td class="tdbg tc">QQ号</td>
+                <td>
+                    <input class="input-text" type="text" name="qq" value="{{ qq }}" datatype="qq" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">邮箱</td>
+                <td>
+                    <input class="input-text" type="text" name="email" value="{{ email }}" datatype="e" ignore="ignore" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <p style="margin-top:-10px;">园所基本信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>园名</td>
+                <td width="30%"><input class="input-text" type="text" name="schoolName" value="{{ schoolName }}" datatype="*" /></td>
+                <td class="tdbg tc" style="width:12%;">状态</td>
+                <td colspan="3">
+                    <label><input type="radio" name="isUse" value="1" checked>启用</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" >停用</label>
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tc">地址</td>
+                <td colspan="5" class="J-cityBox">
+                    <span class="select-box w_auto">
+						  <select class="select prov" name="provId">
+							  <option value="0">--省份--</option>
+						  </select>
+						</span>
+						<span class="select-box w_auto">
+						  <select class="select city" name="cityId">
+							  <option value="0">--城市--</option>
+						  </select>
+						</span>
+						<span class="select-box w_auto">
+						<select class="select dist" name="distId" id="distId">
+							<option value="0">--区/县--</option>
+						</select>
+						</span>
+                    <input type="text" class="input-text" name="address" placeholder="详细地址" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">学校电话</td>
+                <td>
+                    <input class="input-text" type="text" name="schoolTel" value="{{ schoolTel }}" datatype="t" ignore="ignore" />
+                </td>
+                <td class="tdbg tc">学校传真</td>
+                <td colspan="3">
+                    <input class="input-text" type="text" name="fax" value="{{ fax }}" datatype="fax" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">顶级域名</td>
+                <td><input class="input-text" type="text" name="ownDomain" value="{{ ownDomain }}" datatype="url" ignore="ignore" /></td>
+                <td class="tdbg tc"><span class="f-red">*</span>二级域名</td>
+                <td colspan="3"><input class="input-text" type="text" name="domain" value="{{ domain }}" datatype="url" ignore="ignore" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">视频账号</td>
+                <td><input class="input-text" type="text" name="deviceUn" value="{{ deviceUn }}" ignore="ignore" /></td>
+                <td class="tdbg tc">密码</td>
+                <td><input class="input-text J-pwd" type="text" name="devicePw" value="{{ devicePw }}" /></td>
+                <td class="tdbg tc">视频提供商</td>
+                <td class="J-laiyuan">
+                    <span class="select-box w_auto">
+                                <select class="select" name="cameraType">
+                                    <option value="0"  {{ if cameraType == 0 }}selected{{/if}}>无</option>
+                                    <option value="1"  {{ if cameraType == 1 }}selected{{/if}}>华麦</option>
+                                    <option value="2"  {{ if cameraType == 2 }}selected{{/if}}>海康</option>
+                                </select>
+                            </span>
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>短信发送间隔<br><span style="display:none;" class="f-red">(单位秒,如修改,60分钟后生效)</span></td>
+                <td><input class="input-text" type="text" name="smsInterval" value="{{ smsInterval }}" ignore="ignore" /></td>
+                <td class="tdbg tc">考勤短信</td>
+                <td> <label><input type="radio" name="smsFlag"  value="1" {{ if smsFlag == 1 }} checked {{/if}}>开</label>
+                    <label style="margin-left:10px;"><input type="radio" name="smsFlag" value="0"  {{ if smsFlag == 0 }} checked {{/if}} >关</label></td>
+                 <td class="tdbg tc">通知公告短信</td>
+                 <td> <label><input type="radio" name="noticesSmsFlag"  value="1" {{ if noticesSmsFlag == 1 }} checked {{/if}}>开</label>
+                     <label style="margin-left:10px;"><input type="radio" name="noticesSmsFlag" value="0"  {{ if noticesSmsFlag == 0 }} checked {{/if}} >关</label></td>
+            </tr>
+             <tr>
+                <td class="tdbg tc">宝贝门禁控制</td>
+                <td><label><input type="radio" name="kidRfFlag" value="1" {{ if kidRfFlag == 1 }} checked {{/if}}>开</label>
+                    <label style="margin-left:10px;"><input type="radio" name="kidRfFlag" value="0" {{ if kidRfFlag == 0 }} checked {{/if}} >关</label></td>
+                <td class="tdbg tc">教师门禁控制</td>
+                <td colspan="3"> <label><input type="radio" name="teacherRfFlag" value="1" {{ if teacherRfFlag == 1 }} checked {{/if}}>开</label>
+                    <label style="margin-left:10px;"><input type="radio" name="teacherRfFlag" value="0" {{ if teacherRfFlag == 0 }} checked {{/if}} >关</label></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="ptop10">园所联系人信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc"><span class="f-red">*</span>联系人</td>
+                <td width="35%"><input class="input-text" type="text" name="contactName" value="{{ contactName }}" datatype="cname|ename" /></td>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>手机号</td>
+                <td><input class="input-text" type="text" name="telephone" value="{{ telephone }}" datatype="m" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">电话</td>
+                <td>
+                    <input class="input-text" type="text" name="contactTel" value="{{ contactTel }}" datatype="t" ignore="ignore" />
+                </td>
+                <td class="tdbg tc">QQ号</td>
+                <td>
+                    <input class="input-text" type="text" name="qq" value="{{ qq }}" datatype="qq" ignore="ignore" />
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">邮箱</td>
+                <td>
+                    <input class="input-text" type="text" name="email" value="{{ email }}" datatype="e" ignore="ignore" />
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+        <p style="margin-top:-10px;">园所基本信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc">园名</td>
+                <td width="35%">{{ schoolName }}</td>
+                <td class="tdbg tc" style="width:12%;">状态</td>
+                <td colspan="3">
+                    <label>{{ if isUse == 1}}启用{{/if}}{{ if isUse == 0}}停用{{/if}}</label>
+                </td>
+            </tr>
+            <tr>
+                <td width="13%" class="tdbg tc">地址</td>
+                <td colspan="5" class="J-cityBox">
+                    {{ if provName == '' || provName == null}}
+                    {{ cityName }}--{{ distName }}--详细地址：{{ address }}
+                    {{ else }}
+                    {{ provName }}--{{ cityName }}--{{ distName }}--详细地址：{{ address }}
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">学校电话</td>
+                <td>
+                    {{ schoolTel }}
+                </td>
+                <td class="tdbg tc">学校传真</td>
+                <td colspan="3">
+                    {{ fax }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">顶级域名</td>
+                <td>{{ ownDomain }}</td>
+                <td class="tdbg tc">二级域名</td>
+                <td colspan="3">{{ if domain != null && domain != "" }}<a href="{{ domain }}" target="_blank">{{ domain }}</a>{{/if}} </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">视频账号</td>
+                <td>{{ deviceUn }}</td>
+                <td class="tdbg tc">密码</td>
+                <td colspan="3">{{ devicePw }}</td>
+                <td class="tdbg tc">视频来源</td>
+                <td>
+                    {{ if cameraType == 0 }}无{{/if}}
+                    {{ if cameraType == 1 }}华麦{{/if}}
+                    {{ if cameraType == 2 }}海康{{/if}}
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc">短信发送间隔</td>
+                <td>{{ smsInterval }}</td>
+                <td class="tdbg tc">考勤短信</td>
+                <td  class="tc">
+                    {{ if smsFlag == 1 }}开{{/if}}
+                    {{ if smsFlag == 0 }}关{{/if}}
+                </td>
+                 <td class="tdbg tc">通知公告短信</td>
+                 <td  class="tc">
+                     {{ if noticesSmsFlag == 1 }}开{{/if}}
+                     {{ if noticesSmsFlag == 0 }}关{{/if}}
+                 </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc">宝贝门禁控制</td>
+                <td  class="tc">
+                     {{ if kidRfFlag == 1 }}开{{/if}}
+                     {{ if kidRfFlag == 0 }}开{{/if}}
+                    </td>
+                <td class="tdbg tc">教师门禁控制</td>
+                <td colspan="3" class="tc">
+                     {{ if teacherRfFlag == 1 }}开{{/if}}
+                     {{ if teacherRfFlag == 0 }}开{{/if}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p  class="ptop10">填写园所联系人信息</p>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="12%" class="tdbg tc">联系人</td>
+                <td width="35%">{{ contactName }}</td>
+                <td width="12%" class="tdbg tc">手机号</td>
+                <td>{{ telephone }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">电话</td>
+                <td>
+                    {{ contactTel }}
+                </td>
+                <td class="tdbg tc">QQ号</td>
+                <td>
+                    {{ qq }}
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">邮箱</td>
+                <td>
+                    {{ email }}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="tplJzg">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-addJhr" title="关联其他代理商">关联其他代理商</a>
+    <div class="tableGrids hidLimt">
+        <table id="mmgJhr" style="width:100%;"></table>
+        <div class="table-paginator hidLimt">
+            <div id="paginatorJhr"></div>
+        </div>
+    </div>
+</script>
+    <script type="text/html" id="tplDailishang">
+       <div class="tplProvice J-dailshangCitys">
+           筛选：
+           <span class="select-box w_auto">
+                <select class="select prov J-select" name="provId" id="provId"></select>
+           </span>
+           <span class="select-box w_auto J-select">
+               <select class="select city" name="cityId" id="cityId"></select>
+           </span>
+           <span class="select-box w_auto J-select">
+               <select class="select dist" name="distId" id="distId"></select>
+           </span>
+       </div>
+       <div>选择：
+           <span class="select-box w_auto">
+               <select class="select" id="dailishang" name="dailishang">
+
+               </select>
+           </span>
+       </div>
+    </script>
+    <script type="text/html" id="tplSelectDailishang">
+        {{each list as val key }}
+            <option  value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.agentName }}</option>
+        {{/each}}
+    </script>
+<script type="text/javascript" src="../static/admin/js/service/yey-yuansuo.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-yuansuo.min.js"></script> -->
+
+
+
+
+
+

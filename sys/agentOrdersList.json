@@ -1,0 +1,29 @@
+﻿{
+    "command": "agentOrdersList",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "操作成功",
+    "totalCount": 1,
+    "list": [
+        {
+            "id": 1,
+            "orderNO": "1467367661262",
+            "total": 200,
+            "ageId": 0,
+            "isUse": 0,
+            "insertDate": "2016-07-01 18:07:41",
+            "endDate": null,
+            "orderDetail": [
+                {
+                    "id": 1,
+                    "proId": 2,
+                    "price": 200,
+                    "number": 1,
+                    "aoId": 1,
+                    "proName": "pos道闸设备"
+                }
+            ]
+        }
+    ],
+    "nowDate": "2016-11-24 17:04:26"
+}

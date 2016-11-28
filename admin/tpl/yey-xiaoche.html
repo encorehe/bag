@@ -1,0 +1,519 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search J-citys">
+        <form action="" method="post" class="form form-horizontal J-searchForm">
+
+            <span class="J-schools"></span>
+				<!--<span class="select-box w_auto">
+				  <select class="select" name="isUse" id="isUse">
+					  <option value="" selected>全部</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>-->
+				<span class="select-box w_auto">
+				  <select class="select" name="busType" id="busType">
+					  <option value="" selected>巴士类型</option>
+					  <option value="1" >正常</option>
+					  <option value="2">加班</option>
+				  </select>
+				</span>
+            <input type="text" placeholder="线路" value="" id="keyWord" name="keyWord" class="input-text"/>
+            <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+        </form>
+    </div>
+</div>
+<div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+        <div id="paginator"></div>
+    </div>
+</div>
+
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加校车"><i class="iconfont">&#xe618;</i>添加线路</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a href="javascript:void(0);" class="btn btn-default radius J-delAll" title="批量删除"><i class="iconfont">&#xe617;</i>批量删除</a>
+   <!-- <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>-->
+</script>
+<script type="text/html" id="tplTeachers">
+    {{ if list.length == 0 }}
+    <option value="">无</option>
+    {{/if}}
+    {{each list as val key }}
+        <option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.name }}</option>
+    {{/each}}
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <div class="xiaocheAdd">
+            <span class="J-school"></span>
+        </div>
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="7.8%" class="tdbg tr"><span class="f-red">*</span>路线名称</td>
+                <td width="35%"><input class="input-text" type="text" name="lineName" datatype="title" /></td>
+                <td width="7.8%%" class="tdbg tr">班车类型</td>
+                <td width="35%">
+                    <label><input type="radio" name="busType" value="1" checked>正常</label>
+                    <label style="margin:0 10px;"><input type="radio" name="busType" value="2">加班</label>
+                    <label><input type="radio" name="busType" value="0">其他</label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">班车状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1" checked>启运</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0">停运</label>
+                </td>
+                <td class="tdbg tr"><span class="f-red">*</span>终端编号</td>
+                <td><input class="input-text" type="text" name="busTerminalNum" datatype="*" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">简介</td>
+                <td><textarea class="textarea" name="brief" id="brief"></textarea></td>
+                <td class="tdbg tr">短信选择</td>
+                <td>
+                    <p> <label class="label-title">上学短信：</label>
+                        <span class="mr10"><input type="radio" name="attendMsg" value="1" checked>发送</span>
+                        <span><input type="radio" name="attendMsg" value="0" >不发</span>
+                    </p>
+                    </p>
+                    <p>
+                        <label class="label-title">放学短信：</label>
+                        <span class="mr10"><input type="radio" name="leaveMsg" value="1" checked>发送</span>
+                        <span><input type="radio" name="leaveMsg" value="0">不发</span>
+                    </p>
+                    <p style="margin-bottom:0;">
+                        <label class="label-title">预报站短信：</label>
+                        <span class="mr10"><input type="radio" name="stationMsg" value="1" checked>发送</span>
+                        <span><input type="radio" name="stationMsg" value="0">不发</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">幼儿数</td>
+                <td colspan="3">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table tableStyle" style="margin-top:-1px;">
+            <thead>
+            <tr>
+                <th width="5%"></th>
+                <th class="tc">班车名称</th>
+                <th width="15%" class="tc">发车时间</th>
+                <th class="tc"><span class="f-red">*</span>车牌号码</th>
+                <th class="tc"><span class="f-red">*</span>校车司机</th>
+                <th class="tc"><span class="f-red">*</span>司机电话</th>
+                <th class="tc"><span class="f-red">*</span>跟车教师</th>
+                <th class="tc"><span class="f-red">*</span>教师电话</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="tdbg tc">上学</td>
+                <td><input class="input-text" type="text" name="toSchBusName" datatype="title" /></td>
+                <td><input class="input-text laydate-icon J-date" type="text" name="toSchDriverTime" datatype="*" /></td>
+                <td><input class="input-text" type="text" name="toSchBusNum" datatype="busId" /></td>
+                <td><span class="select-box">
+						  <select class="select J-siji" name="toSchDriverid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" name="toSchTeacher" datatype="m" readonly /></td>
+                <td>
+						<span class="select-box">
+						  <select class="select J-teacher" name="toSchTeacherid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text" readonly datatype="m" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">放学</td>
+                <td><input class="input-text" type="text" name="fromSchBusName" datatype="title" /></td>
+                <td><input class="input-text laydate-icon J-date" type="text" name="fromSchDriverTime" datatype="*" /></td>
+                <td><input class="input-text" type="text" name="fromSchbusNum" datatype="busId" /></td>
+                <td><span class="select-box">
+						  <select class="select J-siji" name="fromSchDriverid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" readonly datatype="m" /></td>
+                <td>
+						<span class="select-box">
+						  <select class="select J-teacher" name="fromSchTeacherid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text" datatype="m" readonly /></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm" id="zdForm"  onsubmit="return false">
+        <div class="xiaocheEdit">
+            <span class="J-school"></span>
+        </div>
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="7.8%" class="tdbg tr"><span class="f-red">*</span>路线名称</td>
+                <td width="35%"><input class="input-text" type="text" name="lineName" value={{ lineName }} datatype="*" /></td>
+                <td width="7.8%%" class="tdbg tr">班车类型</td>
+                <td width="35%">
+                    <label><input type="radio" name="busType" value="1" {{ if busType == 1}}checked{{/if}}>正常</label>
+                    <label style="margin:0 10px;"><input type="radio" name="busType" value="2" {{ if busType == 2}}checked{{/if}} >加班</label>
+                    <label><input type="radio" name="busType" value="0" {{ if busType == 0}}checked{{/if}} >其他</label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">班车状态</td>
+                <td>
+                    <label><input type="radio" name="isUse" value="1"  {{ if isUse == 1}}checked{{/if}}>启运</label>
+                    <label style="margin-left:10px;"><input type="radio" name="isUse" value="0" {{ if isUse == 0}}checked{{/if}}>停运</label>
+                </td>
+                <td class="tdbg tr"><span class="f-red">*</span>终端编号</td>
+                <td><input class="input-text" type="text" name="busTerminalNum" value="{{ busTerminalNum }}" datatype="*" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">简介</td>
+                <td><textarea class="textarea" name="brief" id="brief">{{ brief }}</textarea></td>
+                <td class="tdbg tr">短信选择</td>
+                <td>
+                    <p> <label class="label-title">上学短信：</label>
+                        <span class="mr10"><input type="radio" name="attendMsg" value="1" {{ if attendMsg == 1}} checked{{/if}}>发送</span>
+                        <span><input type="radio" name="attendMsg" value="0" {{ if attendMsg == 0}} checked{{/if}} >不发</span>
+                    </p>
+                    </p>
+                    <p>
+                        <label class="label-title">放学短信：</label>
+                        <span class="mr10"><input type="radio" name="leaveMsg" value="1" {{ if leaveMsg == 1}} checked{{/if}}>发送</span>
+                        <span><input type="radio" name="leaveMsg" value="0" {{ if leaveMsg == 0}} checked{{/if}}>不发</span>
+                    </p>
+                    <p style="margin-bottom:0;">
+                        <label class="label-title">预报站短信：</label>
+                        <span class="mr10"><input type="radio" name="stationMsg" value="1" {{ if stationMsg == 1}} checked{{/if}}>发送</span>
+                        <span><input type="radio" name="stationMsg" value="0" {{ if stationMsg == 0}} checked{{/if}}>不发</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">幼儿数</td>
+                <td colspan="3">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table tableStyle" style="margin-top:-1px;">
+            <thead>
+            <tr>
+                <th width="5%"></th>
+                <th class="tc"><span class="f-red">*</span>班车名称</th>
+                <th width="15%" class="tc"><span class="f-red">*</span>发车时间</th>
+                <th class="tc"><span class="f-red">*</span>车牌号码</th>
+                <th class="tc"><span class="f-red">*</span>校车司机</th>
+                <th class="tc"><span class="f-red">*</span>司机电话</th>
+                <th class="tc"><span class="f-red">*</span>跟车教师</th>
+                <th class="tc"><span class="f-red">*</span>教师电话</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="tdbg tc">上学</td>
+                <td><input class="input-text" type="text" name="toSchBusName" value="{{ toSchBusName }}" /></td>
+                <td><input class="input-text laydate-icon J-date" type="text" name="toSchDriverTime" value="{{ toSchDriverTime }}"   /></td>
+                <td><input class="input-text" type="text" name="toSchBusNum" value="{{ toSchBusNum }}" datatype="busId" /></td>
+                <td><span class="select-box">
+						  <select class="select J-siji" name="toSchDriverid" id="toSchDriverid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" datatype="m" name="toSchTeacher" /></td>
+                <td>
+						<span class="select-box">
+						  <select class="select J-teacher" name="toSchTeacherid" id="toSchTeacherid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text"  datatype="m" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">放学</td>
+                <td><input class="input-text" type="text" name="fromSchBusName" value="{{ fromSchBusName }}" /></td>
+                <td><input class="input-text laydate-icon J-date" type="text" name="fromSchDriverTime" value="{{ fromSchDriverTime }}" /></td>
+                <td><input class="input-text" type="text" name="fromSchbusNum" value="{{ fromSchbusNum }}" datatype="busId" /></td>
+                <td><span class="select-box">
+						  <select class="select J-siji" name="fromSchDriverid" id="fromSchDriverid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" datatype="m"  /></td>
+                <td>
+						<span class="select-box">
+						  <select class="select J-teacher" name="fromSchTeacherid">
+						  </select>
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text" name="fromSchTeacherTelephone" datatype="m" /></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="btn-act"><button  type="submit" id="btnSav" class="btn btn-success radius" title="保存">保存</button></p>
+    </form>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="7.8%" class="tdbg tr">路线名称</td>
+                <td width="35%"><input class="input-text" type="text" name="lineName" value="{{ lineName }}" readonly /></td>
+                <td width="7.8%%" class="tdbg tr">班车类型</td>
+                <td width="35%">
+                    <label>
+                        {{ if busType == 1}}正常{{/if}}
+                        {{ if busType == 2}}加班{{/if}}
+                        {{ if busType == 0}}其他{{/if}}
+                    </label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">班车状态</td>
+                <td>
+                    <label>
+                        {{ if isUse == 1}}启运{{/if}}
+                        {{ if isUse == 0}}停运{{/if}}
+                    </label>
+                </td>
+                <td class="tdbg tr">终端编号</td>
+                <td><input class="input-text" type="text" name="busTerminalNum" value="{{busTerminalNum}}" readonly /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">简介</td>
+                <td><div class="textarea" name="brief" id="brief" readonly>{{ brief }}</div></td>
+                <td class="tdbg tr">短信选择</td>
+                <td>
+                    <p> <label class="label-title">上学短信：</label>
+			  	  	 		<span>
+				  	  	 		{{ if attendMsg == 1}}发送{{/if}}
+				  	  	 		{{ if attendMsg == 0}}不发{{/if}}
+			  	  	 		</span>
+                    </p>
+                    </p>
+                    <p>
+                        <label class="label-title">放学短信：</label>
+			  	  	 		<span>
+				  	  	 		{{ if leaveMsg == 1}}发送{{/if}}
+				  	  	 		{{ if leaveMsg == 0}}不发{{/if}}
+			  	  	 		</span>
+                    </p>
+                    <p style="margin-bottom:0;">
+                        <label class="label-title">预报站短信：</label>
+			  	  	 		<span>
+				  	  	 		{{ if stationMsg == 1}}发送{{/if}}
+				  	  	 		{{ if stationMsg == 0}}不发{{/if}}
+			  	  	 		</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tr">幼儿数</td>
+                <td colspan="3">
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table tableStyle" style="margin-top:-1px;">
+            <thead>
+            <tr>
+                <th width="5%"></th>
+                <th class="tc">班车名称</th>
+                <th width="15%" class="tc">发车时间</th>
+                <th class="tc">车牌号码</th>
+                <th class="tc">校车司机</th>
+                <th class="tc">司机电话</th>
+                <th class="tc">跟车教师</th>
+                <th class="tc">教师电话</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="tdbg tc">上学</td>
+                <td><input class="input-text" type="text" name="toSchBusName" value="{{ toSchBusName }}" readonly /></td>
+                <td><input class="input-text laydate-icon" type="text" name="toSchDriverTime" value="{{ toSchDriverTime }}" readonly /></td>
+                <td><input class="input-text" type="text" name="toSchBusNum" value="{{ toSchBusNum }}" readonly /></td>
+                <td><span class="select-box">
+						  {{toSchDriverName}}
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" name="toSchDriverTelephone" value="{{ toSchDriverTelephone }}" id="toSchDriverTelephone" readonly /></td>
+                <td>
+						<span class="select-box">
+						 {{ toSchTeacherName }}
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text" value="{{ toSchTeacherTelephone }}" name="{{ toSchTeacherTelephone }}" id="toSchTeacherTelephone" readonly /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">放学</td>
+                <td><input class="input-text" type="text" name="fromSchBusName" value="{{ fromSchBusName }}" readonly /></td>
+                <td><input class="input-text laydate-icon" type="text" name="fromSchDriverTime" value="{{ fromSchDriverTime }}" readonly /></td>
+                <td><input class="input-text" type="text" name="fromSchbusNum" value="{{ fromSchbusNum }}" readonly /></td>
+                <td><span class="select-box">
+						  {{fromSchDriverName}}
+						</span>
+                </td>
+                <td><input class="input-text J-siji-phone" type="text" value="{{ fromSchDriverTelephone }}"  id="fromSchDriverTelephone" name="fromSchDriverTelephone" readonly /></td>
+                <td>
+						<span class="select-box">
+						 {{ fromSchTeacherName }}
+						</span>
+                </td>
+                <td><input class="input-text J-teacher-phone" type="text" value="{{  fromSchTeacherTelephone }}"  id="fromSchTeacherTelephone" name="fromSchTeacherTelephone" readonly /></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplZhandian">
+    <p>【<span class="J-title">线路：{{ lineName }}</span>】 <a style="float:right" href="javascript:void(0);" class="btn btn-primary radius J-addZD" title="添加校车"><i class="iconfont"></i>新增站点</a></p>
+    <div class="table-wrapper">
+        <table id="mmgZDs"></table>
+        <div class="table-paginator">
+            <div id="paginators"></div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="tplZdChk">
+<div style="margin:20px;">
+    <table class="table tableStyle">
+        <body>
+        <tr>
+            <td class="tdbg tr" style="width:10%">站点名字</td>
+            <td colspan="3">{{ name }}</td>
+        </tr>
+        <tr>
+            <td class="tdbg tr">早上到达时间</td>
+            <td>{{ amTime }}</td>
+            <td class="tdbg tc" style="width:80px;">下午达到时间</td>
+            <td>{{ pmTime }}</td>
+        </tr>
+        <tr>
+            <td class="tdbg tr">地点</td>
+            <td colspan="3">
+                <div class="content">
+                    <div id="f_container" style="position:absolute;top:0;right:0;">
+                        <div id="container"></div>
+                        <input type="hidden" id="latitude" name="latitude" value="{{ latitude }}">
+                        <input type="hidden" id="longitude" name="longitude" value="{{ longitude }}">
+                    </div>
+                    <div id="allmap" style="width:790px;height:500px;"></div>
+                </div>
+            </td>
+        </tr>
+
+        </body>
+    </table>
+    </div>
+</script>
+<script type="text/html" id="tplZdEdit">
+    <form action="" class="J-zdForm">
+        <input type="hidden" name="busLineId" value="{{ busLineId }}">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <body>
+            <tr>
+                <td class="tdbg tr" width="15%"><span class="f-red">*</span>站点名字</td>
+                <td colspan="3"><input type="text" class="input-text" name="name" value="{{ name }}" datatype="*"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>早上到达时间</td>
+                <td><input type="text" class="input-text laydate-icon J-date" name="amTime" value="{{ amTime }}" datatype="*"></td>
+                <td class="tdbg tc"><span class="f-red">*</span>下午达到时间</td>
+                <td><input type="text" class="input-text laydate-icon J-date" name="pmTime" value="{{ pmTime }}" datatype="*" ></td>
+            </tr>
+            <tr>
+                <td class="tdbg tr"><span class="f-red">*</span>选取地点</td>
+                <td colspan="3">
+                    <div class="content">
+                        <p style="margin-top:0;">鼠标选取坐标 <input type="text" class="input-text w_auto" id="latitude" name="latitude" value="{{ latitude }}" datatype="*" readonly>
+                            <input type="text" class="input-text w_auto" id="longitude" name="longitude" value="{{ longitude }}" datatype="*" readonly></p>
+                            <div id="container"></div>
+                        <div id="allmap" style="width:790px;height:500px;"></div>
+                    </div>
+                </td>
+            </tr>
+            </body>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplBabyBoxs">
+    <div style="padding:20px;">
+        <div class="action">
+            <div class="btnsArea"><a style="float:right" href="javascript:void(0);" class="btn btn-primary radius zdbb J-addBb" title="新增站点宝贝"><i class="iconfont"></i>站点宝贝</a></div>
+        </div>
+        <div class="table-wrapper">
+            <table id="busKid"></table>
+            <div class="table-paginator">
+                <div id="paginatorBusKid"></div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="tplBusKids">
+    <form action="" id="busKidsAddForm" style="padding:20px;">
+    
+        <table class="table tableStyle">
+            <body>
+            <tr>
+              <td width="15%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+                <td class="J-school-xc"></td>
+                <td width="15%" class="tdbg tc">班级</td>
+                <td class="J-class-xc"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">宝贝</td>
+                <td colspan="3" class="J-babys"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">已选中宝贝</td>
+                <td colspan="3" class="J-curBabys"></td>
+            </tr>
+            </body>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplBaby">
+    {{ each list as val }}
+    <label for="kidId"><input type="checkbox" name="kidId" value="{{ val.id }}" {{ if val.checkedflag }}checked{{/if}}  />{{ val.name }}</label>
+    {{/each}}
+</script>
+<script type="text/html" id="tplBabyCur">
+    {{ each list as val }}
+    <label class="active" for="kidId"><input type="checkbox" name="kidId" value="{{ val.id }}" checked  />{{ val.name }}</label>
+    {{/each}}
+</script>
+
+<script type="text/javascript" src="../static/admin/js/service/yey-xiaoche.js"></script>
+
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-xiaoche.min.js"></script> -->
+
+
+
+
+

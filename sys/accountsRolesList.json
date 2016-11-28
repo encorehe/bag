@@ -1,0 +1,35 @@
+{
+    "command": "accountsRolesList",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "操作成功",
+    "totalCount": 1,
+    "list": [
+        {
+            "id": 1,
+            "roleName": "管理员",
+            "code": "CG",
+            "roleTypeId": 1,
+            "insertDate": "2016-04-11 10:27:46",
+            "schoolId": 0,
+            "isUse": 1,
+            "schoolName": null,
+            "roleId": null,
+            "accountId": null,
+            "className": null,
+            "classId": null,
+            "kidName": null,
+            "gender": null,
+            "icon": null,
+            "kidId": null,
+            "relationshipName": null,
+            "kidSchoolId": null,
+            "kidSchoolName": null,
+            "classImages": null,
+            "cameraType": null,
+            "kidCameraType": null,
+            "videoExpirationDate": null
+        }
+    ],
+    "nowDate": "2016-11-24 16:39:57"
+}

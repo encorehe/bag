@@ -1,0 +1,166 @@
+﻿<div class="action">
+        <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+      <form action="" method="post" class="form form-horizontal J-searchForm">
+        <span class="J-school"></span>
+        <span class="J-class"></span>
+        <span class="J-select">
+             <select class="select-box w_auto" name="type">
+                <option value="">请假人类型</option>
+                <option value="1">老师</option>
+                <option value="0">学生</option>
+             </select>
+        </span>
+        <input type="text" class="input-text" name="startDate" placeholder="开始时间" onclick="WdatePicker({skin:'whyGreen'});">
+        <input type="text" class="input-text" name="endDate" placeholder="结束时间" onclick="WdatePicker({skin:'whyGreen'});">
+        <input type="text" placeholder="教师姓名" value="" id="teacherName" name="teacherName" class="input-text"/>
+        <input type="text" placeholder="宝贝姓名" value="" id="keyWord" name="keyWord" class="input-text"/>
+        <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+      </form>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table id="mmg"></table>
+    <div class="table-paginator">
+      <div id="paginator"></div>
+    </div>
+  </div>
+<script type="text/html" id="addBtn">
+  <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加考勤规则"><i class="iconfont">&#xe618;</i>添加请假记录</a>
+</script>
+<script type="text/html" id="delAllBtn">
+  <a href="javascript:void(0);" style="display:none;" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+  <a href="javascript:void(0);" style="display:none;" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplList">
+  {{ if list.length ==0 }}暂无{{/if}}
+  {{ each list as val key}}
+    <a  {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}} href="javascript:void(0);">
+            <span>{{ val.name }}</span>
+            <span class="duigou">√</span>
+    </a>
+  {{/each}}
+</script>
+  <script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                   <tr>
+                       <td width="15%" class="tdbg tc">类型</td>
+                       <td>
+                           <span class="select-box">
+                <select class="select J-attendanceType" name="attendanceType">
+                  <option value="2">病假</option>
+                  <option value="3">事假</option>
+                </select>
+              </span>
+                       </td>
+                       <td width="15%" class="tdbg tc">请假人类型</td>
+                       <td>
+                           <span class="select-box">
+                <select class="select J-person" name="person">
+                  <option value="1">教职工</option>
+                  <option value="2">幼儿</option>
+                </select>
+              </span>
+                       </td>
+                   </tr>
+                   <tr>
+                     <td class="tdbg tc">请假人</td>
+                     <td colspan="3" class="J-qj"></td>
+                   </tr>
+                   <tr>
+                      <td class="tdbg tc"><span class="f-red">*</span>请假时间</td>
+                       <td colspan="3"><input class="input-text laydate-icon J-date" type="text" id="attDate" name="attDate" datatype="*" /></td>
+                   </tr>
+                   <tr class="tdbg tc">
+                       <td><span class="f-red">*</span>请假原因</td>
+                       <td colspan="3"><textarea class="textarea" name="leaveReason" id="leaveReason" cols="30" rows="10" datatype="*"></textarea></td>
+                   </tr>
+                </tbody>
+            </table>
+    </form>
+  </script>
+  <script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                   <tr>
+                      <td class="tdbg tc"><span class="f-red">*</span>被抓拍人</td>
+                      <td>{{ if teacherId == 0 }}
+                              {{ kidName }}
+                              {{ else }}
+                              {{ teacherName }}
+                          {{/if}}
+                        </td>
+                       <td class="tdbg tc"><span class="f-red">*</span>被抓拍时间</td>
+                      <td>{{ attTime }}</td>
+                   </tr>
+                   <tr class="tdbg tc">
+                       <td  class="tdbg tc"><span class="f-red">*</span>抓拍图片</td>
+                       <td colspan="3" class="J-imgs"><img id="preview" src="" height="60px" /></td>
+                   </tr>
+                </tbody>
+            </table>
+    </form>
+  </script>
+    <script type="text/html" id="tplQj">
+        <table class="table">
+            <tbody>
+                <tr class="J-qjTag">
+                    <td class="tdbg tc" width="10%">园所</td>
+                    <td class="J-eleSchool"></td>
+                    {{ if person == 2}}
+                        <td class="tdbg tc" width="10%">班级</td>
+                        <td class="J-classItem"></td>
+                    {{/if}}
+                </tr>
+                <tr>
+                    <td class="tdbg tc">请假人</td>
+                    <td class="alink" {{ if person == 2}} colspan="3"{{/if}}>
+                        <div class="J-qjItem" style="max-height:120px;overflow:auto"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>
+  <script type="text/html" id="tplDaochu">
+      <form class='J-form-daochu'>
+          <table class="table tableStyle">
+              <tbody>
+              <tr>
+                  <td width="15%" class="tdbg tc">请假人类型</td>
+                  <td colspan="3">
+                           <span class="select-box">
+                                <select class="select J-person" name="type">
+                                  <option value="1">教职工</option>
+                                  <option value="2">学生</option>
+                                </select>
+                  </td>
+              </tr>
+              <tr>
+                  <td class="tdbg tc" width="15%"><span class="f-red">*</span>开始时间</td>
+                  <td><input onclick="WdatePicker({ skin: 'whyGreen',dateFmt: 'yyyy-MM-dd'});" class="input-text laydate-icon" type="text" name="startDate" id="startDate" readonly datatype="*" ></td>
+                  <td class="tdbg tc" width="15%"><span class="f-red">*</span>结束时间</td>
+                  <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'startDate\')}'});" class="input-text laydate-icon" type="text" readonly name="endDate" datatype="*"></td>
+              </tr>
+              <tr class="J-s">
+                  <td  class="tdbg tc">导出范围</td>
+                  <td colspan="3" class="J-duixiang"></td>
+              </tr>
+              </tbody>
+          </table>
+      </form>
+  </script>
+<script type="text/html" id="duixiangTpl">
+    <span class="J-schools"></span>
+    <span class="J-class"></span>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/yey-kaoqinjilu.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-kaoqinjilu.min.js"></script> -->
+
+
+
+
+
+

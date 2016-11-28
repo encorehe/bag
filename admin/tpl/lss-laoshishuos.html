@@ -1,0 +1,115 @@
+﻿<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+			<span class="J-schools"></span>
+			<span class="J-classs"></span>
+				<span class="select-box w_70">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="标题" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+
+<script type="text/html" id="cacheBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-cache" title="缓存推送"><i class="iconfont">&#xe618;</i>缓存推送</a>
+</script>    
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);"  style="display:none;" class="btn btn-primary radius J-add" title="添加宝贝"><i class="iconfont">&#xe618;</i>添加宝贝</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+	<script type="text/html" id="addTpl">
+	</script>
+<script type="text/html" id="editTpl">
+</script>
+<script type="text/html" id="chkTpl">
+  <table class="table tableStyle">
+        <tbody>
+            <tr>
+                <td  width="10%" class="tdbg tc">学校</td>
+                <td>{{ schoolName }}</td>
+                <td  width="10%" class="tdbg tc">班级</td>
+                <td>{{ className }}</td>
+                <td  width="10%" class="tdbg tc">发表时间</td>
+                <td>{{ insertDate }}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">主题内容</td>
+                <td colspan="5">{{ content }} <div class="imgs layerPhoto J-imgs"></div></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">回复列表</td>
+                <td colspan="5">
+                    <ul class="reply-box">
+                        {{ each commentaryList as val key}}
+                        {{ if val.content == null || val.content =="" }}
+                        <li>
+                            <p class="said">
+                                {{ val.answerer }}于{{ val.insertDate }}点了赞
+                            </p>
+                        </li>
+                        {{ else }}
+                            <li>
+                                <div class="said">
+                                    {{ val.answerer }}于{{ val.insertDate }}评论说：{{ val.content }}
+                                </div>
+                                <p class="reply">
+                                    {{ name }}回复:{{ val.teacherSaidContent }}{{ if val.teacherSaidImg&& val.teacherSaidImg.length>0}}<img src="{{ val.teacherSaidImg }}"  alt="">{{/if}}
+                                </p>
+                            </li>
+                        {{/if}}
+                        {{/each}}
+                    </ul>
+                </td>
+            </tr>
+
+
+        </tbody>
+  </table>
+</script>
+<script type="text/html" id="imgList">
+    {{ each imgs as val key }}
+    {{if val.type==1}}
+    <p>
+        <img src='http://image.bag61.com/{{ val.filePath }}?time={{ timestep }}' alt="">
+    </p>
+    {{/if}}
+    {{if val.type == 2}}
+    <a class="J-luxiang" href="http://video.bag61.com/{{ val.filePath }}" data-img = "http://video.bag61.com/{{ val.filePath }}?vframe/jpg/offset/1/w/480/h/360" {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}}>
+    <span>
+                        <input type="checkbox" name="imgId">
+                    </span>
+    <i class='iconfont J-player' title='播放'>&#xe63e;</i>
+    <img src="http://video.bag61.com/{{ val.filePath }}?vframe/jpg/offset/1/w/480/h/360" >
+    </a>
+    {{/if}}
+    {{/each}}
+</script>
+<script type="text/html" id="tplPlayer">
+    <div id="a1"></div>
+</script>
+<script type="text/javascript" src="../lib/CKplayer_v6.7/ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript" src="../static/admin/js/service/lss-laoshishuo.js"></script>
+<!-- 
+<script type="text/javascript" src="../static/admin/js/serviceMin/lss-laoshishuo.min.js"></script> -->
+
+
+
+
+
+

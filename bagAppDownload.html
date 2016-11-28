@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport"/>
+  <meta name="apple-itunes-app" content="app-id=1112158917"/>
+  <title>点击下载应用</title>
+  <link rel="stylesheet" href="static/app/css/base.css">
+  <link rel="stylesheet" href="static/app/css/app.css">
+</head>
+<body class="success">
+  <div class="page-wrap">
+    <div class="info">
+      <div class="ok-btn"><img src="static/app/images/app/ok.png" alt="注册成功"></div>
+      <p class="entry-con" style="display:none">感谢您加入<span class="J-type">贝安港</span></p>
+      <h2 class="entry-hd">感谢您加入<span class="J-type">贝安港</span></h2>；
+      <ul class="info-list" style="display:none">
+        <li>您的健康档案账号：15507621887</li>
+        <li>您的健康档案密码：621887</li>
+      </ul>
+    </div>
+    <div class="download">
+      <h3 class="entry-hd">立即下载最新<span class="J-type">贝安港</span>app</h3>
+      <p class="entry-con" style="display:none">即可免费领取蓝牙智能血糖仪</p>
+      <div class="download-btn">
+        <a href="javascript:void(0);" class="J-btn"><img src="static/app/images/app/ios-btn.png" alt="苹果版下载"></a>
+        <a href="javascript:void(0);" class="android-btn J-btn"><img src="static/app/images/app/android-btn.png" alt="安卓版下载"></a>
+      </div>
+    </div>
+    <div class="app">
+      <img src="static/app/images/app/app.png" alt="应用预览">
+    </div>
+    <div class="footer-bg">
+      <p class="entry-con">注：微信用户请在右上角选择“在浏览器中打开”，再选择下载应用</p>
+    </div>
+  </div>
+  <div id="weixin-tip"><p><img src="static/app/images/app/live_weixin.png" alt="微信打开"/><span title="关闭" class="close J-close">×</span></p></div>
+  <script type="text/javascript" src="static/admin/js/config.js"></script>
+  <script type="text/javascript" src="lib/app/zepto.min.js"></script>
+  <script type="text/javascript" src="lib/app/layer/layer.js"></script>
+  <script type="text/javascript">
+    var th = null;
+    var toast = function(message){
+      layer.open({
+        content: message,
+        time: 2
+      });
+    };
+    var loadingAjax = function () {
+      indexLoading=layer.open({
+        type: 2
+        //,shade: false
+        ,time: 5
+        //,content: '加载测试中…'
+      });
+    };
+    var app = {
+      init:function(){
+
+        configAdmin.test();
+        th = app;
+        var types = th.getHash();
+        var appType=1;
+        if(appType==1){
+          $('.J-type').text('贝安港');
+        }else{
+          $('.J-type').text('智慧曙光');
+        }
+        th.checkPlatform();
+      },checkPlatform:function(){
+        if(/android/i.test(navigator.userAgent)){
+          th.fun_android();//这是Android平台下浏览器
+        }
+        if(/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+            th.fun_ios();//这是iOS平台下浏览器
+        }
+        if(/MicroMessenger/i.test(navigator.userAgent)){
+            th.fun_weixin();//这是微信平台下浏览器
+        }
+      },fun_android:function(){
+        $('.J-btn').eq(0).remove();
+        var sys = 1;
+        th.addurl(sys);
+      },fun_ios:function(){
+        $('.J-btn').eq(1).remove();
+        var sys = 0;
+        th.addurl(sys);
+      },fun_weixin:function(){
+        var tip = $('#weixin-tip'),
+          close = $('.J-close'),
+          btn =$('.J-btn');
+          btn.on('click',function(e){
+            th.showPop();
+          });
+          close.on('click',function(){
+            th.hidePop();
+          });
+      },hidePop:function(){
+        var tip = $('#weixin-tip');
+        $("body").unbind("touchmove");
+        tip.hide();
+      },
+        showPop:function(){
+          var tip = $('#weixin-tip');
+          tip.show();
+          $('body').bind('touchmove',function(e){
+            e.preventDefault();
+          });
+          return false;
+        },addurl:function(system){
+            systemType = system;
+            var appType=1;
+        $('.J-btn').on('click',function(e){
+          $.ajax({
+            type: "post",
+            url: $appDownload.url,
+            data:{"system":system,"appType":appType},
+            dataType: "json",
+            beforeSend:function () {
+              loadingAjax();
+            },
+            success:function (data) {
+              if(data.success == false){
+                toast('服务器错误,请联系管理员');
+              }else{
+
+                if(data.data == null || data.data == ""){
+                  toast('没有最新的app,请联系管理员');
+                  return false;
+                }
+
+                urlApp = data.data.downUrl;
+                $(this).prop('href',urlApp);
+                var appUrl="";
+                var sId = th.getHash();
+                tempScheme = sId.scheme;
+                switch(systemType){
+                  case 0:
+                    appUrl = tempScheme+"://";
+                    break;
+                  case 1:
+                    appUrl = tempScheme+"://";
+                    break;
+                }
+                location.href = appUrl;
+                setTimeout(function(){
+                  //toast(urlApp);
+                  location.href = urlApp;
+                },3000);
+
+
+              }
+              // toast('ok2');
+            },complete:function () {
+              //toast('ok');
+              closeLayer();
+            },error:function (XMLHttpRequest, textStatus, errorThrown) {
+              toast(XMLHttpRequest.status);
+            }
+
+          })
+        })
+        },getHash:function(){
+        //取得查询的hash，并去除开头的#号
+        var hashStrings = (window.location.hash.length > 0 ? window.location.hash.substring(1) : ""),
+                //保持数据的对象
+
+                hashArgs = {},
+
+                //取得每一项hash对
+
+                items = hashStrings.length > 0 ? hashStrings.split("&") : [],
+
+                item = null,
+
+                name = null,
+
+                value = null,
+
+                i = 0,
+
+                len = items.length;
+
+
+
+        //逐个将每一项添加到hashArgs中
+
+        for (i = 0; i < len; i++) {
+
+          item = items[i].split("=");
+
+          name = decodeURIComponent(item[0]);
+
+          value = decodeURIComponent(item[1]);
+
+          if (name.length > 0) {
+
+            hashArgs[name] = value;
+
+          }
+
+        }
+
+        return hashArgs;
+
+      }
+      };
+    
+
+    $(document).ready(function(){
+   // alert(navigator.platform);
+      app.init();
+    });
+</script>
+</body>
+
+</html>

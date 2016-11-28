@@ -1,0 +1,9 @@
+﻿{
+    "command": "kidAdd",
+    "success": false,
+    "ecode": "E000001",
+    "msg": "班级不能为空",
+    "totalCount": 0,
+    "list": [],
+    "nowDate": "2016-11-24 16:50:57"
+}

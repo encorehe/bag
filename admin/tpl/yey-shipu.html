@@ -1,0 +1,256 @@
+﻿
+        <div class="action">
+            <div class="btnsArea"></div>
+            <div class="searchArea J-search">
+                <form action="" method="post" class="form form-horizontal J-searchForm  J-school">
+                    <span class="J-schools"></span>
+                </form>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table id="mmg"></table>
+            <div class="table-paginator">
+                <div id="paginator"></div>
+            </div>
+        </div>
+    <script type="text/html" id="addBtn">
+        <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加食谱"><i class="iconfont">&#xe618;</i>添加食谱</a>
+    </script>
+    <script type="text/html" id="delAllBtn">
+        <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+        <a href="javascript:void(0);"  class="btn btn-successdd radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+    </script>
+    <script type="text/jhtml" id="tplXueqi">
+        <span class="select-box">
+                  <select class="select" name="semesterId" id="semesterId">
+                      {{ if list && list.length>0 }}
+                       {{each list as val key }}
+                          <option {{ if cur && cur == val.semesterId}} selected {{/if}} value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.semesterName }}</option>
+                      {{/each}}
+                      {{ else }}
+                        <option value="">无学期,需创建</option>
+                      {{/if}}
+                  </select>
+            </span>
+    </script>
+    <script type="text/html" id="tplXuezhou">
+        <span class="select-box">
+            <select class="select" name="xuezhou" id="xuezhou">
+                 {{ if list && list.length>0 }}
+                        {{each list as val key }}
+                            <option {{ if cur && cur.startDate==val.startDate }}selected{{/if}} value="{{ val.id }}" {{each val as vval kkey}}data-{{kkey}}="{{vval}}" {{/each}}>第{{ key+1 }}周:{{ val.startDate }}至{{ val.endDate }}</option>
+                        {{/each}}
+                      {{ else }}
+                        <option value="">无学周,需创建学期</option>
+                      {{/if}}
+            </select>
+        </span>
+    </script>
+    <script type="text/html" id="addTpl">
+        <form action="" method="post" class="form form-horizontal J-addForm">
+            <table class="table tableStyle">
+                <tbody>
+                    <tr>
+                        <td width="10%" class="tdbg tc">学校</td>
+                        <td class="J-school"></td>
+                        <td class="tdbg tc">学期</td>
+                        <td class="J-xueqi"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdbg tc">学周</td>
+                        <td colspan="3" class="J-xuezhou"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdbg tc">每天食谱</td>
+                        <td colspan="3">
+                            <table class="table">
+                                <thead>
+                                    <th width="10%">餐名</th>
+                                    <th>星期一<input type="hidden" name="days" value="1" /> </th>
+                                    <th>星期二<input type="hidden" name="days" value="2" /> </th>
+                                    <th>星期三<input type="hidden" name="days" value="3" /> </th>
+                                    <th>星期四<input type="hidden" name="days" value="4" /> </th>
+                                    <th>星期五<input type="hidden" name="days" value="5" /> </th>
+                                    <th>星期六<input type="hidden" name="days" value="6" /> </th>
+                                    <th>星期天<input type="hidden" name="days" value="7" /> </th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="tdbg tc">早餐</td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                        <td><input class="input-text" type="text" name="breakfast" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tdbg tc">早点</td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                        <td><input class="input-text" type="text" name="morningSnack" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tdbg tc">午餐</td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                        <td><input class="input-text" type="text" name="lunch" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tdbg tc">午点</td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                        <td><input class="input-text" type="text" name="afternoonSnack" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tdbg tc">晚餐</td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                        <td><input class="input-text" type="text" name="supper" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/html" id="editTpl">
+        <form action="" method="post" class="form form-horizontal J-editForm">
+            <input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="10%" class="tdbg tc">学校</td>
+                    <td class="J-school"></td>
+                    <td class="tdbg tc">学期</td>
+                    <td class="J-xueqi"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">学周</td>
+                    <td colspan="3" class="J-xuezhou"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">每天食谱</td>
+                    <td colspan="3">
+                        <table class="table">
+                            <thead>
+                                <th width="10%" class="tdbg tc">周</th>
+                                 <th>
+                                     {{ if day == 1}}一 <input type="hidden" name="day" value="1" />{{/if}}
+                                     {{ if day == 2}}二 <input type="hidden" name="day" value="2" />{{/if}}
+                                     {{ if day == 3}}三 <input type="hidden" name="day" value="3" />{{/if}}
+                                     {{ if day == 4}}四 <input type="hidden" name="day" value="4" />{{/if}}
+                                     {{ if day == 5}}五 <input type="hidden" name="day" value="5" />{{/if}}
+                                     {{ if day == 6}}六 <input type="hidden" name="day" value="6" />{{/if}}
+                                     {{ if day == 7}}日 <input type="hidden" name="day" value="7" />{{/if}}
+                                 </th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="tdbg tc">早餐</td>
+                                <td><input class="input-text" type="text" name="breakfast"  value="{{ breakfast }}"  /></td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">早点</td>
+                                <td><input class="input-text" type="text" name="morningSnack"  value="{{ morningSnack }}" /></td>
+                            <tr>
+                                <td class="tdbg tc">午餐</td>
+                                <td><input class="input-text" type="text" name="lunch"  value="{{ lunch }}"  /></td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">午点</td>
+                                <td><input class="input-text" type="text" name="afternoonSnack"  value="{{ afternoonSnack }}"  /></td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">晚餐</td>
+                                <td><input class="input-text" type="text" name="supper"  value="{{ supper }}"  /></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/html" id="chkTpl">
+        <form action="" method="post" class="form form-horizontal J-chkForm">
+            <input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="10%" class="tdbg tc">学校</td>
+                    <td class="J-school"></td>
+                    <td class="tdbg tc">学期</td>
+                    <td class="J-xueqi"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">学周</td>
+                    <td colspan="3" class="J-xuezhou"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">每天食谱</td>
+                    <td colspan="3">
+                        <table class="table">
+                            <thead>
+                            <th width="10%">餐名</th>
+                            <th>
+                                {{ if day == 1}}星期一 <input type="hidden" name="day" value="1" />{{/if}}
+                                {{ if day == 2}}星期二 <input type="hidden" name="day" value="2" />{{/if}}
+                                {{ if day == 3}}星期三 <input type="hidden" name="day" value="3" />{{/if}}
+                                {{ if day == 4}}星期四 <input type="hidden" name="day" value="4" />{{/if}}
+                                {{ if day == 5}}星期五 <input type="hidden" name="day" value="5" />{{/if}}
+                                {{ if day == 6}}星期六 <input type="hidden" name="day" value="6" />{{/if}}
+                                {{ if day == 7}}星期日 <input type="hidden" name="day" value="7" />{{/if}}
+                            </th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="tdbg tc">早餐</td>
+                                <td>{{ breakfast }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">早点</td>
+                                <td>{{ morningSnack }}</td>
+                            <tr>
+                                <td class="tdbg tc">午餐</td>
+                                <td>{{ lunch }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">午点</td>
+                                <td>{{ afternoonSnack }}</td>
+                            </tr>
+                            <tr>
+                                <td class="tdbg tc">晚餐</td>
+                                <td>{{ supper }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </script>
+    <script type="text/javascript" src="../static/admin/js/service/yey-shipu.js"></script>
+   
+ <!--    <script type="text/javascript" src="../static/admin/js/serviceMin/yey-shipu.min.js"></script> -->

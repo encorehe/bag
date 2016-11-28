@@ -1,0 +1,32 @@
+﻿{
+    "command": "login",
+    "success": true,
+    "ecode": "E000000",
+    "msg": "登录成功",
+    "totalCount": 0,
+    "list": [],
+    "nowDate": "2016-11-24 16:39:56",
+    "data": {
+        "id": 1,
+        "userName": "admin",
+        "passWord": "49dd07b5b59391bf30f1c68a714f7a29",
+        "isUse": 1,
+        "regDate": "2016-02-17 00:00:00",
+        "points": 0.04,
+        "phoneKey": "",
+        "roleName": "管理员",
+        "schoolId": 0,
+        "schoolName": null,
+        "code": "CG",
+        "name": "超级管理员",
+        "gender": 0,
+        "icon": null,
+        "classId": 0,
+        "agentId": null,
+        "cameraType": 0,
+        "roleId": 1,
+        "roleTypeId": 1,
+        "jzRoleTypeId": null,
+        "kidList": []
+    }
+}

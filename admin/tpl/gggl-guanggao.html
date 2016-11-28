@@ -1,0 +1,249 @@
+﻿
+<div class="action">
+    <div class="btnsArea"></div>
+    <div class="searchArea J-search">
+            <form action="" method="post" class="form form-horizontal J-searchForm">
+                 <span class="select-box w_auto">
+				  <select class="select J-select" name="type" id="adSpotsId">
+                      <option value="" selected>广告位</option>
+                      <option value="3" >老师说广告</option>
+                      <option value="2">手机端顶部广告</option>
+                      <option value="1">刷卡机广告</option>
+                  </select>
+				</span>
+                <span class="select-box w_auto">
+				  <select class="select J-select" name="type" id="type">
+                      <option value="" selected>类型</option>
+                      <option value="1" >图片</option>
+                      <option value="2">视频</option>
+                      <option value="3">发现</option>
+                  </select>
+				</span>
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="2">停用</option>
+				  </select>
+				</span>
+                <input type="text" placeholder="广告位名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+                <button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+            </form>
+        </div>
+    </div>
+    <div class="table-wrapper">
+        <table id="mmg"></table>
+        <div class="table-paginator">
+            <div id="paginator"></div>
+        </div>
+    </div>
+<script type="text/html" id="addBtn">
+    <a href="javascript:void(0);" class="btn btn-primary radius J-add" title="分配短信额度"><i class="iconfont">&#xe618;</i>添加广告内容</a>
+</script>
+<script type="text/html" id="delAllBtn">
+    <a href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+    <a href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplAdSpot">
+    <select class="select" name="adSpotId">
+        {{each list as val key }}
+            <option  value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.name }}</option>
+        {{/each}}
+    </select>
+</script>
+<script type="text/html" id="addTpl">
+    <form action="" method="post" class="form form-horizontal J-addForm">
+        <table class="table tableStyle">
+            <tbody>
+                <tr>
+                    <td width="15%" class="tdbg tc"><span class="f-red">*</span>广告位</td>
+                    <td><span class="select-box J-ads"></span></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc">建议尺寸(宽*高/单位:像素)</td>
+                    <td class="J-chicun"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>学校</td>
+                    <td class="J-school"></td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>类型</td>
+                    <td>
+                        <span class="select-box w_auto J-ad-type">
+                          <select class="select J-select" name="type">
+                              <option value="1">图片</option>
+                              <option value="2" >视频</option>
+                              <option value="3" >发现</option>
+                          </select>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td  class="tdbg tc">广告内容</td>
+                    <td class="J-ad-content">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tdbg tc"><span class="f-red">*</span>广告有效期</td>
+                    <td>从
+                        <input id="startDate" ignore="ignore" name="startDate" class="input-text w_auto Wdate" type="text" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',maxDate:'#F{$dp.$D(\'endDate\',{d:-1});}'})"/>
+                        到
+                        <input id="endDate" ignore="ignore" name="endDate" class="input-text w_auto Wdate" type="text" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',minDate:'#F{$dp.$D(\'startDate\',{d:1});}'})"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplPic">
+    <div class="ad-row">
+            <img id="preview" src="" height="60px" />
+            <p>文件: <input type="file" class="input-text" type="text" id="fileName" name="fileName" accept="image/*" onchange="common.imgPreview(this)">
+            <input type="hidden" id="images" name="images" /></p>
+            <p>链接地址:<input type="text" class="input-text" name="target" placeholder="链接地址" value="{{ target }}" datatype="url" /></p>
+            <p>文字内容:<input type="text" class="input-text" name="content" placeholder="文字内容" value="{{ content }}" /></p>
+            <p>停留时间(秒):<input type="text" class="input-text" name="stopTime" placeholder="停留时间(秒)" value="{{ stopTime }}" datatype="initNum" /></p>
+            
+    </div>
+</script>
+<script type="text/html" id="tplVideo">
+ <div class="ad-row">
+    <p>文件:<input type="file" class="input-text" type="text" id="fileName" name="fileName" accept="video/*" /> <input type="hidden" id="images" name="images" /></p>
+    <p>文字内容:<input type="text" class="input-text" name="content" placeholder="文字内容" value="{{ content }}"  /></p>
+    <p>停留时间:<input type="text" class="input-text" name="stopTime" placeholder="停留时间(秒)" value="{{ stopTime }}" datatype="initNum" /></p>
+  </div>  
+</script>
+<script type="text/html" id="tplShoping">
+    <div class="ad-row">
+     <img id="preview" src="" height="60px" />
+        <span class="select-box">
+            <select class="select" name="target">
+                {{each list as val key }}
+                 <option {{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} value="product:{{ val.id }}">{{ val.productName }}</option>
+                 {{/each}}
+            </select>
+        </span>
+       <p>文件：<input type="file" class="input-text" type="text" id="fileName" name="fileName" accept="image/*" onchange="common.imgPreview(this)" />
+            <input type="hidden" id="images" name="images" /></p>
+       <p>商品名字:<input type="text" class="input-text" name="content" placeholder="商品名字" value="{{ content }}" readonly  /></p>
+       <p>停留时间(秒):<input type="text" class="input-text" name="stopTime" placeholder="停留时间(秒)" value="{{ stopTime }}" datatype="initNum" /></p>
+    </div>    
+</script>
+<script type="text/html" id="editTpl">
+    <form action="" method="post" class="form form-horizontal J-editForm">
+        <input type="hidden" name="id" value="{{ id }}">
+
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>广告位</td>
+                <td><span class="select-box J-ads"></span></td>
+            </tr>
+            <tr>
+                    <td width="15%" class="tdbg tc">建议尺寸(宽*高/单位:像素)</td>
+                    <td class="J-chicun"></td>
+                </tr>
+            <tr>
+                <td width="15%" class="tdbg tc"><span class="f-red">*</span>学校</td>
+                <td class="J-school">
+                
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>类型</td>
+                <td>
+                        <span class="select-box w_auto J-ad-type">
+                          <select class="select J-select" name="type">
+                              <option value="1" {{ if type == 1}} selected {{/if}}>图片</option>
+                              <option value="2" {{ if type == 2}} selected {{/if}} >视频</option>
+                              <option value="3" {{ if type == 3}} selected {{/if}} >发现</option>
+                          </select>
+                        </span>
+                </td>
+            </tr>
+            <tr>
+                <td  class="tdbg tc">广告内容</td>
+                <td class="J-ad-content J-img">
+
+                </td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>广告有效期</td>
+                <td>从
+                    <input id="startDate" ignore="ignore" name="startDate" class="input-text w_auto Wdate" type="text" value="{{ startDate }}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',maxDate:'#F{$dp.$D(\'endDate\',{d:-1});}'})"/>
+                    到
+                    <input id="endDate" ignore="ignore" name="endDate" class="input-text w_auto Wdate" type="text" value="{{ endDate }}" onFocus="WdatePicker({dateFmt:'yyyy-M-d H:mm:ss',minDate:'#F{$dp.$D(\'startDate\',{d:1});}'})"/>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/html" id="tplPlayer">
+    <div id="a1"></div>
+</script>
+<script type="text/html" id="chkTpl">
+    <form action="" method="post" class="form form-horizontal J-chkForm">
+        <input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="15%" class="tdbg tc">广告位</td>
+                <td>{{ adSpotsName }}</td>
+            </tr>
+                <tr>
+                    <td width="15%" class="tdbg tc">建议尺寸(宽*高/单位:像素)</td>
+                    <td class="J-chicun">{{ width }}*{{ height }}</td>
+                </tr>
+            <tr>
+                <td class="tdbg tc">学校</td>
+                <td>{{ if schoolName == null }}所有学校{{else}}{{ schoolName }}{{/if}}</td>
+            </tr>
+            <tr>
+                <td class="tdbg tc">类型</td>
+                <td>
+                    {{ if type == 1}}图片{{/if}}
+                    {{ if type == 2}}视频{{/if}}
+                    {{ if type == 3}}发现{{/if}}
+                </td>
+            </tr>
+            <tr>
+               <td  class="tdbg tc">广告内容</td>
+                <td class="J-ad-content J-img">
+
+                </td>
+            </tr>
+             <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>广告有效期</td>
+                <td>
+                      {{ if startDate != null && endDate != null }}
+                            从 {{ startDate }}至{{ endDate }}
+                      {{/if}}
+                      {{ if startDate != null && endDate == null }}
+                            自{{ startDate }}开始
+                      {{/if}}
+                      {{ if startDate == null && endDate == null }}
+                            长期有效
+                      {{/if}}
+                      {{ if startDate == null && endDate != null }}
+                            截至{{ endDate }}
+                      {{/if}}
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+</script>
+<script type="text/javascript" src="../lib/qiniu/qn.min.js"></script>
+<script type="text/javascript" src="../lib/CKplayer_v6.7/ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript" src="../static/admin/js/service/gggl-guanggao.js"></script>
+
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/gggl-guanggao.min.js"></script> -->
+
+
+
+
+

@@ -1,0 +1,104 @@
+﻿
+<div class="action">
+    <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="select-box w_auto">
+				  <select class="select J-select" name="isUse" id="isUse">
+					  <option value="" selected>状态</option>
+					  <option value="1" >启用</option>
+					  <option value="0">停用</option>
+				  </select>
+				</span>
+				<input type="text" placeholder="广告位名称" value="" id="keyWord" name="keyWord" class="input-text"/>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" style="display:none;" class="btn btn-primary radius J-add" title="分配短信额度"><i class="iconfont">&#xe618;</i>添加广告位</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a style="display:none" href="javascript:void(0);" class="btn btn-default radius J-tingyongAll" title="批量停用"><i class="iconfont">&#xe625;</i>批量停用</a>
+	<a style="display:none" href="javascript:void(0);" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+<script type="text/html" id="tplDuanxin">
+	<select class="select" name="smsChannelId">
+		{{each list as val key }}
+		<option value="{{ val.id }}"{{each val as vval kkey}}data-{{kkey}}="{{vval}}"{{/each}} >{{ val.channelName }}</option>
+		{{/each}}
+	</select>
+</script>
+<script type="text/html" id="addTpl">
+	<form action="" method="post" class="form form-horizontal J-addForm">
+		<table class="table tableStyle">
+			<tbody>
+			<tr>
+				<td width=20%" class="tdbg tc"><span class="f-red">*</span>广告位名称</td>
+				<td><input class="input-text" type="text" name="name" datatype="*"></td>
+			</tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>宽</td>
+                <td><input class="input-text" type="text" name="width" datatype="zzs"></td>
+            </tr>
+            <tr>
+
+                <td class="tdbg tc"><span class="f-red">*</span>高</td>
+                <td ><input class="input-text" type="text" name="height" datatype="zzs"></td>
+            </tr>
+			</tbody>
+		</table>
+	</form>
+</script>
+<script type="text/html" id="editTpl">
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width=20%" class="tdbg tc"><span class="f-red">*</span>广告位名称</td>
+                <td><input class="input-text" type="text" name="name" value="{{ name }}" datatype="*" /></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>宽</td>
+                <td><input class="input-text" type="text" name="width" value="{{ width }}" datatype="zzs"></td>
+            </tr>
+            <tr>
+                <td class="tdbg tc"><span class="f-red">*</span>高</td>
+                <td><input class="input-text" type="text" name="height" value="{{ height }}" datatype="zzs"></td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="13%" class="tdbg tc">广告位名称</td>
+                <td width="20%">{{ name }}</td>
+                <td width="5%" class="tdbg tc">宽</td>
+                <td width="10%">{{ width }}</td>
+                <td width="5%" class="tdbg tc">高</td>
+                <td width="10%">{{ height }}</td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+<script type="text/javascript" src="../static/admin/js/service/gggl-guanggaowei.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/gggl-guanggaowei.min.js"></script> -->
+
+
+
+
+
+

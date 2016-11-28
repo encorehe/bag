@@ -1,0 +1,189 @@
+﻿
+	<div class="action">
+        <div class="btnsArea"></div>
+		<div class="searchArea J-search">
+			<form action="" method="post" class="form form-horizontal J-searchForm">
+				<span class="J-schools"></span>
+				<span class="J-classs"></span>
+        <span class="select-box J-select">
+                <select class="select J-type" name="type">
+                  <option value="">类型</option>
+                  <option value="1">教职工</option>
+                  <option value="2">班级</option>
+                </select>
+         </span>
+				<button class="btn btn-primary radius J-searchBtn" type="submit">搜索</button>
+			</form>
+		</div>
+	</div>
+	<div class="table-wrapper">
+		<table id="mmg"></table>
+		<div class="table-paginator">
+			<div id="paginator"></div>
+		</div>
+	</div>
+<script type="text/html" id="addBtn">
+	<a href="javascript:void(0);" class="btn btn-primary radius J-add" title="添加考勤规则"><i class="iconfont">&#xe618;</i>添加考勤规则</a>
+</script>
+<script type="text/html" id="delAllBtn">
+	<a href="javascript:void(0);" class="btn btn-default radius J-delAll" title="批量删除"><i class="iconfont">&#xe617;</i>批量删除</a>
+	<a href="javascript:void(0);" style="display:none;" class="btn btn-success radius J-qiyongAll" title="批量启用"><i class="iconfont">&#xe630;</i>批量启用</a>
+</script>
+	<script type="text/html" id="addTpl">
+		<form action="" method="post" class="form form-horizontal J-addForm">
+			<table class="table tableStyle">
+                <tbody>
+                   <tr>
+                       <td width="20%" class="tdbg tr">类型</td>
+                       <td width="25%">
+            							<span class="select-box">
+            							  <select class="select J-type" name="type">
+            								  <option value="1">教职工</option>
+            								  <option value="2">班级</option>
+            							  </select>
+            							</span>
+            						</td>
+                       <td class="tdbg tr J-typeName" width="20%"><span class="f-red">*</span>考勤针对</td>
+                       <td class="J-typeContent">
+                           <span class="J-school"></span>
+                           <span class="J-class"></span>
+                       </td>
+                   </tr>
+                   
+                </tbody>
+            </table>
+		</form>
+	</script>
+  <script type="text/html" id="tplDateBaby">
+                <tr class="J-row">
+                  <td class="tdbg tr">上下午区分</td>
+                  <td>
+                    <span class="select-box">
+                      <select class="select J-qufen">
+                          <option value="0">无</option>
+                          <option value="1">有</option>
+                      </select>
+                    </span>
+                  </td>
+                </tr>
+                
+  </script>
+  <script type="text/html" id="tplDateBabys1">
+              <tr class="J-row-hidden">
+                  <td class="tdbg tc" colspan="4">打卡有效时间</td>
+              </tr>
+              <tr class="J-row-hidden">
+                       <td class="tdbg tr"><span class="f-red">*</span>上学开始</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInStart" value="{{ punchInStart }}" readonly datatype="*" /></td>
+                       <td><span class="f-red">*</span>上学结束</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInEnd" datatype="*" value="{{ punchInEnd }}" readonly /></td>
+               </tr>
+              <tr class="J-row-hidden">
+                       <td class="tdbg tr"><span class="f-red">*</span>放学开始</td>
+                       <td ><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutStart"  datatype="*" value="{{ punchOutStart }}" readonly /></td>
+                     <td><span class="f-red">*</span>放学结束</td>
+                     <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutEnd" datatype="*" value="{{ punchOutEnd }}" readonly /></td>
+              </tr>
+  </script>
+  <script type="text/html" id="tplDateBabys2">
+           <tr class="J-row-hidden J-row-hidden2">
+              <td class="tdbg tc" colspan="4">上午打卡有效时间</td>
+           </tr>
+           <tr class="J-row-hidden J-row-hidden2">
+                       <td class="tdbg tr"><span class="f-red">*</span>上学开始</td>
+                       <td>
+                           <input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});"  class="input-text laydate-icon" type="text" name="punchInStart" datatype="*" value="{{ punchInStart }}" readonly />
+                        </td>
+                       <td><span class="f-red">*</span>上学结束</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInEnd" datatype="*" value="{{ punchInEnd }}" readonly /></td>
+             </tr>
+              <tr class="J-row-hidden J-row-hidden2">
+                       <td class="tdbg tr"><span class="f-red">*</span>放学开始</td>
+                       <td ><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutStart"  datatype="*" value="{{ punchOutStart }}" readonly /></td>
+                     <td class="J-type1d"><span class="f-red">*</span>放学结束</td>
+                     <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutEnd" datatype="*" value="{{ punchOutEnd }}" readonly /></td>
+             </tr>
+             <tr class="J-row-hidden J-row-hidden2">
+              <td class="tdbg tc" colspan="4">下午打卡有效时间</td>
+           </tr>
+            <tr class="J-row-hidden J-row-hidden2">
+                       <td class="tdbg tr"><span class="f-red">*</span>上学开始</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInStart2" datatype="*" value="{{ punchInStart2 }}" readonly /></td>
+                       <td><span class="f-red">*</span>上学结束</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInEnd2" datatype="*" value="{{ punchInEnd2 }}" readonly /></td>
+             </tr>
+              <tr class="J-row-hidden J-row-hidden2">
+                       <td class="tdbg tr"><span class="f-red">*</span>放学开始</td>
+                       <td ><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutStart2"  datatype="*"  value="{{ punchOutStart2 }}" readonly/></td>
+                     <td class="J-type1d"><span class="f-red">*</span>放学结束</td>
+                     <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutEnd2" datatype="*" value="{{ punchOutEnd2 }}" readonly /></td>
+             </tr>
+  </script>
+  <script type="text/html" id="tplTeacherDate">
+               <tr class="J-row-hidden">
+                  <td class="tdbg tc" colspan="4">打卡有效时间</td>
+               </tr>
+               <tr class="J-row-hidden">
+                       <td class="tdbg tr"><span class="f-red">*</span>上班时间</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',maxDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchInStart" datatype="*" value="{{ punchInStart }}" readonly /></td>
+                       <td><span class="f-red">*</span>下班时间</td>
+                       <td><input onclick="WdatePicker({skin:'whyGreen',dateFmt:'HH:mm:ss',minDate:'12:00:00'});" class="input-text laydate-icon" type="text" name="punchOutStart" datatype="*" value="{{ punchOutStart }}" readonly /></td>
+                </tr>
+                   
+  </script>
+<script type="text/html" id="editTpl">
+    <p class="f-red" style="margin-top:-10px;">eg:如修改考勤规则，12小时才生效!</p>
+	<form action="" method="post" class="form form-horizontal J-editForm">
+		<input type="hidden" name="id" value="{{ id }}">
+            <table class="table tableStyle">
+                <tbody>
+                <tr>
+                    <td width="25%" class="tdbg tr">类型</td>
+                    <td width="25%">
+							<span class="select-box">
+							  <select class="select J-type" name="type">
+								  <option value="1" {{ if type="=1"}}selected{{/if}}>教职工</option>
+								  <option value="2" {{ if type="=2"}}selected{{/if}}>班级</option>
+							  </select>
+							</span>
+                    </td>
+                    <td width="12%" class="tdbg tr J-typeName"><span class="f-red">*</span>考勤针对</td>
+                    <td class="J-typeContent">
+                        <span class="J-school"></span>
+                        <span class="J-class"></span>
+                    </td>
+                </tr>
+               
+                </tbody>
+            </table>
+	</form>
+</script>
+<script type="text/html" id="chkTpl">
+	<form action="" method="post" class="form form-horizontal J-chkForm">
+		<input type="hidden" name="id" value="{{ id }}">
+        <table class="table tableStyle">
+            <tbody>
+            <tr>
+                <td width="25%" class="tdbg tr">类型</td>
+                <td width="25%">
+							{{ if type ==1 }}教职工{{/if}}
+                            {{ if type ==2 }}班级{{/if}}
+                </td>
+                <td width="12%" class="tdbg tr"><span class="f-red">*</span>考勤针对</td>
+                <td class="J-typeContent">
+                    <span class="J-schoolAdd">{{ schoolName }}</span>
+                    <span class="J-classAdd">{{ if type == 2}}{{ className }}{{/if}}</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</form>
+</script>
+
+<script type="text/javascript" src="../static/admin/js/service/yey-kaoqin.js"></script>
+<!-- <script type="text/javascript" src="../static/admin/js/serviceMin/yey-kaoqin.min.js"></script> -->
+
+
+
+
+
